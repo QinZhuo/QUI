@@ -396,8 +396,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -825.75, y: -476.69}
-  m_SizeDelta: {x: 268.5036, y: 126.627594}
+  m_AnchoredPosition: {x: -891.89, y: -476.69}
+  m_SizeDelta: {x: 136.21964, y: 126.627594}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1099095313
 MonoBehaviour:
@@ -422,7 +422,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 0
@@ -431,7 +431,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'N< sprite=1 />N  '
+  m_Text: 
   imagePrefab: {fileID: 0}
 --- !u!222 &1099095315
 CanvasRenderer:

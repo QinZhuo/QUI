@@ -41,7 +41,7 @@ namespace QTool.UI
                 switch (match.Groups[1].Value.ToLower().Trim())
                 {
                     case "sprite":
-                        newText += string.Format( "<quad name={0} size={1} width=1 />",match.Groups[2].Value.Trim(),fontSize);
+                        newText += string.Format( "<quad name={0} size={1} width=1 />",match.Groups[2].Value.Trim(), fontSize);
                         Debug.LogError("fix:[" + match.Groups[1].Value.Trim().ToLower() + "]"+":["+ match.Groups[2].Value.Trim() + "]");
                         break;
                     default:

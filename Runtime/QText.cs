@@ -31,11 +31,13 @@ namespace QTool.UI
         {
             get
             {
-                return Left + "<quad></color>";
+                return Left +string.Format("<quad {0}></color>",fontSize>=0?string.Format("size={0}",fontSize):"");
             }
         }
+        public Dictionary<string, string> pramas = new Dictionary<string, string>();
         public IReplaceUI ui;
-        public Vector2 size;
+        public float fontSize=-1;
+        public Vector2 uiSize;
         public string key;
         public string value;
         public void Clear()
@@ -49,9 +51,9 @@ namespace QTool.UI
     }
     public class QText : Text
     {
-        private static readonly Regex regex = new Regex(@"{(.+?):(.+?)}", RegexOptions.Singleline);
+        private static readonly Regex regex = new Regex(@"{(.+?)}", RegexOptions.Singleline);
         //  private static readonly Regex _regex = new Regex( @"<quad name=(.+?) size=(\d*\.?\d+%?)/>", RegexOptions.Singleline);
-       
+
         public string oText = "";
         public override string text
         {
@@ -73,7 +75,7 @@ namespace QTool.UI
             {
                 foreach (var tag in tagList)
                 {
-                    tag.ui.rectTransform.sizeDelta = tag.size;
+                    tag.ui.rectTransform.sizeDelta = tag.uiSize;
                     tag.ui.rectTransform.gameObject.SetActive(tag.show);
                 }
             }
@@ -106,25 +108,54 @@ namespace QTool.UI
                 lastEndIndex = match.Index + match.Length;
                 newText += lastText;
 
-                oneLineIndex += lastText.Length;
+                oneLineIndex += lastText.Replace("\n","").Length;
                 multLineIndex += lastText.Length;
+                Debug.LogError(match.Index+":::");
 
-                var key = match.Groups[1].Value.ToLower().Trim();
-                var value = match.Groups[2].Value.Trim();
+              
                
-                
                 var tag = new TextRepalceTag
                 {
-                    key = key,
-                    value = value,
                     oneLineIndex = oneLineIndex,
                 };
+
+                var kvs = match.Groups[0].Value.Trim('{','}').Split(',', '，');
+                int i = 0;
+                foreach (var kv in kvs)
+                {
+                    var vs = kv.Split(':');
+                    if (vs.Length >= 2)
+                    {
+                        var key = vs[0].Trim();
+                        var value = vs[1].Trim();
+                        if (i == 0)
+                        {
+                            tag.key = key;
+                            tag.value = value;
+                        }
+                        else
+                        {
+                            tag.pramas.Add(key, value);
+                            if (key.Equals("size"))
+                            {
+                                float size = -1;
+                                float.TryParse(value, out size);
+                                tag.fontSize = size;
+                             
+                            }
+
+                        }
+                        Debug.LogError(key + ":" + value);
+
+                    }
+                    i++;
+                }
                 if (Application.isPlaying)
                 {
                     var ui = Instantiate(replacePrefab, transform).GetComponent<IReplaceUI>();
                     tag.ui = ui;
                     tag.ui.ReplaceTag = tag;
-                    tag.ui.rectTransform.sizeDelta = tag.size;
+                    tag.ui.rectTransform.sizeDelta = tag.uiSize;
                 }
                 tag.multLineIndex = multLineIndex+tag.Left.Length;
                 tagList.Add(tag);
@@ -134,13 +165,14 @@ namespace QTool.UI
             }
             var t = text.Substring(lastEndIndex, text.Length - lastEndIndex); ;
             newText += t;
-            oneLineIndex += t.Length;
+            oneLineIndex += t.Replace("\n","").Length;
             return newText;
         }
         [ContextMenu("Test")]
         public void Test()
         {
-            text = "N{sprite:1}N";
+            text= "N\n{resources:test}N";
+            //text = "N\n{resources:test,size:200}/nN";
         }
         public void ClearTag()
         {
@@ -165,6 +197,7 @@ namespace QTool.UI
         //        Gizmos.color = Color.Lerp(Color.red, Color.clear, 0.9f);
         //        Gizmos.DrawSphere(v.position + transform.position, 1f);
         //    }
+        //    Debug.LogError(vList.Count);
         //}
         public bool Dirty=false;
         List<UIVertex> vList = new List<UIVertex>();
@@ -203,7 +236,7 @@ namespace QTool.UI
                     if (!rt.sizeDelta.Equals(size))
                     {
                         Dirty = true;
-                        tag.size = size;
+                        tag.uiSize = size;
                     }
                    
                 }

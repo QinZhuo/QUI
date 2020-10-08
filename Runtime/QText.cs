@@ -110,7 +110,6 @@ namespace QTool.UI
 
                 oneLineIndex += lastText.Replace("\n","").Length;
                 multLineIndex += lastText.Length;
-                Debug.LogError(match.Index+":::");
 
               
                
@@ -145,7 +144,6 @@ namespace QTool.UI
                             }
 
                         }
-                        Debug.LogError(key + ":" + value);
 
                     }
                     i++;

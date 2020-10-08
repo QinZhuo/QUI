@@ -230,7 +230,7 @@ namespace QTool.UI
                 var size = rightUp - leftDown;
                 if (startIndex < vList.Count)
                 {
-                    rt.anchoredPosition= center;
+                    rt.position=transform.position+ center;
                     if (!rt.sizeDelta.Equals(size))
                     {
                         Dirty = true;

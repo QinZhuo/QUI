@@ -1,0 +1,17 @@
+{
+    "name": "QUIEdtor",
+    "references": [
+        "GUID:af968f272ce506845b1565dee49fe58c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

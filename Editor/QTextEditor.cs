@@ -21,6 +21,7 @@ namespace QTool.UI
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("原始文本");
             text.text = EditorGUILayout.TextArea(text.oText,GUILayout.Height(50));
+            text.replacePrefab = EditorGUILayout.ObjectField("替换预制体",text.replacePrefab,typeof(GameObject),false) as GameObject;
             serializedObject.ApplyModifiedProperties();
             if (GUI.changed)
             {

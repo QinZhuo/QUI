@@ -188,15 +188,6 @@ namespace QTool.UI
         {
             ClearTag();
         }
-        //private void OnDrawGizmosSelected()
-        //{
-        //    foreach (var v in vList)
-        //    {
-        //        Gizmos.color = Color.Lerp(Color.red, Color.clear, 0.9f);
-        //        Gizmos.DrawSphere(v.position + transform.position, 1f);
-        //    }
-        //    Debug.LogError(vList.Count);
-        //}
         public bool Dirty=false;
         List<UIVertex> vList = new List<UIVertex>();
         protected override void OnPopulateMesh(VertexHelper toFill)

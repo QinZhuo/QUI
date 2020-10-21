@@ -31,18 +31,15 @@ namespace QTool.UI
                 }
             }
         }
-        public void ChangeAlphaPos(float t, params int[] index)
+        public void SetAlphaPos(float t,float delay, params int[] index)
         {
             if (index.Length == 0) return;
             var alphaKeys = GradientColor.alphaKeys;
-            var start = alphaKeys[index[0]].time;
 
-
-            var offset = t - start;
             for (int i = 0; i < index.Length; i++)
             {
 
-                alphaKeys[index[i]].time += offset;
+                alphaKeys[index[i]].time += t+delay*i;
             }
             GradientColor.SetKeys(GradientColor.colorKeys, alphaKeys); ;
             Fresh();

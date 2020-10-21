@@ -31,6 +31,7 @@ namespace QTool.UI
                 }
             }
         }
+        
         public void SetAlphaPos(float t,float delay, params int[] index)
         {
             if (index.Length == 0) return;
@@ -39,7 +40,7 @@ namespace QTool.UI
             for (int i = 0; i < index.Length; i++)
             {
 
-                alphaKeys[index[i]].time += t+delay*i;
+                alphaKeys[index[i]].time = t+delay*i;
             }
             GradientColor.SetKeys(GradientColor.colorKeys, alphaKeys); ;
             Fresh();

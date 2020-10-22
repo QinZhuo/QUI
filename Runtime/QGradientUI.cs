@@ -96,11 +96,11 @@ namespace QTool.UI
             }
         }
         private Text _text;
-         Text text
+        Text text
         {
             get
             {
-                return _text??( _text = GetComponent<Text>());
+                return _text ?? (_text = GetComponent<Text>()); 
             }
         }
         public void SetAlphaPos(float t,float delay, params int[] index)
@@ -149,16 +149,17 @@ namespace QTool.UI
         {
             minValue = float.MaxValue;
             maxValue = float.MinValue;
-            //var length = text.text.RichTextLength();
-            textOneLine = text.text.CheckRichTextOneLine(vh.currentVertCount);
-        // 
+            if(lerpDir== LerpDir.TextCount&&text!=null)
+            {
+                textOneLine = text.text.CheckRichTextOneLine(vh.currentVertCount);
+            }
             for (int i = 0; i < vh.currentVertCount; i++)
             {
                 vh.PopulateUIVertex(ref v, i); 
                 var value = GetValue(v, i);
                 if (value > maxValue)
                 {
-                    maxValue = value;
+                    maxValue = value; 
                 }
                 if (value < minValue)
                 {

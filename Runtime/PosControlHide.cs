@@ -63,7 +63,6 @@ namespace QTool.UI
             foreach (var ui in hideUI)
             {
                 if (ui == null) continue;
-                Debug.LogError(ui.Rect.Up() + "  : " + Rect.Up());
                 ui.MaxOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (ui.Rect.Up() - Rect.Up()) : (ui.Rect.Right() - Rect.Right())) - Max;
                 ui.MinOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (Rect.Down() - ui.Rect.Down()) : (Rect.Left() - ui.Rect.Left())) - Min;
                 ui.Fresh();

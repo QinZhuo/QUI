@@ -17,11 +17,11 @@ namespace QTool.UI
 
         public static float Height(this RectTransform rectTransform)
         {
-            return rectTransform.sizeDelta.y;
+            return rectTransform.rect.height;
         }
         public static float Width(this RectTransform rectTransform)
         {
-            return rectTransform.sizeDelta.x;
+            return rectTransform.rect.width;
         }
         public static float Up(this RectTransform rectTransform)
         {
@@ -63,6 +63,7 @@ namespace QTool.UI
             foreach (var ui in hideUI)
             {
                 if (ui == null) continue;
+                Debug.LogError(ui.Rect.Up() + "  : " + Rect.Up());
                 ui.MaxOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (ui.Rect.Up() - Rect.Up()) : (ui.Rect.Right() - Rect.Right())) - Max;
                 ui.MinOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (Rect.Down() - ui.Rect.Down()) : (Rect.Left() - ui.Rect.Left())) - Min;
                 ui.Fresh();

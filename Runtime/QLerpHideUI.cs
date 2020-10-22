@@ -32,7 +32,7 @@ namespace QTool.UI
         {
             get
             {
-                return (HideDir.UpDonw == hideDir ? Rect.sizeDelta.y : Rect.sizeDelta.x);
+                return (HideDir.UpDonw == hideDir ?Rect.Height() : Rect.Width());
             }
         }
 
@@ -79,6 +79,7 @@ namespace QTool.UI
                 default:
                     return 0;
             }
+         
         }
         public Color ChangeColor(float t, Color oldColor)
         {
@@ -109,6 +110,7 @@ namespace QTool.UI
             {
                 vh.PopulateUIVertex(ref v, i);
                 var t = (GetValue(v, i) - minValue) / length;
+           
                 var newColor = ChangeColor(t, v.color);
                 if (v.color != newColor)
                 {

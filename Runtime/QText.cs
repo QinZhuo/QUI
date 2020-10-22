@@ -11,6 +11,7 @@ namespace QTool.UI
         RectTransform rectTransform { get; }
         TextRepalceTag ReplaceTag { set; }
     }
+ 
     public class TextRepalceTag
     {
         public bool show=true;

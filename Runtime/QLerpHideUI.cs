@@ -19,6 +19,7 @@ namespace QTool.UI
         public HideDir hideDir = HideDir.UpDonw;
         public float MaxOffset = 0;
         public float MinOffset = 0;
+        public float HideOffset =50;
         float minValue = float.MaxValue;
         float maxValue = float.MinValue;
         public RectTransform Rect
@@ -35,7 +36,13 @@ namespace QTool.UI
                 return (HideDir.UpDonw == hideDir ?Rect.Height() : Rect.Width());
             }
         }
-
+        float HideRate
+        {
+            get
+            {
+                return HideOffset / Length;
+            }
+        }
         float MaxRate
         {
             get
@@ -89,11 +96,11 @@ namespace QTool.UI
 
 
 
-                return new Color(oldColor.r, oldColor.g, oldColor.b, Mathf.Lerp(1, 0, (MinRate - t / 1)));
+                return new Color(oldColor.r, oldColor.g, oldColor.b, Mathf.Lerp(1, 0, (MinRate - t / HideRate)));
             }
             else if (t > 1 - MaxRate)
             {
-                return new Color(oldColor.r, oldColor.g, oldColor.b, Mathf.Lerp(1, 0, ((t - (1 - MaxRate)) / 1)));
+                return new Color(oldColor.r, oldColor.g, oldColor.b, Mathf.Lerp(1, 0, ((t - (1 - MaxRate)) / HideRate)));
             }
             else
             {

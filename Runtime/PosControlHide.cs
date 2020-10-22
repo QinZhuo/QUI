@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace QTool.UI
 {
     public static class RectTransformExtend
@@ -46,25 +47,24 @@ namespace QTool.UI
         public QLerpHideUI[] hideUI;
         public float Max;
         public float Min;
-        private void Reset()
+        public void Reset()
         {
             hideUI = GetComponentsInChildren<QLerpHideUI>();
         }
-        public RectTransform ParentRect
+        public RectTransform Rect
         {
             get
             {
-                return transform.parent as RectTransform;
+                return transform as RectTransform;
             }
         }
         private void Update()
         {
-
             foreach (var ui in hideUI)
             {
                 if (ui == null) continue;
-                ui.MaxOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (ui.Rect.Up() - ParentRect.Up()) : (ui.Rect.Right() - ParentRect.Right())) - Max;
-                ui.MinOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (ParentRect.Down() - ui.Rect.Down()) : (ParentRect.Left() - ui.Rect.Left())) - Min;
+                ui.MaxOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (ui.Rect.Up() - Rect.Up()) : (ui.Rect.Right() - Rect.Right())) - Max;
+                ui.MinOffset = (hideDir == QLerpHideUI.HideDir.UpDonw ? (Rect.Down() - ui.Rect.Down()) : (Rect.Left() - ui.Rect.Left())) - Min;
                 ui.Fresh();
             }
         }

@@ -132,9 +132,7 @@ namespace QTool.UI
                 case LerpDir.LeftRight:
                     return v.position.x;
                 case LerpDir.TextCount:
-                   // return index;
                     var cIndex = index / 4;
-
                     var offset = index - cIndex*4;
                     if (textOneLine)
                     {
@@ -144,7 +142,6 @@ namespace QTool.UI
                     {
                         cIndex= text.text.ToRichTextIndex(index / 4);
                     }
-               
                     if (offset == 0 || offset == 3)
                     {
                         return cIndex*2;

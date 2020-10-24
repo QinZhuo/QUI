@@ -111,7 +111,7 @@ namespace QTool.UI
             for (int i = 0; i < index.Length; i++)
             {
 
-                alphaKeys[index[i]].time = t+delay*i;
+                alphaKeys[index[i]].time =Mathf.Lerp(-(index.Length-1)*delay,1, t )+ delay* i;
             }
             GradientColor.SetKeys(GradientColor.colorKeys, alphaKeys); ;
             Fresh();
@@ -132,13 +132,26 @@ namespace QTool.UI
                 case LerpDir.LeftRight:
                     return v.position.x;
                 case LerpDir.TextCount:
+                   // return index;
+                    var cIndex = index / 4;
+
+                    var offset = index - cIndex*4;
                     if (textOneLine)
                     {
-                        return index / 4;
+                        cIndex= index / 4;
                     }
                     else
                     {
-                        return text.text.ToRichTextIndex(index / 4);
+                        cIndex= text.text.ToRichTextIndex(index / 4);
+                    }
+               
+                    if (offset == 0 || offset == 3)
+                    {
+                        return cIndex*2;
+                    }
+                    else
+                    {
+                        return cIndex * 2 + 1;
                     }
                 default:
                     return 0;

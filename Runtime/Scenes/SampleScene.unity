@@ -1042,8 +1042,8 @@ GameObject:
   - component: {fileID: 1849468957}
   - component: {fileID: 1849468960}
   - component: {fileID: 1849468959}
-  - component: {fileID: 1849468961}
   - component: {fileID: 1849468958}
+  - component: {fileID: 1849468961}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1102,13 +1102,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0<color=#00000000><quad ></color>234
-
-    4567asd  alskdj aslkdj a
-
-    asdlkfjasdlkfj'
-  oText: 0{resources:test}234
-  oneLineIndex: 5
+  m_Text: "asdgasasdfasdfasdfsddf<color=#00000000><quad ></color>234\u963F\u65AF\u987F\u53D1\u5C04\u70B9\u963F\u65AF\u8FBE\u5361\u98CE\u6551\u9759\u5B89\u5BFA\uFF1B\u6309\u65F6\u706F\u7B3C\u88E4\u98DE\u673A\u963F\u65AF\u5229\u9A84\u50B2\u87BA\u4E1D\u9489\u5496\u5561\u78B1\u62C9"
+  oText: "asdgasasdfasdfasdfsddf{resources:test}234\u963F\u65AF\u987F\u53D1\u5C04\u70B9\u963F\u65AF\u8FBE\u5361\u98CE\u6551\u9759\u5B89\u5BFA\uFF1B\u6309\u65F6\u706F\u7B3C\u88E4\u98DE\u673A\u963F\u65AF\u5229\u9A84\u50B2\u87BA\u4E1D\u9489\u5496\u5561\u78B1\u62C9"
+  oneLineIndex: 61
   replacePrefab: {fileID: 6519103461986875846, guid: e1fae99e309f67341b6b4f2f136e47f4,
     type: 3}
   Dirty: 0
@@ -1128,7 +1124,7 @@ MonoBehaviour:
   _gradientColor:
     serializedVersion: 2
     key0: {r: 0, g: 0.6199827, b: 1, a: 1}
-    key1: {r: 1, g: 0, b: 0, a: 0}
+    key1: {r: 1, g: 0, b: 0, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1144,16 +1140,16 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 25288
-    atime2: 56097
-    atime3: 56097
+    atime1: 65535
+    atime2: 65535
+    atime3: 65535
     atime4: 65535
     atime5: 65535
     atime6: 0
     atime7: 0
     m_Mode: 0
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 4
 --- !u!222 &1849468960
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1171,9 +1167,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1849468956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56743e03ad30463498472ac1526b3bd9, type: 3}
+  m_Script: {fileID: 11500000, guid: a82ef759aced98d4c8fddfe8c788a7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui: {fileID: 1849468959}
+  lerpT: 1
+  delay: 0.1
 --- !u!1 &2043123333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,6 +1301,7 @@ MonoBehaviour:
   hideDir: 0
   MaxOffset: -176.66797
   MinOffset: -90.66797
+  HideOffset: 50
 --- !u!114 &2076286079
 MonoBehaviour:
   m_ObjectHideFlags: 0

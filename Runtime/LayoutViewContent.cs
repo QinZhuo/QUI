@@ -36,10 +36,13 @@ namespace QTool.UI
                 if (view == null)
                 {
                     view = GetPool(index).Get();
+                    var sacle = view.transform.localScale;
                     view.transform.SetParent(transform);
+                    view.transform.localScale = sacle;
                     view.transform.SetAsLastSibling();
                     objList[index].Add(view);
                     view.name = name;
+                   
                     OnCreate?.Invoke(view);
                     Layout();
                 }

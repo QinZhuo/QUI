@@ -64,9 +64,8 @@ namespace QTool.UI
             {
                 foreach (var view in objList[i])
                 {
-                    GetPool(i).Push(view);
+                    Push(view,i);
                 }
-                objList[i].Clear();
 
             }
             OnClear?.Invoke();
@@ -75,6 +74,8 @@ namespace QTool.UI
         public void Push(GameObject view,int i=0)
         {
             GetPool(i).Push(view);
+            objList[i].Remove(view);
+            OnPush?.Invoke(view);
         }
         public event System.Action<GameObject> OnPush;
         public event System.Action<GameObject> OnCreate;

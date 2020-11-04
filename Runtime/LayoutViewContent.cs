@@ -35,7 +35,15 @@ namespace QTool.UI
                 var view = (trans != null && trans.gameObject.activeSelf) ? trans.gameObject : null;
                 if (view == null)
                 {
-                    view = GetPool(index).Get();
+                    if (trans != null)
+                    {
+                        view = GetPool(index).Get(trans.gameObject);
+                    }
+                    else
+                    {
+                        view = GetPool(index).Get();
+                    }
+                  
                     var sacle = view.transform.localScale;
                     view.transform.SetParent(transform);
                     view.transform.localScale = sacle;
@@ -64,6 +72,11 @@ namespace QTool.UI
             OnClear?.Invoke();
             Layout();
         }
+        public void Push(GameObject view,int i=0)
+        {
+            GetPool(i).Push(view);
+        }
+        public event System.Action<GameObject> OnPush;
         public event System.Action<GameObject> OnCreate;
         public event System.Action OnClear;
     }

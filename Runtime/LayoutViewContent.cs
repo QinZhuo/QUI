@@ -62,11 +62,11 @@ namespace QTool.UI
         {
             for (int i = 0; i < objList.Length; i++)
             {
-                foreach (var view in objList[i])
+                for (int j = objList[i].Count-1; j >=0; j--)
                 {
-                    Push(view,i);
+                    var view = objList[i][j];
+                    Push(view, i);
                 }
-
             }
             OnClear?.Invoke();
             Layout();

@@ -15,7 +15,10 @@ namespace QTool.UI
         [ContextMenu("布局")]
         public void Layout()
         {
-            StartCoroutine(WaitLayout());
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(WaitLayout());
+            }
         }
         public int DelayLayout = 1;
         IEnumerator WaitLayout()

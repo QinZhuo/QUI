@@ -61,6 +61,7 @@ namespace QTool.UI
         List<GameObject>[] objList;
         public virtual void Clear()
         {
+            if(objList==null)return;
             for (int i = 0; i < objList.Length; i++)
             {
                 for (int j = objList[i].Count-1; j >=0; j--)

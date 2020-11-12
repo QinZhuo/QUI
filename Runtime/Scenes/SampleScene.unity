@@ -519,8 +519,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 313, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 47.200012, y: 173.59998}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &710491968
 MonoBehaviour:
@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1119,6 +1119,7 @@ GameObject:
   - component: {fileID: 1849468959}
   - component: {fileID: 1849468958}
   - component: {fileID: 1849468961}
+  - component: {fileID: 1849468962}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1174,12 +1175,12 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "asdgasasdfasdfasdfsddf<color=#00000000><quad ></color>234\u963F\u65AF\u987F\u53D1\u5C04\u70B9\u963F\u65AF\u8FBE\u5361\u98CE\u6551\u9759\u5B89\u5BFA\uFF1B\u6309\u65F6\u706F\u7B3C\u88E4\u98DE\u673A\u963F\u65AF\u5229\u9A84\u50B2\u87BA\u4E1D\u9489\u5496\u5561\u78B1\u62C9"
-  oText: "asdgasasdfasdfasdfsddf{resources:test}234\u963F\u65AF\u987F\u53D1\u5C04\u70B9\u963F\u65AF\u8FBE\u5361\u98CE\u6551\u9759\u5B89\u5BFA\uFF1B\u6309\u65F6\u706F\u7B3C\u88E4\u98DE\u673A\u963F\u65AF\u5229\u9A84\u50B2\u87BA\u4E1D\u9489\u5496\u5561\u78B1\u62C9"
-  oneLineIndex: 61
+  m_Text: asdgasasdfasdfasdfsddf{resourcesdasdasdasdasdas
+  oText: asdgasasdfasdfasdfsddf{resourcesdasdasdasdasdas
+  oneLineIndex: 47
   replacePrefab: {fileID: 6519103461986875846, guid: e1fae99e309f67341b6b4f2f136e47f4,
     type: 3}
   Dirty: 0
@@ -1248,6 +1249,19 @@ MonoBehaviour:
   ui: {fileID: 1849468959}
   lerpT: 1
   delay: 0.1
+--- !u!114 &1849468962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849468956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6723078369616af43aea853170423eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 710491967}
 --- !u!1 &2043123333
 GameObject:
   m_ObjectHideFlags: 0

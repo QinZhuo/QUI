@@ -4,8 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace QTool.UI
 {
-    public static class RichTextExtend
+    public static class TextExtend
     {
+        public static Vector3 GetPos(this Text text,int index)
+        {
+            string textStr = text.text;
+            Vector3 charPos = Vector3.zero;
+            if (index <= textStr.Length && index > 0)
+            {
+                TextGenerator textGen = new TextGenerator(textStr.Length);
+                var size = text.rectTransform.rect.size;
+                textGen.Populate(textStr, text.GetGenerationSettings(size));
+
+                int newLine = textStr.Substring(0, index).Split('\n').Length - 1;
+                int whiteSpace = textStr.Substring(0, index).Split(' ').Length - 1;
+                int indexOfTextQuad = (index * 4) + (newLine * 4) - 4;
+                if (indexOfTextQuad < textGen.vertexCount)
+                {
+                    charPos = (textGen.verts[indexOfTextQuad].position +
+                        textGen.verts[indexOfTextQuad + 1].position +
+                        textGen.verts[indexOfTextQuad + 2].position +
+                        textGen.verts[indexOfTextQuad + 3].position) / 4f;
+                }
+            }
+            charPos /= text.GetComponentInParent<Canvas>().scaleFactor;//适应不同分辨率的屏幕
+            charPos = text.transform.TransformPoint(charPos);//转换为世界坐标
+            return charPos;
+        }
         public static bool CheckRichTextOneLine(this string text,int count)
         {
             if (text.Length == count)

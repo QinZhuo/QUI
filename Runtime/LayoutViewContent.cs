@@ -47,6 +47,7 @@ namespace QTool.UI
                     var sacle = view.transform.localScale;
                     view.transform.SetParent(transform);
                     view.transform.localScale = sacle;
+                    view.transform.localRotation = Quaternion.identity;
                     view.transform.SetAsLastSibling();
                     objList[index].Add(view);
                     view.name = name;

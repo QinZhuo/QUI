@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace QTool.UI
 {
+    public static class ColorExtend
+    {
+        public static string ToHtmlStringRGB(this Color color)
+        {
+            return ColorUtility.ToHtmlStringRGB(color);
+        }
+        public static Color ChangeAlpha(this Color color,float a)
+        {
+            return new Color(color.r, color.g, color.b, a);
+        }
+    }
     public static class TextExtend
     {
         public static Vector3 GetPos(this Text text,int index)
@@ -211,7 +222,7 @@ namespace QTool.UI
             {
                 vh.PopulateUIVertex(ref v, i);
                 var t = (GetValue(v, i) - minValue) / length;
-                var newColor =v.color* GradientColor.Evaluate(t);
+                var newColor = v.color* GradientColor.Evaluate(t);
                 if (v.color != newColor)
                 {
                     v.color = newColor;

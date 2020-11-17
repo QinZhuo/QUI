@@ -51,8 +51,8 @@ namespace QTool.UI
                     view.transform.SetAsLastSibling();
                     objList[index].Add(view);
                     view.name = name;
-                   
-                    OnCreate?.Invoke(view);
+                    _count++;
+                     OnCreate?.Invoke(view);
                     Layout();
                 }
                 return view;
@@ -73,8 +73,17 @@ namespace QTool.UI
             OnClear?.Invoke();
             Layout();
         }
+        private int _count = 0;
+        public int Count
+        {
+            get
+            {
+                return _count;
+            }
+        }
         public void Push(GameObject view,int i=0)
         {
+            _count--;
             GetPool(i).Push(view);
             objList[i].Remove(view);
             OnPush?.Invoke(view);

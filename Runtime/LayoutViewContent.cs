@@ -57,7 +57,7 @@ namespace QTool.UI
                 return view;
             }
         }
-        List<List<GameObject>> objLists;
+        List<List<GameObject>> objLists = new List<List<GameObject>>();
         public virtual void Clear()
         {
             for (int i = 0; i < objLists.Count; i++)

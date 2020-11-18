@@ -11,15 +11,14 @@ namespace QTool.UI
         {
             return PoolManager.GetPool(viewPrefab[index]);
         }
-        private void Awake()
+    
+        public List<GameObject> GetObjList(int index)
         {
-            objList = new List<GameObject>[viewPrefab.Length];
-            for (int i = 0; i < objList.Length; i++)
+            for (int i = objLists.Count; i <= index; i++)
             {
-                objList[i] = new List<GameObject>();
+                objLists.Add(new List<GameObject>());
             }
-            
-           
+            return objLists[index];
         }
         public GameObject[] viewPrefab;
         public virtual GameObject this[string name, int index = 0]
@@ -49,7 +48,7 @@ namespace QTool.UI
                     view.transform.localScale = sacle;
                     view.transform.localRotation = Quaternion.identity;
                     view.transform.SetAsLastSibling();
-                    objList[index].Add(view);
+                    GetObjList(index).Add(view);
                     view.name = name;
                     _count++;
                      OnCreate?.Invoke(view);
@@ -58,15 +57,14 @@ namespace QTool.UI
                 return view;
             }
         }
-        List<GameObject>[] objList;
+        List<List<GameObject>> objLists;
         public virtual void Clear()
         {
-            if(objList==null)return;
-            for (int i = 0; i < objList.Length; i++)
+            for (int i = 0; i < objLists.Count; i++)
             {
-                for (int j = objList[i].Count-1; j >=0; j--)
+                for (int j = objLists[i].Count-1; j >=0; j--)
                 {
-                    var view = objList[i][j];
+                    var view = objLists[i][j];
                     Push(view, i);
                 }
             }
@@ -85,7 +83,7 @@ namespace QTool.UI
         {
             _count--;
             GetPool(i).Push(view);
-            objList[i].Remove(view);
+            GetObjList(i).Remove(view);
             OnPush?.Invoke(view);
         }
         public event System.Action<GameObject> OnPush;

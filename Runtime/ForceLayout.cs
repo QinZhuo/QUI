@@ -24,6 +24,18 @@ namespace QTool.UI
         {
             return rectTransform.sizeDelta.x;
         }
+        public static bool IsOutRange(this RectTransform transform,RectTransform mask)
+        {
+            if (transform.Left() > mask.Right()||transform.Right()<transform.Left())
+            {
+                return true;
+            }
+            else if(transform.Up()<mask.Down()||transform.Down()>mask.up())
+            {
+                return true;
+            }
+            return false;
+        }
         public static RectTransform RectTransform(this Transform transform)
         {
             return transform as RectTransform;

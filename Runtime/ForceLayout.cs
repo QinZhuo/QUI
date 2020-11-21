@@ -37,13 +37,17 @@ namespace QTool.UI
             return false;
         }
 
-        public static bool IsOutRange(this Vector2 rightUp,Vector2 leftDonw, RectTransform mask)
+        public static bool IsXOutRange(this Vector2 leftRight, RectTransform mask)
         {
-            if (leftDonw.x > mask.Right() || rightUp.x < mask.Left())
+            if (leftRight.x > mask.Right() || leftRight.y < mask.Left())
             {
                 return true;
             }
-            else if (rightUp.y< mask.Down() || leftDonw.y > mask.Up())
+            return false;
+        }
+        public static bool IsYOutRange(this Vector2 DonwUp, RectTransform mask)
+        {
+            if (DonwUp.x > mask.Right() || DonwUp.y < mask.Left())
             {
                 return true;
             }

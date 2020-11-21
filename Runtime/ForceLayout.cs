@@ -47,7 +47,7 @@ namespace QTool.UI
         }
         public static bool IsYOutRange(this Vector2 DonwUp, RectTransform mask)
         {
-            if (DonwUp.x > mask.Right() || DonwUp.y < mask.Left())
+            if (DonwUp.x > mask.Up() || DonwUp.y < mask.Down())
             {
                 return true;
             }

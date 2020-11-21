@@ -30,12 +30,13 @@ namespace QTool.UI
             {
                 return true;
             }
-            else if(transform.Up()<mask.Down()||transform.Down()>mask.up())
+            else if(transform.Up()<mask.Down()||transform.Down()>mask.Up())
             {
                 return true;
             }
             return false;
         }
+   
         public static RectTransform RectTransform(this Transform transform)
         {
             return transform as RectTransform;

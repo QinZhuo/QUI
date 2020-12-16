@@ -42,10 +42,9 @@ namespace QTool.UI
                     {
                         view = GetPool(index).Get();
                     }
-                  
-                    var sacle = view.transform.localScale;
+
                     view.transform.SetParent(transform);
-                    view.transform.localScale = sacle;
+                    view.transform.localScale = Vector3.one;
                     view.transform.localRotation = Quaternion.identity;
                     view.transform.SetAsLastSibling();
                     GetObjList(index).Add(view);

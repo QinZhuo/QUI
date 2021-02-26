@@ -113,7 +113,7 @@ namespace QTool.UI
             LeftRight,
             TextCount,
         }
-        public LerpDir lerpDir = LerpDir.TextCount;
+        public LerpDir lerpDir = LerpDir.LeftRight;
         [SerializeField]
         private Gradient _gradientColor = new Gradient();
         public Gradient GradientColor

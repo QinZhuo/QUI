@@ -21,15 +21,52 @@ namespace QTool.UI
             vertices.AddUIPoint(rect, v2, color);
             vertices.AddUIPoint(rect, v3, color);
         }
+        public static void DrawRectangle(this List<UIVertex> vertexs, Graphic graphic,Rect graphicRect,Rect drawRect)
+        {
+            var v1 = new Vector2(drawRect.xMin, drawRect.yMax);
+            var v2 = new Vector2(drawRect.xMax, drawRect.yMax);
+            var v3 = new Vector2(drawRect.xMax, drawRect.yMin);
+            var v4 = new Vector2(drawRect.xMin, drawRect.yMin);
+            vertexs.AddUIPoints(graphicRect, v1, v2, v3,graphic.color);
+            vertexs.AddUIPoints(graphicRect, v3, v4, v1, graphic.color);
+        }
+        public static void DrawCircle(this List<UIVertex> vertexs, Graphic graphic, Rect graphicRect, Rect drawRect, int smooth, float lineWidth, float angle = 360,float start = 0)
+        {
+            var startAngle = start / 360 * Mathf.PI * 2;
+            var endAngle =(start+ angle) / 360 * Mathf.PI * 2;
+            float unit = Mathf.PI * 2 / smooth;
+            float lineRate = lineWidth / drawRect.width;
+            for (float unitStartAngle = startAngle; unitStartAngle < endAngle; unitStartAngle+=unit)
+            {
+
+                var unitEndAngle = unitStartAngle + unit;
+                if (unitEndAngle > endAngle)
+                {
+                    unitEndAngle = endAngle;
+                }
+                var v1 = new Vector2(Mathf.Cos(unitStartAngle) * drawRect.width, Mathf.Sin(unitStartAngle) * drawRect.height) / 2;
+                var v2 = new Vector2(Mathf.Cos(unitEndAngle) * drawRect.width, Mathf.Sin(unitEndAngle) * drawRect.height) / 2;
+                if (lineWidth >= 0 && lineRate < 1)
+                {
+                    var v3 = v1 * (1 - lineRate / 1);
+                    var v4 = v2 * (1 - lineRate / 1);
+                    vertexs.AddUIPoints(graphicRect, v3 + drawRect.center, v2 + drawRect.center, v1 + drawRect.center, graphic.color);
+                    vertexs.AddUIPoints(graphicRect, v3 + drawRect.center, v4 + drawRect.center, v2 + drawRect.center, graphic.color);
+                }
+                else
+                {
+                    var v3 = new Vector2(0, 0);
+                    vertexs.AddUIPoints(graphicRect, v3 + drawRect.center, v2 + drawRect.center, v1 + drawRect.center, graphic.color);
+                }
+            }
+        }
     }
     public class QCircle : BaseMeshEffect
     {
-        [Range(0, 1)]
-        public float radius = 1;
-        [Range(3, 90)]
-        public int smooth = 30;
-        [Range(0, 1)]
-        public float lineWidth = 1;
+        [Range(3, 360)]
+        public int smooth = 36;
+        public float lineWidth = -1;
+        public float angle = 360;
         private List<UIVertex> Draw()
         {
             List<UIVertex> vertexs = new List<UIVertex>();
@@ -38,25 +75,7 @@ namespace QTool.UI
                 return vertexs;
             }
             var Rect = graphic.GetPixelAdjustedRect();
-            float unit = 3.14f * 2 / smooth;
-            for (int i = 0; i < smooth; i++)
-            {
-                var angle = unit * i;
-                var v1 = new Vector2(Mathf.Cos(angle) * Rect.width, Mathf.Sin(angle) * Rect.height) * radius / 2;
-                var v2 = new Vector2(Mathf.Cos(angle + unit) * Rect.width, Mathf.Sin(angle + unit) * Rect.height) * radius / 2;
-                if (lineWidth > 0 && lineWidth < radius)
-                {
-                    var v3 = v1 * (1 - lineWidth / radius);
-                    var v4 = v2 * (1 - lineWidth / radius);
-                    vertexs.AddUIPoints(Rect, v3, v2, v1, graphic.color);
-                    vertexs.AddUIPoints(Rect, v3, v4, v2, graphic.color);
-                }
-                else
-                {
-                    var v3 = new Vector2(0, 0);
-                    vertexs.AddUIPoints(Rect, v3, v2, v1, graphic.color);
-                }
-            }
+            vertexs.DrawCircle(graphic, Rect, Rect, smooth, lineWidth,angle);
             return vertexs;
         }
         public override void ModifyMesh(VertexHelper vh)

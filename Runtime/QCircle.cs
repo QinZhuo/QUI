@@ -61,27 +61,47 @@ namespace QTool.UI
             }
         }
     }
-    public class QCircle : BaseMeshEffect
+    [RequireComponent(typeof(Image))]
+    public class QCircle : QImageShapeEffect
     {
         [Range(3, 360)]
         public int smooth = 36;
         public float lineWidth = -1;
         public float angle = 360;
-        private List<UIVertex> Draw()
+        public override void FreshShape()
+        {
+            switch (modifyType)
+            {
+                case ModifyType.图片:
+                    {
+                        image.sprite = Resources.Load<Sprite>("QCircle512");
+                        image.type = Image.Type.Simple;
+                        image.SetVerticesDirty();
+                    }
+                    break;
+                case ModifyType.顶点:
+                    {
+                        if (image.sprite != null && image.sprite.name == "QCircle512")
+                        {
+                            image.sprite = null;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected override List<UIVertex> Draw()
         {
             List<UIVertex> vertexs = new List<UIVertex>();
-            if (smooth <3)
+            if (smooth < 3)
             {
                 return vertexs;
             }
             var Rect = graphic.GetPixelAdjustedRect();
-            vertexs.DrawCircle(graphic, Rect, Rect, smooth, lineWidth,angle);
+            vertexs.DrawCircle(graphic, Rect, Rect, smooth, lineWidth, angle);
             return vertexs;
-        }
-        public override void ModifyMesh(VertexHelper vh)
-        {
-            vh.Clear();
-            vh.AddUIVertexTriangleStream(Draw());
         }
     }
 }

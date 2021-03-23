@@ -11,8 +11,8 @@ namespace QTool.UI
         顶点,
     }
     [RequireComponent(typeof(Image))]
-    public class QRectangle : BaseMeshEffect
-    {
+    public abstract class QImageShapeEffect:BaseMeshEffect{
+        public ModifyType modifyType = ModifyType.图片;
         public Image image
         {
             get
@@ -20,19 +20,36 @@ namespace QTool.UI
                 return graphic as Image;
             }
         }
-        public ModifyType modifyType = ModifyType.图片;
+        protected override void Reset()
+        {
+            base.Reset();
+            FreshShape();
+        }
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            FreshShape();
+        }
+        public abstract void FreshShape();
+        protected abstract List<UIVertex> Draw();
+        public override void ModifyMesh(VertexHelper vh)
+        {
+            if (modifyType == ModifyType.顶点)
+            {
+                vh.Clear();
+                vh.AddUIVertexTriangleStream(Draw());
+            }
+        }
+    }
+ 
+    public class QRectangle : QImageShapeEffect
+    {
         [FormerlySerializedAs("circle")]
         public float radius = 10;
         [Range(3, 360)]
         public int smooth = 36;
         public float lineWidth = -1;
-        protected override void Reset()
-        {
-            base.Reset();
-
-            FreshCircle();
-        }
-        public void FreshCircle()
+        public override void FreshShape()
         {
             switch (modifyType)
             {
@@ -47,19 +64,17 @@ namespace QTool.UI
                     break;
                 case ModifyType.顶点:
                     {
-                       
+                       if(image.sprite!=null&&image.sprite.name== "QCircle512")
+                        {
+                            image.sprite = null;
+                        }
                     }
                     break;
                 default:
                     break;
             }
         }
-        protected override void OnValidate()
-        {
-            base.OnValidate();
-            FreshCircle();
-        }
-        private List<UIVertex> Draw()
+        protected override List<UIVertex> Draw()
         {
             List<UIVertex> vertexs = new List<UIVertex>();
             if (smooth < 3)
@@ -82,14 +97,7 @@ namespace QTool.UI
             vertexs.DrawRectangle(graphic, Rect, new Rect(Rect.xMax-radius, Rect.yMin + radius, radius, Rect.height - radius * 2));
             return vertexs;
         }
-        public override void ModifyMesh(VertexHelper vh)
-        {
-            if (modifyType == ModifyType.顶点)
-            {
-                vh.Clear();
-                vh.AddUIVertexTriangleStream(Draw());
-            }
-        }
+        
     }
 }
    

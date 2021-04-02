@@ -58,7 +58,7 @@ namespace QTool.UI
             var dis = distance == 0 ? 0 : distance / 360 * Mathf.PI * 2;
             for (int i = 0; i < rectChildren.Count; i++)
             {
-                var angle = start + (reverse ? 1 : -1) * i * dis;
+                var angle = start + (reverse ? -1 : 1) * i * dis;
                 var pos= new Vector2(Mathf.Cos(angle) * Size.x, Mathf.Sin(angle) * Size.y) / 2 - rectChildren[i].sizeDelta / 2;
                 childPositions[i] = Center + pos;
                 if (rotate)

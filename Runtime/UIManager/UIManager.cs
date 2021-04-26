@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using QTool;
-using QTool.Tween;
 using UnityEngine.Serialization;
 using QTool.Resource;
+#if QTween
+using QTool.Tween;
+#endif
 namespace QTool.UI.Manager
 {
     public class UIPanel : PrefabResourceList<UIPanel>
@@ -117,6 +119,7 @@ namespace QTool.UI.Manager
         {
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
+ #if QTween
             showAnim?.Anim.OnStart(() =>
             {
                 if (IsShow)
@@ -138,6 +141,7 @@ namespace QTool.UI.Manager
                     FreshGroup();
                 }
             });
+#endif
             Init();
         }
         protected virtual void Init()
@@ -150,29 +154,40 @@ namespace QTool.UI.Manager
         }
         public string ParentPanel = "";
         public CanvasGroup group;
+#if QTween
         public QTweenBehavior showAnim;
+#endif
+
         public ActionEvent OnShowAction;
         public ActionEvent OnHideAction;
         public void RunAnim()
         {
             if (IsShow)
             {
+#if QTween
                 if (showAnim != null)
                 {
                     showAnim.Show();
                 }
                 else
+#else
+                FreshGroup();
+#endif
                 {
                     OnShow();
                 }
             }
             else
             {
+#if QTween
                 if (showAnim != null)
                 {
                     showAnim.Hide();
                 }
                 else
+#else
+                FreshGroup();
+#endif
                 {
                     OnHide();
                 }

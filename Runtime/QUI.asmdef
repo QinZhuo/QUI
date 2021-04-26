@@ -1,7 +1,9 @@
 {
     "name": "QUI",
+    "rootNamespace": "",
     "references": [
-        "GUID:8c4295a259d9a934784fb95a11fa9e58"
+        "GUID:8c4295a259d9a934784fb95a11fa9e58",
+        "GUID:24a932a217b594b47a735a1f916a201a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,6 +12,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.qtool.tween",
+            "expression": "",
+            "define": "QTween"
+        }
+    ],
     "noEngineReferences": false
 }

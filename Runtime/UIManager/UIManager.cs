@@ -289,11 +289,8 @@ namespace QTool.UI
         }
         public void Hide()
         {
-            if (IsShow)
-            {
-                IsShow = false;
-                RunAnim();
-            }
+            IsShow = false;
+            RunAnim();
         }
         public virtual void Fresh() { }
     }
@@ -329,7 +326,7 @@ namespace QTool.UI
         }
         protected override void OnShow()
         {
-            if (IsShow) return;
+          
             ShowBack();
             base.OnShow();
             if (timeScale >= 0)
@@ -339,7 +336,7 @@ namespace QTool.UI
             UIManager.Push(this);
         }
         protected override void OnHide()
-        {
+        {;
             base.OnHide();
             TimeManager.RevertScale(gameObject);
             UIManager.Remove(this);

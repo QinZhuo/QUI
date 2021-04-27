@@ -130,6 +130,10 @@ namespace QTool.UI
                 }
             }
         }
+        protected virtual void OnLevelWasLoaded(int level)
+        {
+            Hide();
+        }
         protected override void Awake()
         {
             base.Awake();
@@ -157,10 +161,6 @@ namespace QTool.UI
                 }
             });
 #endif
-            Init();
-        }
-        protected virtual void Init()
-        {
             Show();
         }
         protected virtual void Reset()

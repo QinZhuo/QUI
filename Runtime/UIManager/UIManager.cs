@@ -99,7 +99,7 @@ namespace QTool.UI.Manager
         RectTransform rectTransform { get; }
     }
     [RequireComponent(typeof(CanvasGroup))]
-    public abstract class PanelView<T> : InstanceBehaviour<T, UIPanel>, IUIPanel where T : PanelView<T>
+    public abstract class UIPanel<T> : InstanceBehaviour<T, UIPanel>, IUIPanel where T : UIPanel<T>
     {
         public static bool PanelIsShow
         {
@@ -282,7 +282,7 @@ namespace QTool.UI.Manager
         }
         public abstract void Fresh();
     }
-    public abstract class WindowPanelView<T> : PanelView<T> where T : WindowPanelView<T>
+    public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
     {
         public float timeScale = -1;
         [FormerlySerializedAs("backView")]

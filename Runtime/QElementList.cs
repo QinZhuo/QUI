@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace QTool.UI
 {
-    public class LayoutViewContent : ForceLayout
+    public class QElementList : QForceLayout
     {
 
         public QTool.ObjectPool<GameObject> GetPool(int index)

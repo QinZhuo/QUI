@@ -75,7 +75,7 @@ namespace QTool.UI
             return rectTransform.transform.position.x + rectTransform.UpRightRectOffset().x;
         }
     }
-    public class ForceLayout : MonoBehaviour
+    public class QForceLayout : MonoBehaviour
     {
         [System.Serializable]
         public class ActionEvent : UnityEvent

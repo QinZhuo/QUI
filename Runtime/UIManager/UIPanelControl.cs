@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace QTool.UI.Manager
+namespace QTool.UI
 {
     public class UIPanelControl : MonoBehaviour
     {

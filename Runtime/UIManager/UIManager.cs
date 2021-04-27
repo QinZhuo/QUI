@@ -8,7 +8,7 @@ using QTool.Resource;
 #if QTween
 using QTool.Tween;
 #endif
-namespace QTool.UI.Manager
+namespace QTool.UI
 {
     public class UIPanel : PrefabResourceList<UIPanel>
     {

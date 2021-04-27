@@ -280,7 +280,7 @@ namespace QTool.UI
                 RunAnim();
             }
         }
-        public abstract void Fresh();
+        public virtual void Fresh() { }
     }
     public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
     {

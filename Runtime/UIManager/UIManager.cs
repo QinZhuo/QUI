@@ -48,7 +48,7 @@ namespace QTool.UI
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList.ContainsKey(key)) return PanelList[key];
 
-            if (!UIPanel.LabelLoadOver)
+            if (!UIPanel.LoadOver())
             {
                 Debug.LogError("UIPnael资源还未加载无法获取父页面[" + key + "]");
                 return null;

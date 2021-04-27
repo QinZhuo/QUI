@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b85c2a9fc55714883f152debb43ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentPanel: TestCanvas
+  ParentPanel: TestCanvas.Front.Test
   group: {fileID: 1648352842163412403}
   showAnim: {fileID: 6049403496481952236}
   OnShowAction:

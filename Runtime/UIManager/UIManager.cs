@@ -53,7 +53,18 @@ namespace QTool.UI
                 Debug.LogError("UIPnael资源还未加载无法获取父页面[" + key + "]");
                 return null;
             }
-            if (!PanelList.ContainsKey(key))
+            if (key.Contains("."))
+            {
+                var keys = key.Split('.');
+                var index = 0;
+                Transform parent = Get(keys[index]);
+                for (index = 1; index < keys.Length - 1; index++)
+                {
+                    parent = parent.Find(keys[index]) ;
+                }
+                PanelList[key] = parent.Find(keys[index]) as RectTransform;
+            }
+            else if (!PanelList.ContainsKey(key))
             {
                 var obj = UIPanel.GetInstance(key);
                 if (obj.transform.parent == null)
@@ -61,6 +72,10 @@ namespace QTool.UI
                     GameObject.DontDestroyOnLoad(obj);
                 }
                 ResisterPanel(key, obj.GetComponent<RectTransform>());
+            }
+            else
+            {
+                Debug.LogError("找不到【" + key + "】UI页面");
             }
             return PanelList[key];
         }

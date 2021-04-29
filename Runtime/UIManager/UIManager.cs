@@ -111,6 +111,7 @@ namespace QTool.UI
     {
         void Show();
         void Hide();
+        void ResetUI();
         RectTransform rectTransform { get; }
     }
     [RequireComponent(typeof(CanvasGroup))]
@@ -130,14 +131,21 @@ namespace QTool.UI
                 }
             }
         }
-       
+        public bool showOnStart=true;
         protected virtual void OnLevelWasLoaded(int level)
         {
             ResetUI();
         }
-        private void ResetUI()
+        public void ResetUI()
         {
-            Hide();
+            if (showOnStart)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
 #if QTween
             showAnim?.Anim.Complete();
 #endif
@@ -305,6 +313,11 @@ namespace QTool.UI
     }
     public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
     {
+        protected override void Reset()
+        {
+            base.Reset();
+            showOnStart = false;
+        }
         public float timeScale = -1;
         [FormerlySerializedAs("backView")]
         public string backPanel = "";

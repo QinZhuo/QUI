@@ -15,7 +15,7 @@ namespace QTool.UI
     }
     public static class UIManager
     {
-        static QDcitionary<string, RectTransform> PanelList = new QDcitionary<string, RectTransform>();
+        static QDictionary<string, RectTransform> PanelList = new QDictionary<string, RectTransform>();
 
         public static void ResisterPanel(string key, RectTransform panel, string parentKey = "")
         {

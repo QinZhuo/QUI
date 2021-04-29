@@ -13,7 +13,8 @@ namespace QTool.UI
             {
                 foreach (var item in PanelList)
                 {
-                    UIManager.Get(item);
+                    var ui= UIManager.Get(item).GetComponent<IUIPanel>();
+                    ui?.Show();
                 }
             });
         }

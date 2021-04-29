@@ -111,6 +111,7 @@ namespace QTool.UI
     {
         void Show();
         void Hide();
+        void UIReset();
         RectTransform rectTransform { get; }
     }
     [RequireComponent(typeof(CanvasGroup))]
@@ -130,9 +131,22 @@ namespace QTool.UI
                 }
             }
         }
+        public bool showOnStart=true;
         protected virtual void OnLevelWasLoaded(int level)
         {
-            Hide();
+            UIReset();
+        }
+        public virtual void UIReset()
+        {
+            if (showOnStart)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+            showAnim?.Anim.Complete();
         }
         protected override void Awake()
         {
@@ -287,6 +301,7 @@ namespace QTool.UI
             IsShow = true;
             RunAnim();
         }
+       
         public void Hide()
         {
             IsShow = false;

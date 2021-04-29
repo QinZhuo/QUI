@@ -111,7 +111,6 @@ namespace QTool.UI
     {
         void Show();
         void Hide();
-        void UIReset();
         RectTransform rectTransform { get; }
     }
     [RequireComponent(typeof(CanvasGroup))]
@@ -131,22 +130,17 @@ namespace QTool.UI
                 }
             }
         }
-        public bool showOnStart=true;
+       
         protected virtual void OnLevelWasLoaded(int level)
         {
-            UIReset();
+            ResetUI();
         }
-        public virtual void UIReset()
+        private void ResetUI()
         {
-            if (showOnStart)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
+            Hide();
+#if QTween
             showAnim?.Anim.Complete();
+#endif
         }
         protected override void Awake()
         {
@@ -175,7 +169,7 @@ namespace QTool.UI
                 }
             });
 #endif
-            Show();
+            ResetUI();
         }
         protected virtual void Reset()
         {

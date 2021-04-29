@@ -12,31 +12,20 @@ namespace QTool.UI
     [ExecuteAlways]
     public class QMaskTarget : UIBehaviour, IMaterialModifier,ICanvasElement, IMeshModifier
     {
-        public RenderTexture renderTexture;
-        CommandBuffer _buffer;
-        public CommandBuffer buffer
-        {
-            get
-            {
-                if (_buffer == null)
-                {
-                    _buffer = new CommandBuffer { name = "MaskBuffer" };
-                    var p = GL.GetGPUProjectionMatrix(Camera.main.projectionMatrix, false);
-                    _buffer.SetViewProjectionMatrices(Camera.main.worldToCameraMatrix, p);
-                }
-                return _buffer ;
-            }
-        }
         RectTransform _rectTransform;
         public RectTransform rectTransform => _rectTransform ?? (_rectTransform = GetComponent<RectTransform>());
-        public RectTransform mask;
+        public QMask mask;
         Material _mat;
         public Material GetModifiedMaterial(Material baseMaterial)
         {
             return _mat ?? (_mat = new Material(Shader.Find("QUI/QMask")));
         }
 
-      
+        protected override void Reset()
+        {
+            base.Reset();
+            mask = GetComponentInParent<QMask>();
+        }
         protected override void Awake()
         {
             base.Awake();
@@ -63,23 +52,19 @@ namespace QTool.UI
         }
         private void Fresh()
         {
-           // Debug.LogError(transform.RectTransform().Center());
-            var offset = (transform.RectTransform().Center()-mask.RectTransform().Center()  );
+            if (mask == null)
+            {
+                mask = GetComponentInParent<QMask>();
+            }
+            // Debug.LogError(transform.RectTransform().Center());
+          
+             var tilling = rectTransform.rect.size.Div(mask.rectTransform.rect.size);
+            var offset = (rectTransform.Center() - mask.rectTransform.Center()).Mult(tilling)-(rectTransform.rect.size+mask.rectTransform.rect.size)/2;
             //Debug.LogError(offset);
             //  Debug.LogError(GetComponent<Graphic>().materialForRendering.shader.name);
-            GetComponent<Graphic>().materialForRendering.SetVector("_MaskOffset", new Vector4(offset.x/rectTransform.Width(), offset.y/rectTransform.Height()));
-            //   Debug.LogError("Fresh");
-         
-            buffer.Clear();
-            buffer.SetRenderTarget(renderTexture);
-            buffer.ClearRenderTarget(true, true, Color.clear);
-            var image = GetComponent<Image>();
-            //  buffer.ClearRenderTarget(true, true, clearColor);
-          //  if (Mesh.vertices.Length > 0)
-            {
-
-                buffer.DrawMesh(Mesh, transform.localToWorldMatrix, image.materialForRendering);
-            }
+            _mat.SetTexture("_Mask", mask.graphic.mainTexture);
+            _mat.SetVector("_MaskTillingOffset", new Vector4(tilling.x, tilling.y, offset.x/rectTransform.Width(), offset.y/rectTransform.Height()));
+           
         }
 
 

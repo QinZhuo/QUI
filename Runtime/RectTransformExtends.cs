@@ -56,13 +56,17 @@ namespace QTool.UI
         {
             return transform as RectTransform;
         }
-        public static Vector2 MultMerge(this Vector2 a,Vector2 b)
+        public static Vector2 Mult(this Vector2 a,Vector2 b)
         {
             return new Vector2(a.x * b.x, a.y * b.y);
         }
+        public static Vector2 Div(this Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x / b.x, a.y / b.y);
+        }
         public static Vector2 Center(this RectTransform rectTransform)
         {
-            return rectTransform.anchoredPosition+ MultMerge(rectTransform.rect.size,Vector2.one*0.5f- rectTransform.pivot);
+            return rectTransform.anchoredPosition+ Mult(rectTransform.rect.size,Vector2.one*0.5f- rectTransform.pivot);
         }
         public static float Up(this RectTransform rectTransform)
         {

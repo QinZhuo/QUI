@@ -28,15 +28,15 @@ namespace QTool.UI
         }
         public static float ScaleHeight(this RectTransform rectTransform)
         {
-            return rectTransform.rect.size.y*rectTransform.localScale.y;
+            return rectTransform.rect.size.y*rectTransform.lossyScale.y;
         }
         public static float ScaleWidth(this RectTransform rectTransform)
         {
-            return rectTransform.rect.size.x * rectTransform.localScale.x;
+            return rectTransform.rect.size.x * rectTransform.lossyScale.x;
         }
         public static Vector2 ScaleSize(this RectTransform rectTransform)
         {
-            return rectTransform.rect.size.Mult(rectTransform.localScale);
+            return rectTransform.rect.size.Mult(rectTransform.lossyScale);
         }
         public static bool IsOutRange(this RectTransform transform, RectTransform mask)
         {
@@ -82,7 +82,7 @@ namespace QTool.UI
         }
         public static Vector2 Center(this RectTransform rectTransform)
         {
-            return new Vector2( rectTransform.position.x,rectTransform.position.y)+ Mult(rectTransform.rect.size,Vector2.one*0.5f- rectTransform.pivot);
+            return new Vector2( rectTransform.position.x,rectTransform.position.y)+ Mult(rectTransform.ScaleSize(),Vector2.one*0.5f- rectTransform.pivot);
         }
         public static float Up(this RectTransform rectTransform)
         {

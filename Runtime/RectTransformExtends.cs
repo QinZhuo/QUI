@@ -66,7 +66,7 @@ namespace QTool.UI
         }
         public static Vector2 Center(this RectTransform rectTransform)
         {
-            return rectTransform.anchoredPosition+ Mult(rectTransform.rect.size,Vector2.one*0.5f- rectTransform.pivot);
+            return new Vector2( rectTransform.position.x,rectTransform.position.y)+ Mult(rectTransform.rect.size,Vector2.one*0.5f- rectTransform.pivot);
         }
         public static float Up(this RectTransform rectTransform)
         {

@@ -22,6 +22,22 @@ namespace QTool.UI
         {
             return rectTransform.rect.size.x;
         }
+        public static Vector2 Size(this RectTransform rectTransform)
+        {
+            return rectTransform.rect.size;
+        }
+        public static float ScaleHeight(this RectTransform rectTransform)
+        {
+            return rectTransform.rect.size.y*rectTransform.localScale.y;
+        }
+        public static float ScaleWidth(this RectTransform rectTransform)
+        {
+            return rectTransform.rect.size.x * rectTransform.localScale.x;
+        }
+        public static Vector2 ScaleSize(this RectTransform rectTransform)
+        {
+            return rectTransform.rect.size.Mult(rectTransform.localScale);
+        }
         public static bool IsOutRange(this RectTransform transform, RectTransform mask)
         {
             if (transform.Left() > mask.Right() || transform.Right() < mask.Left())

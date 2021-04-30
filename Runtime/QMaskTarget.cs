@@ -90,10 +90,10 @@ namespace QTool.UI
                 mask = GetComponentInParent<QMask>();
             }
 
-            var tilling =  rectTransform.rect.size.Div(mask.rectTransform.rect.size);
+            var tilling =  rectTransform.ScaleSize().Div(mask.rectTransform.ScaleSize());
             var offset = (rectTransform.Center() - mask.rectTransform.Center()).Mult(tilling);
-            offset -= (rectTransform.rect.size).Mult((tilling-Vector2.one)/2);
-            offset = offset.Div(rectTransform.rect.size);
+            offset -= (rectTransform.ScaleSize()).Mult((tilling-Vector2.one)/2);
+            offset = offset.Div(rectTransform.ScaleSize());
             Mat.SetTexture("_Mask", mask.graphic.mainTexture);
             Mat.SetVector("_MaskTillingOffset", new Vector4(tilling.x, tilling.y, offset.x, offset.y));
             Mat.SetFloat("_Reverse", mask.Reverse?1:0);

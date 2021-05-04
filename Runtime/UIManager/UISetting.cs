@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace QTool.UI
 {
-    public class UISetting:MonoBehaviour
+    public class UISetting:InstanceBehaviour<UISetting>
     {
         public List<string> PanelList;
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             UIPanel.LoadOverRun(() =>
             {
                 foreach (var item in PanelList)

@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+namespace QTool.UI
+{
+    [ExecuteAlways]
+    public class QShaderUI : MonoBehaviour
+    {
+        //public class MatFloatValue : IKey<string>
+        //{
+        //    public string Key { get=> name; set { } }
+        //    public string name;
+        //    public float value;
+        //}
+        public RectTransform rectTransform
+        {
+            get
+            {
+                return transform as RectTransform;
+            }
+        }
+        private RectTransform _rectTransform;
+        public Material material
+        {
+            get
+            {
+                if (_material == null)
+                {
+                    _material = GetComponent<Graphic>().material;
+                }
+                return _material;
+            }
+        }
+        private Material _material;
+
+        public bool UpdateSize = true;
+        public string UISizeName = "_UISize";
+        public bool RuntimeUpdate = false;
+        //    [ExecuteAlways]
+        private void Update()
+        {
+            Debug.LogError("update");
+            if (!Application.isPlaying || RuntimeUpdate)
+            {
+                if (UpdateSize)
+                {
+                    material.SetVector(UISizeName, new Vector4(rectTransform.rect.size.x, rectTransform.rect.size.y));
+                }
+            }
+        }
+    }
+}

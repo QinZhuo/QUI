@@ -341,7 +341,7 @@ namespace QTool.UI
         }
         protected virtual void FreshWindow(IUIPanel window)
         {
-            group.interactable = window.Equals(this);
+            group.interactable = this.Equals( window);
         }
         protected override void Awake()
         {

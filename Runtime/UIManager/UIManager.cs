@@ -99,11 +99,14 @@ namespace QTool.UI
                 windowStack.Remove(window);
             }
             windowStack.Push(window);
+            WindowChange?.Invoke(windowStack.StackPeek());
         }
+        public static event System.Action<IUIPanel> WindowChange;
         public static void Remove(IUIPanel window)
         {
-            if (windowStack.Count == 0) return;
+            if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);
+            WindowChange?.Invoke(windowStack.StackPeek());
         }
     }
 
@@ -151,8 +154,13 @@ namespace QTool.UI
             showAnim?.Anim.Complete();
 #endif
         }
+        protected virtual void FreshWindow(IUIPanel window)
+        {
+            group.interactable = window.Equals(this);
+        }
         protected override void Awake()
         {
+            UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
  #if QTween
@@ -179,6 +187,10 @@ namespace QTool.UI
             });
 #endif
             ResetUI();
+        }
+        private void OnDestroy()
+        {
+            UIManager.WindowChange -= FreshWindow;
         }
         protected virtual void Reset()
         {
@@ -242,25 +254,7 @@ namespace QTool.UI
         {
             if (group != null)
             {
-                group.interactable = IsShow;
-            }
-        }
-        public bool Focus
-        {
-            get
-            {
-                if (group != null)
-                {
-                    return group.interactable;
-                }
-                return true;
-            }
-            set
-            {
-                if (group != null)
-                {
-                    group.interactable = value;
-                }
+                group.blocksRaycasts = IsShow;
             }
         }
         protected virtual void OnShow()
@@ -330,7 +324,7 @@ namespace QTool.UI
         public string backPanel = "";
 
         IUIPanel _backUI;
-        IUIPanel BackUI
+        protected IUIPanel BackUI
         {
             get
             {
@@ -342,7 +336,7 @@ namespace QTool.UI
                 return _backUI;
             }
         }
-        public void ShowBack()
+        protected virtual void ShowBack()
         {
             if (BackUI != null)
             {
@@ -352,6 +346,10 @@ namespace QTool.UI
                 }
                 BackUI.Show();
             }
+        }
+        protected virtual void HideBack()
+        {
+            BackUI?.Hide();
         }
         protected override void OnShow()
         {
@@ -369,7 +367,7 @@ namespace QTool.UI
             base.OnHide();
             TimeManager.RevertScale(gameObject);
             UIManager.Remove(this);
-            BackUI?.Hide();
+            HideBack();
         }
     }
 

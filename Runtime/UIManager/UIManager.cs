@@ -341,7 +341,7 @@ namespace QTool.UI
         }
         protected virtual void FreshWindow(IUIPanel window)
         {
-            group.interactable = this.Equals( window);
+            group.interactable = this.Equals( window)||transform.HasParentIs(window.rectTransform);
         }
         protected override void Awake()
         {

@@ -5,9 +5,6 @@ namespace QTool.UI
 {
     public class NormalPanel : UIPanel<NormalPanel>
     {
-        public override void Fresh()
-        {
-        }
     }
 }
 

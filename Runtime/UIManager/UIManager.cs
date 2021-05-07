@@ -154,13 +154,9 @@ namespace QTool.UI
             showAnim?.Anim.Complete();
 #endif
         }
-        protected virtual void FreshWindow(IUIPanel window)
-        {
-            group.interactable = window.Equals(this);
-        }
+      
         protected override void Awake()
         {
-            UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
  #if QTween
@@ -187,10 +183,6 @@ namespace QTool.UI
             });
 #endif
             ResetUI();
-        }
-        private void OnDestroy()
-        {
-            UIManager.WindowChange -= FreshWindow;
         }
         protected virtual void Reset()
         {
@@ -346,6 +338,21 @@ namespace QTool.UI
                 }
                 BackUI.Show();
             }
+        }
+        protected virtual void FreshWindow(IUIPanel window)
+        {
+            group.interactable = window.Equals(this);
+        }
+        protected override void Awake()
+        {
+
+            UIManager.WindowChange += FreshWindow;
+            base.Awake();
+        }
+
+        private void OnDestroy()
+        {
+            UIManager.WindowChange -= FreshWindow;
         }
         protected virtual void HideBack()
         {

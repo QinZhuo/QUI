@@ -131,6 +131,7 @@ namespace QTool.UI
                 }
             }
         }
+        public bool controlActive = true;
         public bool showOnStart=true;
         protected virtual void OnLevelWasLoaded(int level)
         {
@@ -266,13 +267,19 @@ namespace QTool.UI
         {
             transform.SetAsLastSibling();
             Fresh();
-            gameObject.SetActive(IsShow);
+            if (controlActive)
+            {
+                gameObject.SetActive(IsShow);
+            }
             OnShowAction?.Invoke();
 
         }
         protected virtual void OnHide()
         {
-            gameObject.SetActive(IsShow);
+            if (controlActive)
+            {
+                gameObject.SetActive(IsShow);
+            }
             OnHideAction?.Invoke();
         }
      

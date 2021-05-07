@@ -96,6 +96,21 @@ namespace QTool.UI
         {
             return rectTransform.transform.position.x - rectTransform.DownLeftRectOffset().x;
         }
+        public static bool HasParentIs(this Transform transform,Transform target)
+        {
+            if (transform.parent == null)
+            {
+                return false;
+            }
+            else if (transform.parent == target)
+            {
+                return true;
+            }
+            else
+            {
+                return transform.parent.HasParentIs(target);
+            }
+        }
         public static float Right(this RectTransform rectTransform)
         {
             return rectTransform.transform.position.x + rectTransform.UpRightRectOffset().x;

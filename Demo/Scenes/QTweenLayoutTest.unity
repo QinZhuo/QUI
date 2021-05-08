@@ -882,10 +882,10 @@ MonoBehaviour:
   tweenList:
   - name: Image.0 => 1
     qTween: {fileID: 1689863683}
-    type: 2
+    type: 1
   - name: "Image.\u52A8\u753B\u5217\u8868[0]0"
     qTween: {fileID: 1689863679}
-    type: 2
+    type: 1
 --- !u!114 &1689863683
 MonoBehaviour:
   m_ObjectHideFlags: 0

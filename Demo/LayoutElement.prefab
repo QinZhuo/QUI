@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202baf7b91b533540b266841d5649be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curTime: 0
   OnShow:
     m_PersistentCalls:
       m_Calls: []
@@ -96,6 +97,6 @@ MonoBehaviour:
       m_Calls: []
   curve: 5
   animTime: 0.2
-  hideTime: 0.2
+  hideTimeScale: 2
   StartValue: {x: 0, y: 0}
   EndValue: {x: 1, y: 1}

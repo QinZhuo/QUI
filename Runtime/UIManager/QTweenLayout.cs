@@ -23,6 +23,7 @@ namespace QTool.Tween.Component
                 if (view != null)
                 {
                     var node = new QTweenlistNode(view.GetComponent<QTweenBehavior>()) { type = listType };
+
                     node.FreshName();
                     tweenList.Add(node);
                     ClearAnim();

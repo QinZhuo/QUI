@@ -810,6 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f98ca1e89b47c4eb49973b05e0b09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curTime: 0
   OnShow:
     m_PersistentCalls:
       m_Calls: []
@@ -873,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d83c75b851ac2040ab3763939459e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curTime: 0
   OnShow:
     m_PersistentCalls:
       m_Calls: []
@@ -882,10 +884,10 @@ MonoBehaviour:
   tweenList:
   - name: Image.0 => 1
     qTween: {fileID: 1689863683}
-    type: 1
+    type: 2
   - name: "Image.\u52A8\u753B\u5217\u8868[0]0"
     qTween: {fileID: 1689863679}
-    type: 1
+    type: 2
 --- !u!114 &1689863683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,6 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f79fe8b7559674d9321eaeb77e5b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curTime: 0
   OnShow:
     m_PersistentCalls:
       m_Calls: []
@@ -906,7 +909,7 @@ MonoBehaviour:
       m_Calls: []
   curve: 5
   animTime: 0.4
-  hideTime: 0.4
+  hideTimeScale: 2
   StartValue: 0
   EndValue: 1
   group: {fileID: 1689863684}

@@ -37,10 +37,8 @@ namespace QTool.UI
         public bool UpdateSize = true;
         public string UISizeName = "_UISize";
         public bool RuntimeUpdate = false;
-        //    [ExecuteAlways]
         private void Update()
         {
-            Debug.LogError("update");
             if (!Application.isPlaying || RuntimeUpdate)
             {
                 if (UpdateSize)

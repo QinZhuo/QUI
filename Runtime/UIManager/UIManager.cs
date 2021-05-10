@@ -148,7 +148,10 @@ namespace QTool.UI
             //}
             //else
             //{
+            if (!gameObject.activeSelf || group.alpha <= 0.1f)
+            {
                 Hide();
+            }
             //}
 #if QTween
             showAnim?.Anim.Complete();

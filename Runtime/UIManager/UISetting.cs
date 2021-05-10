@@ -6,25 +6,15 @@ namespace QTool.UI
 {
     public class UISetting:InstanceBehaviour<UISetting>
     {
-        [System.Serializable]
-        public class UIInitSetting
-        {
-            public string uiKey;
-            public bool show = false;
-        }
-        public List<UIInitSetting> UIList;
+        public List<string> PanelList;
         protected override void Awake()
         {
             base.Awake();
             UIPanel.LoadOverRun(() =>
             {
-                foreach (var item in UIList)
+                foreach (var item in PanelList)
                 {
-                    var ui = UIManager.GetUI(item.uiKey);
-                    if (ui != null && item.show)
-                    {
-                        ui.Show();
-                    }
+                    var ui= UIManager.Get(item);
                 }
             });
         }

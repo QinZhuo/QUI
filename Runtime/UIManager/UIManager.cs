@@ -135,24 +135,21 @@ namespace QTool.UI
             }
         }
         public bool controlActive = true;
-      //  public bool showOnStart=true;
+        public bool showOnStart=true;
         protected virtual void OnLevelWasLoaded(int level)
         {
             ResetUI();
         }
         public void ResetUI()
         {
-            //if (showOnStart)
-            //{
-            //    Show();
-            //}
-            //else
-            //{
-            if (!gameObject.activeSelf || !group.blocksRaycasts )
+            if (showOnStart)
+            {
+                Show();
+            }
+            else
             {
                 Hide();
             }
-            //}
 #if QTween
             showAnim?.Anim.Complete();
 #endif
@@ -309,11 +306,11 @@ namespace QTool.UI
     }
     public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
     {
-        //protected override void Reset()
-        //{
-        //    base.Reset();
-        //    showOnStart = false;
-        //}
+        protected override void Reset()
+        {
+            base.Reset();
+            showOnStart = false;
+        }
         public float timeScale = -1;
         [FormerlySerializedAs("backView")]
         public string backPanel = "";

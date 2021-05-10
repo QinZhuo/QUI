@@ -232,9 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043fedb76e2e1e14681be7ea4be03f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIList:
-  - uiKey: TestButton
-    show: 1
+  PanelList:
+  - TestButton
 --- !u!1 &1596283946
 GameObject:
   m_ObjectHideFlags: 0

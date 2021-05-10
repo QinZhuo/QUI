@@ -148,7 +148,7 @@ namespace QTool.UI
             //}
             //else
             //{
-            if (!gameObject.activeSelf || group.alpha <= 0.1f)
+            if (!gameObject.activeSelf || !group.blocksRaycasts )
             {
                 Hide();
             }

@@ -115,6 +115,7 @@ namespace QTool.UI
         void Show();
         void Hide();
         void ResetUI();
+        bool IsShow { get; }
         RectTransform rectTransform { get; }
     }
     [RequireComponent(typeof(CanvasGroup))]

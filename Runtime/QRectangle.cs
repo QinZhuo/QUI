@@ -20,6 +20,7 @@ namespace QTool.UI
                 return graphic as Image;
             }
         }
+# if UNITY_EDITOR
         protected override void Reset()
         {
             base.Reset();
@@ -30,6 +31,8 @@ namespace QTool.UI
             base.OnValidate();
             FreshShape();
         }
+#endif
+
         public abstract void FreshShape();
         protected abstract List<UIVertex> Draw();
         public override void ModifyMesh(VertexHelper vh)

@@ -42,11 +42,13 @@ namespace QTool.UI
                 return _graphic ?? (_graphic = GetComponent<Graphic>());
             }
         }
+#if UNITY_EDITOR
         protected override void Reset()
         {
             base.Reset();
             mask = GetComponentInParent<QMask>();
         }
+# endif
         protected override void Awake()
         {
             base.Awake();

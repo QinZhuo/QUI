@@ -22,11 +22,12 @@ namespace QTool.UI
         RectTransform _rectTransform;
         public RectTransform rectTransform => _rectTransform ?? (_rectTransform = GetComponent<RectTransform>());
         public QMask mask;
+        public Shader maskShader ;
         Material Mat
         {
             get
             {
-                return _mat ?? (_mat = new Material(Shader.Find("QUI/QMaskUI")));
+                return _mat ?? (_mat = new Material(maskShader));
             }
         }
         Material _mat;
@@ -47,11 +48,19 @@ namespace QTool.UI
         {
             base.Reset();
             mask = GetComponentInParent<QMask>();
+            if (maskShader == null)
+            {
+                maskShader = Shader.Find("QUI/QMaskUI");
+            }
         }
 # endif
         protected override void Awake()
         {
             base.Awake();
+            if (maskShader == null)
+            {
+                maskShader = Shader.Find("QUI/QMaskUI");
+            }
             CanvasUpdateRegistry.RegisterCanvasElementForGraphicRebuild(this);
         }
         protected override void OnEnable()

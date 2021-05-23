@@ -47,7 +47,7 @@ namespace QTool.UI {
         }
 
         [SerializeField]
-        private bool m_ShowMaskGraphic = true;
+        private bool m_ShowMaskGraphic = false;
 
         /// <summary>
         /// Show the graphic that is associated with the Mask render area.

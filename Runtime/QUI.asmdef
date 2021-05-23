@@ -17,6 +17,11 @@
             "name": "com.qtool.tween",
             "expression": "",
             "define": "QTween"
+        },
+        {
+            "name": "com.qtool.qtool",
+            "expression": "",
+            "define": "QTool"
         }
     ],
     "noEngineReferences": false

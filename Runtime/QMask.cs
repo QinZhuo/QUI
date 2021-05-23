@@ -114,11 +114,6 @@ namespace QTool.UI {
                 }
                 Add(target);
             }
-            //for (int i = 0; i < MaskRoot.childCount; i++)
-            //{
-            //    var child = MaskRoot.GetChild(i);
-              
-            //}
         }
         public void Clear()
         {
@@ -171,10 +166,6 @@ namespace QTool.UI {
                 return;
             graphic.enabled = m_ShowMaskGraphic;
         }
-
 #endif
-
-
-
     }
 }

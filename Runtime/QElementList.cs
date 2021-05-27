@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace QTool.UI
 {
-    public class QElementList : QForceLayout
+    public class QElementList : MonoBehaviour
     {
 
         public QTool.ObjectPool<GameObject> GetPool(int index)
@@ -51,7 +51,7 @@ namespace QTool.UI
                     view.name = name;
                     _count++;
                      OnCreate?.Invoke(view);
-                    Layout();
+                  //  Layout();
                 }
                 return view;
             }
@@ -68,7 +68,7 @@ namespace QTool.UI
                 }
             }
             OnClear?.Invoke();
-            Layout();
+          //  Layout();
         }
         private int _count = 0;
         public int Count

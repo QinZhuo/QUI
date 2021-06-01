@@ -160,6 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b85c2a9fc55714883f152debb43ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlActive: 1
+  showOnStart: 1
   ParentPanel: TestCanvas.Back
   group: {fileID: 7591923041071275064}
   showAnim: {fileID: 0}

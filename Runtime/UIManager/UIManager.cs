@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using QTool;
 using UnityEngine.Serialization;
 using QTool.Resource;
+using QTool.Inspector;
 #if QTween
 using QTool.Tween;
 #endif
@@ -135,8 +136,10 @@ namespace QTool.UI
                 }
             }
         }
+        [ViewName("控制Active")]
         public bool controlActive = true;
-        public bool showOnStart=true;
+        [ViewName("初始显示")]
+        public bool showOnStart=false;
         protected virtual void OnLevelWasLoaded(int level)
         {
             ResetUI();
@@ -183,18 +186,21 @@ namespace QTool.UI
                 }
             });
 #endif
-            ResetUI();
+           // ResetUI();
         }
         protected virtual void Reset()
         {
             group = GetComponent<CanvasGroup>();
         }
+        [ViewName("父页面")]
         public string ParentPanel = "";
+        [HideInInspector]
         public CanvasGroup group;
 #if QTween
+        [ViewName("显示动画")]
         public QTweenBehavior showAnim;
 #endif
-
+        
         public ActionEvent OnShowAction;
         public ActionEvent OnHideAction;
         public void RunAnim()
@@ -291,13 +297,13 @@ namespace QTool.UI
         {
             Instance?.Hide();
         }
-       
+        [ViewButton("显示")]
         public void Show()
         {
             IsShow = true;
             RunAnim();
         }
-       
+        [ViewButton("隐藏")]
         public void Hide()
         {
             IsShow = false;
@@ -312,7 +318,9 @@ namespace QTool.UI
             base.Reset();
             showOnStart = false;
         }
+        [ViewName("时间控制")]
         public float timeScale = -1;
+        [ViewName("背景页面")]
         [FormerlySerializedAs("backView")]
         public string backPanel = "";
 

@@ -8,17 +8,14 @@ namespace QTool.UI
     {
         [ViewName("UI≈‰÷√")]
         public List<string> PanelList;
-        protected override void Awake()
+        protected async override void Awake()
         {
             base.Awake();
-            UIPanel.LoadOverRun(() =>
+            foreach (var item in PanelList)
             {
-                foreach (var item in PanelList)
-                {
-                    var ui= UIManager.GetUI(item);
-                    ui?.ResetUI();
-                }
-            });
+                var ui = await UIManager.GetUI(item);
+                ui?.ResetUI();
+            }
         }
     }
 }

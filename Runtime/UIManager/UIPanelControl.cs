@@ -1,30 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 namespace QTool.UI
 {
     public class UIPanelControl : MonoBehaviour
     {
         IUIPanel _panel;
-        IUIPanel Panel
+        async Task< IUIPanel> Panel()
         {
-            get
-            {
                 if (_panel == null)
                 {
-                    _panel = UIManager.GetUI(panelName);
+                    _panel = await UIManager.GetUI(panelName) ;
                 }
                 return _panel;
-            }
         }
         public string panelName;
-        public void Show()
+        public async void Show()
         {
-            Panel?.Show();
+          (await Panel())? .Show();
         }
-        public void Hide()
+        public async void Hide()
         {
-            Panel?.Hide();
+            (await Panel()) ?.Hide();
         }
     }
 }

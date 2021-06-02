@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using QTool;
 using UnityEngine.Serialization;
-using QTool.Resource;
+using QTool.Asset;
 using QTool.Inspector;
+using System.Threading.Tasks;
 #if QTween
 using QTool.Tween;
 #endif
 namespace QTool.UI
 {
-    public class UIPanel : PrefabResourceList<UIPanel>
+    public class UIPanel : PrefabAssetList<UIPanel>
     {
     }
     public static class UIManager
@@ -24,10 +25,10 @@ namespace QTool.UI
             PanelList[key] = panel;
             InitPanret(panel, parentKey);
         }
-        static void InitPanret(RectTransform panel, string parentKey)
+        static async void InitPanret(RectTransform panel, string parentKey)
         {
             if (string.IsNullOrWhiteSpace(parentKey)) return;
-            var parent = Get(parentKey);
+            var parent = await Get(parentKey);
             if (parent != null && parent != panel)
             {
                 var scale = panel.localScale;
@@ -40,25 +41,21 @@ namespace QTool.UI
                 }
             }
         }
-        public static IUIPanel GetUI(string key)
+        public static async Task<IUIPanel> GetUI(string key)
         {
-            return Get(key).GetComponent<IUIPanel>();
+            return (await Get(key)).GetComponent<IUIPanel>();
         }
-        public static RectTransform Get(string key)
+        public static async Task<RectTransform> Get(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList.ContainsKey(key)) return PanelList[key];
 
-            if (!UIPanel.LoadOver())
-            {
-                Debug.LogError("UIPnael资源还未加载无法获取父页面[" + key + "]");
-                return null;
-            }
+            await UIPanel.LoadAllAsync();
             if (key.Contains("."))
             {
                 var keys = key.Split('.');
                 var index = 0;
-                Transform parent = Get(keys[index]);
+                Transform parent = await Get(keys[index]);
                 for (index = 1; index < keys.Length - 1; index++)
                 {
                     parent = parent.Find(keys[index]) ;
@@ -67,7 +64,7 @@ namespace QTool.UI
             }
             else if (!PanelList.ContainsKey(key))
             {
-                var obj = UIPanel.GetInstance(key);
+                var obj = await UIPanel.GetInstance(key);
                 if (obj.transform.parent == null)
                 {
                     GameObject.DontDestroyOnLoad(obj);
@@ -332,10 +329,14 @@ namespace QTool.UI
                 if (string.IsNullOrWhiteSpace(backPanel)) return null;
                 if (_backUI == null)
                 {
-                    _backUI = UIManager.GetUI(backPanel);
+                    InitBackUI();
                 }
                 return _backUI;
             }
+        }
+        async void InitBackUI()
+        {
+            _backUI =await UIManager.GetUI(backPanel);
         }
         protected virtual void ShowBack()
         {

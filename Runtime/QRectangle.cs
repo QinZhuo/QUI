@@ -10,9 +10,17 @@ namespace QTool.UI
         图片,
         顶点,
     }
+    [ExecuteInEditMode]
     [RequireComponent(typeof(Image))]
-    public abstract class QImageShapeEffect:BaseMeshEffect{
-        public ModifyType modifyType = ModifyType.图片;
+    public  abstract class QImageEffect : BaseMeshEffect
+    {
+        public RectTransform rectTransform
+        {
+            get
+            {
+                return transform as RectTransform;
+            }
+        }
         public Image image
         {
             get
@@ -20,20 +28,37 @@ namespace QTool.UI
                 return graphic as Image;
             }
         }
-# if UNITY_EDITOR
+#if UNITY_EDITOR
         protected override void Reset()
         {
             base.Reset();
-            FreshShape();
+            Fresh();
         }
         protected override void OnValidate()
         {
             base.OnValidate();
-            FreshShape();
+            Fresh();
         }
 #endif
+        protected override void OnEnable()
+        {
 
-        public abstract void FreshShape();
+            Canvas.willRenderCanvases += Fresh;
+        }
+        protected override void OnDisable()
+        {
+            Canvas.willRenderCanvases += Fresh;
+        }
+        public abstract void Fresh();
+        public override void ModifyMesh(VertexHelper vh)
+        {
+          
+        }
+    }
+    [RequireComponent(typeof(Image))]
+    public abstract class QImageShapeEffect: QImageEffect
+    {
+        public ModifyType modifyType = ModifyType.图片;
         protected abstract List<UIVertex> Draw();
         public override void ModifyMesh(VertexHelper vh)
         {
@@ -52,7 +77,7 @@ namespace QTool.UI
         [Range(3, 360)]
         public int smooth = 36;
         public float lineWidth = -1;
-        public override void FreshShape()
+        public override void Fresh()
         {
             switch (modifyType)
             {

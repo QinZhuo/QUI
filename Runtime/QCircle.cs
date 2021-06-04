@@ -68,7 +68,7 @@ namespace QTool.UI
         public int smooth = 36;
         public float lineWidth = -1;
         public float angle = 360;
-        public override void FreshShape()
+        public override void Fresh()
         {
             switch (modifyType)
             {

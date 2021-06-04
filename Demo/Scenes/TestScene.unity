@@ -559,7 +559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3669585820ba7548a05fee8a9855cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpDir: 1
   _gradientColor:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -589,6 +588,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  lerpDir: 1
 --- !u!114 &254317132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,7 +804,7 @@ RectTransform:
   m_GameObject: {fileID: 567116882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0392249, y: 1.0672876, z: 0}
+  m_LocalScale: {x: 1.0951712, y: 1.1807852, z: 0}
   m_Children: []
   m_Father: {fileID: 1747651748}
   m_RootOrder: 0
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.31764707}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 10.65873
+  m_PixelsPerUnitMultiplier: 4.266667
 --- !u!222 &567116885
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -864,9 +864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeee285984e839240908e16547dfabf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineWidth: -1
-  size: 50.4
-  shadow: 1
+  size: 56
+  radius: 50
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,7 +1101,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 5.12
+  m_PixelsPerUnitMultiplier: 25.6
 --- !u!222 &835800043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1124,8 +1123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifyType: 0
-  radius: 50
   smooth: 30
+  radius: 10
   lineWidth: -1
 --- !u!1 &925484998
 GameObject:
@@ -1623,8 +1622,7 @@ MonoBehaviour:
   m_Text: N<color=#00000000><quad ></color>N
   oText: N{resources:test}N
   oneLineIndex: 3
-  replacePrefab: {fileID: 6519103461986875846, guid: e1fae99e309f67341b6b4f2f136e47f4,
-    type: 3}
+  replacePrefab: {fileID: 6519103461986875846, guid: e1fae99e309f67341b6b4f2f136e47f4, type: 3}
   Dirty: 0
 --- !u!222 &1099095315
 CanvasRenderer:
@@ -2598,8 +2596,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -109.42053, y: 46.38829}
-  m_SizeDelta: {x: 1404.8987, y: 869.0234}
+  m_AnchoredPosition: {x: -238.79645, y: 220.02509}
+  m_SizeDelta: {x: 1296.8269, y: 739.5198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1747651749
 MonoBehaviour:
@@ -2865,8 +2863,7 @@ MonoBehaviour:
   m_Text: asdgasasdfasdfasdfsddf{resourcesdasdasdasdasdas
   oText: asdgasasdfasdfasdfsddf{resourcesdasdasdasdasdas
   oneLineIndex: 47
-  replacePrefab: {fileID: 6519103461986875846, guid: e1fae99e309f67341b6b4f2f136e47f4,
-    type: 3}
+  replacePrefab: {fileID: 6519103461986875846, guid: e1fae99e309f67341b6b4f2f136e47f4, type: 3}
   Dirty: 0
 --- !u!114 &1849468959
 MonoBehaviour:
@@ -2880,7 +2877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3669585820ba7548a05fee8a9855cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpDir: 2
   _gradientColor:
     serializedVersion: 2
     key0: {r: 0, g: 0.6199827, b: 1, a: 1}
@@ -2910,6 +2906,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 4
+  lerpDir: 2
 --- !u!222 &1849468960
 CanvasRenderer:
   m_ObjectHideFlags: 0

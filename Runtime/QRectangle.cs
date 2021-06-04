@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
+using QTool.Inspector;
 namespace QTool.UI
 {
     public enum ModifyType
@@ -58,7 +59,15 @@ namespace QTool.UI
     [RequireComponent(typeof(Image))]
     public abstract class QImageShapeEffect: QImageEffect
     {
+        public bool VertexMode
+        {
+            get => modifyType == ModifyType.顶点;
+        }
+        [ViewName("形状模式")]
         public ModifyType modifyType = ModifyType.图片;
+        [Range(3, 360)]
+        [ViewName("顶点复杂度", "VertexMode")]
+        public int smooth = 36;
         protected abstract List<UIVertex> Draw();
         public override void ModifyMesh(VertexHelper vh)
         {
@@ -73,9 +82,10 @@ namespace QTool.UI
     public class QRectangle : QImageShapeEffect
     {
         [FormerlySerializedAs("circle")]
+        [Range(0, 256)]
+        [ViewName("圆角")]
         public float radius = 10;
-        [Range(3, 360)]
-        public int smooth = 36;
+        [ViewName("线框", "VertexMode")]
         public float lineWidth = -1;
         public override void Fresh()
         {
@@ -86,7 +96,7 @@ namespace QTool.UI
                         
                         image.sprite = Resources.Load<Sprite>("QCircle512");
                         image.type = Image.Type.Sliced;
-                        image.pixelsPerUnitMultiplier = radius == 0 ? 0.0001f : 256 / radius;
+                        image.pixelsPerUnitMultiplier = radius <=0.1f  ? 0.1f : 256 / radius;
                         image.SetVerticesDirty();
                     }
                     break;

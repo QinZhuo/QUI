@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using QTool.Inspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -113,9 +114,12 @@ namespace QTool.UI
             LeftRight,
             TextCount,
         }
-        public LerpDir lerpDir = LerpDir.LeftRight;
         [SerializeField]
+        [ViewName("过度颜色")]
         private Gradient _gradientColor = new Gradient();
+        [ViewName("过度方向")]
+        public LerpDir lerpDir = LerpDir.LeftRight;
+      
         public Gradient GradientColor
         {
             get

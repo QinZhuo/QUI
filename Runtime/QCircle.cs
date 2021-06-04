@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using QTool.Inspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,9 +65,11 @@ namespace QTool.UI
     [RequireComponent(typeof(Image))]
     public class QCircle : QImageShapeEffect
     {
-        [Range(3, 360)]
-        public int smooth = 36;
+
+        [ViewName("线框", "VertexMode")]
         public float lineWidth = -1;
+        [Range(0,360)]
+        [ViewName("角度")]
         public float angle = 360;
         public override void Fresh()
         {

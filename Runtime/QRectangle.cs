@@ -43,12 +43,13 @@ namespace QTool.UI
 #endif
         protected override void OnEnable()
         {
-
+            base.OnEnable();
             Canvas.willRenderCanvases += Fresh;
         }
         protected override void OnDisable()
         {
-            Canvas.willRenderCanvases += Fresh;
+            base.OnDisable();
+            Canvas.willRenderCanvases -= Fresh;
         }
         public abstract void Fresh();
         public override void ModifyMesh(VertexHelper vh)

@@ -139,7 +139,14 @@ namespace QTool.UI
         public bool showOnStart=false;
         protected virtual void OnLevelWasLoaded(int level)
         {
-            ResetUI();
+            FastHide();
+        }
+        public void FastHide()
+        {
+            Hide();
+#if QTween
+            showAnim?.Anim.Complete();
+#endif
         }
         public void ResetUI()
         {

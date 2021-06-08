@@ -8,9 +8,9 @@ namespace QTool.UI
     {
         [ViewName("UI≈‰÷√")]
         public List<string> PanelList;
-        protected async override void Awake()
+        protected async  void Start()
         {
-            base.Awake();
+          //  base.Awake();
             foreach (var item in PanelList)
             {
                 var ui = await UIManager.GetUI(item);

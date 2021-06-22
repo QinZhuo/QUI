@@ -240,12 +240,11 @@ namespace QTool.UI
                 }
             }
         }
-        RectTransform _rectTransform;
         public RectTransform rectTransform
         {
             get
             {
-                return _rectTransform ?? (_rectTransform = GetComponent<RectTransform>());
+                return transform as RectTransform;
             }
         }
 

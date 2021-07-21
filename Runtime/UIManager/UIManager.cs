@@ -111,6 +111,7 @@ namespace QTool.UI
     public interface IUIPanel
     {
         void Show();
+        void ShowAsync();
         void Hide();
         void ResetUI();
         bool IsShow { get; }
@@ -313,6 +314,18 @@ namespace QTool.UI
             RunAnim();
         }
         public virtual void Fresh() { }
+
+        public async void ShowAsync()
+        {
+            Show();
+            await Task.Run(() =>
+            {
+                while (IsShow)
+                {
+                    Task.Delay(100);
+                }
+            });
+        }
     }
     public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
     {

@@ -138,6 +138,11 @@ namespace QTool.UI
         public bool controlActive = true;
         [ViewName("初始显示")]
         public bool showOnStart=false;
+        protected virtual void FreshWindow(IUIPanel window)
+        {
+            if (window == null) return;
+            group.interactable = this.Equals(window) || transform.HasParentIs(window.rectTransform);
+        }
         protected virtual void OnLevelWasLoaded(int level)
         {
             FastHide();
@@ -163,9 +168,13 @@ namespace QTool.UI
             showAnim?.Anim.Complete();
 #endif
         }
-      
+        private void OnDestroy()
+        {
+            UIManager.WindowChange -= FreshWindow;
+        }
         protected override void Awake()
         {
+            UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
  #if QTween
@@ -368,22 +377,8 @@ namespace QTool.UI
                 BackUI.Show();
             }
         }
-        protected virtual void FreshWindow(IUIPanel window)
-        {
-            if (window == null) return;
-            group.interactable = this.Equals( window)||transform.HasParentIs(window.rectTransform);
-        }
-        protected override void Awake()
-        {
-
-            UIManager.WindowChange += FreshWindow;
-            base.Awake();
-        }
-
-        private void OnDestroy()
-        {
-            UIManager.WindowChange -= FreshWindow;
-        }
+      
+       
         protected virtual void HideBack()
         {
             BackUI?.Hide();

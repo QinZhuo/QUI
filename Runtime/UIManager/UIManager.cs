@@ -114,6 +114,7 @@ namespace QTool.UI
         Task ShowAsync();
         void Hide();
         void ResetUI();
+        IUIPanel BackUI { get; }
         bool IsShow { get; }
         RectTransform rectTransform { get; }
     }
@@ -134,6 +135,7 @@ namespace QTool.UI
                 }
             }
         }
+        public virtual IUIPanel BackUI => null;
         [ViewName("控制Active")]
         public bool controlActive = true;
         [ViewName("初始显示")]
@@ -141,7 +143,7 @@ namespace QTool.UI
         protected virtual void FreshWindow(IUIPanel window)
         {
             if (window == null) return;
-            group.interactable = this.Equals(window) || transform.HasParentIs(window.rectTransform);
+            group.interactable = this.Equals(window) || transform.HasParentIs(window.rectTransform)||window.BackUI.Equals(this);
         }
         protected virtual void OnLevelWasLoaded(int level)
         {
@@ -350,7 +352,7 @@ namespace QTool.UI
         public string backPanel = "";
 
         IUIPanel _backUI;
-        protected IUIPanel BackUI
+        public override IUIPanel BackUI
         {
             get
             {

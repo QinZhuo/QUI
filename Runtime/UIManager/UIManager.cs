@@ -111,7 +111,7 @@ namespace QTool.UI
     public interface IUIPanel
     {
         void Show();
-        void ShowAsync();
+        Task ShowAsync();
         void Hide();
         void ResetUI();
         bool IsShow { get; }
@@ -315,7 +315,7 @@ namespace QTool.UI
         }
         public virtual void Fresh() { }
 
-        public async void ShowAsync()
+        public async Task ShowAsync()
         {
             Show();
             await Task.Run(() =>

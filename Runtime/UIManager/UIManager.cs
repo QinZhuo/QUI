@@ -142,8 +142,7 @@ namespace QTool.UI
         public bool showOnStart=false;
         protected virtual void FreshWindow(IUIPanel window)
         {
-            if (window == null||group==null) return;
-             group.interactable = this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
+             group.interactable =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
         }
         protected virtual void OnLevelWasLoaded(int level)
         {

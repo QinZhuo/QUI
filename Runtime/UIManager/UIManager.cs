@@ -142,8 +142,8 @@ namespace QTool.UI
         public bool showOnStart=false;
         protected virtual void FreshWindow(IUIPanel window)
         {
-            if (window == null) return;
-            group.interactable = this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
+            if (window == null||group==null) return;
+             group.interactable = this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
         }
         protected virtual void OnLevelWasLoaded(int level)
         {
@@ -176,6 +176,10 @@ namespace QTool.UI
         }
         protected override void Awake()
         {
+            if (group==null)
+            {
+                group = GetComponent<CanvasGroup>();
+            }
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
@@ -210,7 +214,6 @@ namespace QTool.UI
         }
         [ViewName("父页面")]
         public string ParentPanel = "";
-        [HideInInspector]
         public CanvasGroup group;
 #if QTween
         [ViewName("显示动画")]

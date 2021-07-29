@@ -175,6 +175,7 @@ namespace QTool.UI
         }
         protected override void Awake()
         {
+
             if (group==null)
             {
                 group = GetComponent<CanvasGroup>();
@@ -207,20 +208,7 @@ namespace QTool.UI
 #endif
            // ResetUI();
         }
-        protected virtual void OnEnable()
-        {
-            if (IsShow)
-            {
-                OnShow();
-            }
-        }
-        protected virtual void OnDisable()
-        {
-            if (!IsShow)
-            {
-                OnHide();
-            }
-        }
+       
         protected virtual void Reset()
         {
             group = GetComponent<CanvasGroup>();

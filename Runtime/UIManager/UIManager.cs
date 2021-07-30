@@ -206,7 +206,7 @@ namespace QTool.UI
                 }
             });
 #endif
-            //ResetUI();
+            ResetUI();
         }
        
         protected virtual void Reset()

@@ -6,6 +6,7 @@ namespace QTool.UI
 {
     public class UISetting:InstanceBehaviour<UISetting>
     {
+        public static List<string> curList = new List<string>();
         [ViewName("UI≈‰÷√")]
         public List<string> PanelList;
         protected async  void Start()
@@ -13,9 +14,12 @@ namespace QTool.UI
           //  base.Awake();
             foreach (var item in PanelList)
             {
+                if (curList.Contains(item)) continue;
                 var ui = await UIManager.GetUI(item);
                 ui?.ResetUI();
             }
+            curList.Clear();
+            curList.AddRange(PanelList);
         }
     }
 }

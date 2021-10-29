@@ -341,13 +341,10 @@ namespace QTool.UI
         public async Task ShowAsync()
         {
             Show();
-            await Task.Run(() =>
+            while (IsShow && Application.isPlaying)
             {
-                while (IsShow)
-                {
-                    Task.Delay(100);
-                }
-            });
+                await Task.Yield();
+            }
         }
     }
     public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>

@@ -14,7 +14,7 @@ namespace QTool.UI
           //  base.Awake();
             foreach (var item in PanelList)
             {
-                if (curList.Contains(item)) continue;
+               // if (curList.Contains(item)) continue;
                 var ui = await UIManager.GetUI(item);
                 ui?.ResetUI();
             }

@@ -166,7 +166,7 @@ namespace QTool.UI
                 Hide();
             }
 #if QTween
-           // showAnim?.Anim.Complete();
+            showAnim?.Anim.Complete();
 #endif
         }
         private void OnDestroy()

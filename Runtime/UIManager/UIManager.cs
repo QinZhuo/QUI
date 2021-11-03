@@ -181,7 +181,7 @@ namespace QTool.UI
                 group = GetComponent<CanvasGroup>();
             }
             if (group != null)
-            {
+            { 
                 IsShow = group.alpha >= 0.9f;
             }
             else

@@ -180,14 +180,14 @@ namespace QTool.UI
             {
                 group = GetComponent<CanvasGroup>();
             }
-            if (group != null)
-            {
-                IsShow = group.alpha >= 0.9f;
-            }
-            else
-            {
-                IsShow = gameObject.activeSelf;
-            }
+            //if (group != null)
+            //{
+            //    IsShow = group.alpha >= 0.9f;
+            //}
+            //else
+            //{
+            //    IsShow = gameObject.activeSelf;
+            //}
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);

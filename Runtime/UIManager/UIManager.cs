@@ -110,9 +110,8 @@ namespace QTool.UI
 
     public interface IUIPanel
     {
-        void Show();
-        Task ShowAsync();
-        void Hide();
+        Task Show();
+        Task Hide();
         void ResetUI();
         IUIPanel BackUI { get; }
         bool IsShow { get; }
@@ -197,7 +196,7 @@ namespace QTool.UI
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
- #if QTween
+#if QTween
             showAnim?.Anim.OnStart(() =>
             {
                 if (IsShow)
@@ -220,9 +219,9 @@ namespace QTool.UI
                 }
             });
 #endif
-           // ResetUI();
+            // ResetUI();
         }
-       
+
         protected virtual void Reset()
         {
             group = GetComponent<CanvasGroup>();
@@ -237,14 +236,14 @@ namespace QTool.UI
         
         public ActionEvent OnShowAction;
         public ActionEvent OnHideAction;
-        public void RunAnim()
+        public async Task RunAnim()
         {
             if (IsShow)
             {
 #if QTween
                 if (showAnim != null)
                 {
-                    showAnim.Show();
+                    await showAnim.Play(true);
                 }
                 else
 #else
@@ -259,7 +258,7 @@ namespace QTool.UI
 #if QTween
                 if (showAnim != null)
                 {
-                    showAnim.Hide();
+                      await showAnim.Play(false);
                 }
                 else
 #else
@@ -331,22 +330,27 @@ namespace QTool.UI
             Instance?.Hide();
         }
         [ViewButton("显示")]
-        public void Show()
+        public async Task Show()
         {
             IsShow = true;
-            RunAnim();
+            await RunAnim();
+          
         }
         [ViewButton("隐藏")]
-        public void Hide()
+        public async Task Hide()
         {
             IsShow = false;
-            RunAnim();
+            await RunAnim();
         }
         public virtual void Fresh() { }
 
-        public async Task ShowAsync()
+        public async Task ShowWaitHide()
         {
-            Show();
+            await Show();
+            await WaitHide();
+        }
+        public async Task WaitHide()
+        {
             while (IsShow && Application.isPlaying)
             {
                 await Task.Yield();

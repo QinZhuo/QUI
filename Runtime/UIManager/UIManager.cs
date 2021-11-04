@@ -243,7 +243,7 @@ namespace QTool.UI
 #if QTween
                 if (showAnim != null)
                 {
-                    await showAnim.Play(true);
+                    await showAnim.PlayAsync(true);
                 }
                 else
 #else
@@ -258,7 +258,7 @@ namespace QTool.UI
 #if QTween
                 if (showAnim != null)
                 {
-                      await showAnim.Play(false);
+                      await showAnim.PlayAsync(false);
                 }
                 else
 #else

@@ -110,8 +110,10 @@ namespace QTool.UI
 
     public interface IUIPanel
     {
-        Task Show();
-        Task Hide();
+        void Show();
+        Task ShowAsync();
+        void Hide();
+        Task HideAsync();
         void ResetUI();
         IUIPanel BackUI { get; }
         bool IsShow { get; }
@@ -330,23 +332,30 @@ namespace QTool.UI
             Instance?.Hide();
         }
         [ViewButton("显示")]
-        public async Task Show()
+        public void Show()
         {
             IsShow = true;
+        }
+        public async Task ShowAsync()
+        {
+            Show();
             await RunAnim();
-          
         }
         [ViewButton("隐藏")]
-        public async Task Hide()
+        public void Hide()
         {
             IsShow = false;
+        }
+        public async Task HideAsync()
+        {
+            Hide();
             await RunAnim();
         }
         public virtual void Fresh() { }
 
         public async Task ShowWaitHide()
         {
-            await Show();
+            await ShowAsync();
             await WaitHide();
         }
         public async Task WaitHide()

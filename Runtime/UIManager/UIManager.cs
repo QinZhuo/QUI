@@ -334,21 +334,21 @@ namespace QTool.UI
         [ViewButton("显示")]
         public void Show()
         {
-            IsShow = true;
+            ShowAsync();
         }
         public async Task ShowAsync()
         {
-            Show();
+            IsShow = true;
             await RunAnim();
         }
         [ViewButton("隐藏")]
         public void Hide()
         {
-            IsShow = false;
+            HideAsync();
         }
         public async Task HideAsync()
         {
-            Hide();
+            IsShow = false;
             await RunAnim();
         }
         public virtual void Fresh() { }

@@ -159,11 +159,17 @@ namespace QTool.UI
         {
             if (showOnStart)
             {
-                Show();
+                if (!IsShow)
+                {
+                    Show();
+                }
             }
             else
             {
-                Hide();
+                if (IsShow)
+                {
+                    Hide();
+                }
             }
 #if QTween
             showAnim?.Anim.Complete();

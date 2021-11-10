@@ -9,8 +9,10 @@ namespace QTool.UI
         public static List<string> curList = new List<string>();
         [ViewName("UI≈‰÷√")]
         public List<string> PanelList;
+        public bool InitOver=false;
         protected async  void Start()
         {
+            InitOver = false;
           //  base.Awake();
             foreach (var item in PanelList)
             {
@@ -20,6 +22,7 @@ namespace QTool.UI
             }
             curList.Clear();
             curList.AddRange(PanelList);
+            InitOver = true;
         }
     }
 }

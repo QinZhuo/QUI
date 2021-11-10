@@ -46,17 +46,7 @@ namespace QTool.UI
         {
             return (await Get(key)).GetComponent<IUIPanel>();
         }
-        public static void Show(string key)
-        {
-            if (IsShow(key))
-            {
-                return;
-            }
-            else
-            {
-
-            }
-        }
+      
         public static bool IsShow(string key)
         {
             if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<IUIPanel>().IsShow;

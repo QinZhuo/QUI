@@ -25,6 +25,7 @@ namespace QTool.UI
             PanelList[key] = panel;
             InitPanret(panel, parentKey);
         }
+   
         static async void InitPanret(RectTransform panel, string parentKey)
         {
             if (string.IsNullOrWhiteSpace(parentKey)) return;
@@ -45,7 +46,32 @@ namespace QTool.UI
         {
             return (await Get(key)).GetComponent<IUIPanel>();
         }
-        public static async Task<RectTransform> Get(string key)
+        public static void Show(string key)
+        {
+            if (IsShow(key))
+            {
+                return;
+            }
+            else
+            {
+
+            }
+        }
+        public static bool IsShow(string key)
+        {
+            if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<IUIPanel>().IsShow;
+            return false;
+        }
+        public static async Task Show(string key,bool show,object obj)
+        {
+            if (show == IsShow(key))
+            {
+                return;
+            }
+            (await GetUI(key)).Switch(show, obj);
+        }
+      
+        static async Task<RectTransform> Get(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList.ContainsKey(key)) return PanelList[key];
@@ -110,6 +136,7 @@ namespace QTool.UI
 
     public interface IUIPanel
     {
+        void Switch(bool show,object obj);
         void Show();
         Task ShowAsync();
         void Hide();
@@ -336,6 +363,26 @@ namespace QTool.UI
         {
             ShowAsync();
         }
+        List<object> showObj = new List<object>();
+        
+        public void Switch(bool show, object obj )
+        {
+            if (show)
+            {
+                Show();
+                showObj.AddCheckExist(obj);
+            }
+            else
+            {
+                showObj.Remove(obj);
+                if (showObj.Count==0)
+                {
+                    Hide();
+                } 
+            }
+           
+        }
+
         public async Task ShowAsync()
         {
             IsShow = true;
@@ -344,6 +391,7 @@ namespace QTool.UI
         [ViewButton("隐藏")]
         public void Hide()
         {
+            showObj.Clear();
             HideAsync();
         }
         public async Task HideAsync()
@@ -365,6 +413,8 @@ namespace QTool.UI
                 await Task.Yield();
             }
         }
+
+      
     }
     public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
     {

@@ -355,20 +355,30 @@ namespace QTool.UI
         }
         List<object> showObj = new List<object>();
         
-        public void Switch(bool show, object obj )
+        public void Switch(bool show, object obj=null )
         {
             if (show)
             {
                 Show();
-                showObj.AddCheckExist(obj);
+                if (obj != null)
+                {
+                    showObj.AddCheckExist(obj);
+                }
             }
             else
             {
-                showObj.Remove(obj);
-                if (showObj.Count==0)
+                if (obj != null)
                 {
                     Hide();
-                } 
+                }
+                else
+                {
+                    showObj.Remove(obj);
+                    if (showObj.Count == 0)
+                    {
+                        Hide();
+                    }
+                }
             }
            
         }

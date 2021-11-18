@@ -226,7 +226,7 @@ namespace QTool.UI
             {
                 vh.PopulateUIVertex(ref v, i);
                 var t = (GetValue(v, i) - minValue) / length;
-                if (t==float.NaN)
+                if (float.IsNaN(t))
                 {
                     return;
                 }

@@ -221,14 +221,15 @@ namespace QTool.UI
         public void LerpColor(VertexHelper vh)
         {
             var length = maxValue - minValue;
-            if (length == float.NaN)
-            {
-                return;
-            }
+         
             for (int i = 0; i < vh.currentVertCount; i++)
             {
                 vh.PopulateUIVertex(ref v, i);
                 var t = (GetValue(v, i) - minValue) / length;
+                if (t==float.NaN)
+                {
+                    return;
+                }
                 var newColor = v.color* GradientColor.Evaluate(t);
                 if (v.color != newColor)
                 {

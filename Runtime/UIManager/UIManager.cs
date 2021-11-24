@@ -164,7 +164,10 @@ namespace QTool.UI
         }
         protected virtual void OnLevelWasLoaded(int level)
         {
-            FastHide();
+            if(!string.IsNullOrEmpty(ParentPanel))
+            {
+                FastHide();
+            }
         }
         public void FastHide()
         {

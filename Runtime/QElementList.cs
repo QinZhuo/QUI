@@ -43,7 +43,7 @@ namespace QTool.UI
                         view = GetPool(index).Get();
                     }
 
-                    view.transform.SetParent(transform);
+                    view.transform.SetParent(transform,false);
                     view.transform.localScale = Vector3.one;
                     view.transform.localRotation = Quaternion.identity;
                     view.transform.SetAsLastSibling();

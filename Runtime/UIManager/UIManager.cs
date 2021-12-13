@@ -33,7 +33,7 @@ namespace QTool.UI
             if (parent != null && parent != panel)
             {
                 var scale = panel.localScale;
-                panel.SetParent(parent);
+                panel.SetParent(parent,false);
                 panel.localScale = scale;
                 if (panel.anchorMin == Vector2.zero && panel.anchorMax == Vector2.one)
                 {
@@ -455,7 +455,7 @@ namespace QTool.UI
             {
                 if (transform.parent != BackUI.rectTransform.parent)
                 {
-                    BackUI.rectTransform.SetParent(transform.parent);
+                    BackUI.rectTransform.SetParent(transform.parent,false);
                 }
                 BackUI.Show();
             }

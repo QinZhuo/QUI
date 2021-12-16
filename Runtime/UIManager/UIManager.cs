@@ -154,8 +154,8 @@ namespace QTool.UI
             }
         }
         public virtual IUIPanel BackUI => null;
-        [ViewName("控制Active")]
-        public bool controlActive = true;
+        //[ViewName("控制Active")]
+        //public bool controlActive = true;
         [ViewName("初始显示")]
         public bool showOnStart=false;
         protected virtual void FreshWindow(IUIPanel window)
@@ -314,16 +314,16 @@ namespace QTool.UI
         {
             transform.SetAsLastSibling();
             Fresh();
-            if (controlActive)
-            {
-                gameObject.SetActive(IsShow);
-            }
+            //if (controlActive)
+            //{
+            //    gameObject.SetActive(IsShow);
+            //}
             OnShowAction?.Invoke();
 
         }
         protected virtual void OnHide()
         {
-            if (controlActive)
+            if (group!=null)
             {
                 gameObject.SetActive(IsShow);
             }

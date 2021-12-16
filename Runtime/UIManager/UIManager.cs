@@ -260,8 +260,14 @@ namespace QTool.UI
         public ActionEvent OnHideAction;
         public async Task RunAnim()
         {
+         
             if (IsShow)
             {
+                if (!gameObject.activeSelf)
+                {
+                    gameObject.SetActive(true);
+                }
+              
 #if QTween
                 if (showAnim != null)
                 {

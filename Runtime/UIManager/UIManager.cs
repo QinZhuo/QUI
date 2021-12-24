@@ -314,15 +314,29 @@ namespace QTool.UI
         
             transform.SetAsLastSibling();
             Fresh();
-            group.interactable = true;
-            group.alpha = 1;
+#if QTween
+            if (showAnim != null)
+            {  
+                gameObject.SetActive(true);;
+            }
+#endif
+          
+
+            //group.interactable = true;
+            //group.alpha = 1;
             OnShowAction?.Invoke();
 
         }
         protected virtual void OnHide()
         {
-            group.interactable = false;
-            group.alpha = 0;
+#if QTween
+            if (showAnim != null)
+            {  
+                gameObject.SetActive(false);;
+            }
+#endif
+            //group.interactable = false;
+            //group.alpha = 0;
             OnHideAction?.Invoke();
         }
      

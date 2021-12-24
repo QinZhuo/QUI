@@ -207,14 +207,8 @@ namespace QTool.UI
             {
                 group = GetComponent<CanvasGroup>();
             }
-            if (group != null)
-            { 
-                IsShow = group.alpha >= 0.9f;
-            }
-            else
-            {
-                IsShow = gameObject.activeSelf;
-            }
+            IsShow = group.alpha >= 0.9f;
+            gameObject.SetActive
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
@@ -278,6 +272,7 @@ namespace QTool.UI
                 FreshGroup();
 #endif
                 {
+                    group.alpha = 1;
                     OnShow();
                 }
             }
@@ -329,10 +324,16 @@ namespace QTool.UI
         }
         protected virtual void OnHide()
         {
-            if (group!=null)
-            {
-                gameObject.SetActive(IsShow);
-            }
+            gameObject.SetActive()
+#if QTween
+           if (showAnim==0)
+           {
+              group.alpha = 0;
+           }
+#else
+
+            group.alpha = 0;
+#endif
             OnHideAction?.Invoke();
         }
      

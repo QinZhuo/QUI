@@ -271,7 +271,6 @@ namespace QTool.UI
                 FreshGroup();
 #endif
                 {
-                    group.alpha = 1;
                     OnShow();
                 }
             }
@@ -312,26 +311,18 @@ namespace QTool.UI
         }
         protected virtual void OnShow()
         {
+        
             transform.SetAsLastSibling();
             Fresh();
-            //if (controlActive)
-            //{
-            //    gameObject.SetActive(IsShow);
-            //}
+            group.interactable = true;
+            group.alpha = 1;
             OnShowAction?.Invoke();
 
         }
         protected virtual void OnHide()
         {
-#if QTween
-           if (showAnim==null)
-           {
-              group.alpha = 0;
-           }
-#else
-
+            group.interactable = false;
             group.alpha = 0;
-#endif
             OnHideAction?.Invoke();
         }
      

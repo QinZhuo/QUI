@@ -311,6 +311,13 @@ namespace QTool.UI
         }
         protected virtual void OnShow()
         {
+#if QTween
+            if (showAnim != null)
+#else
+            {
+                gameObject.SetActive(IsShow);
+            }
+#endif
             transform.SetAsLastSibling();
             Fresh();
             //if (controlActive)
@@ -322,7 +329,13 @@ namespace QTool.UI
         }
         protected virtual void OnHide()
         {
-           
+#if QTween
+            if (showAnim != null)
+#else
+            {
+                gameObject.SetActive(IsShow);
+            }
+#endif
             OnHideAction?.Invoke();
         }
      
@@ -465,7 +478,7 @@ namespace QTool.UI
         }
         protected override void OnShow()
         {
-          
+
             ShowBack();
             base.OnShow();
             if (timeScale >= 0)

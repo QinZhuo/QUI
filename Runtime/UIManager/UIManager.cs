@@ -268,11 +268,13 @@ namespace QTool.UI
                 }
                 else
 #else
-                FreshGroup();
-#endif
+                
+
                 {
+                   // FreshGroup();
                     OnShow();
                 }
+#endif
             }
             else
             {
@@ -283,11 +285,13 @@ namespace QTool.UI
                 }
                 else
 #else
-                FreshGroup();
-#endif
+             
                 {
+                   // FreshGroup();
                     OnHide();
                 }
+
+#endif
             }
         }
         public RectTransform rectTransform
@@ -302,13 +306,13 @@ namespace QTool.UI
         {
             protected set; get;
         }
-        void FreshGroup()
-        {
-            if (group != null)
-            {
-                group.blocksRaycasts = IsShow;
-            }
-        }
+        //void FreshGroup()
+        //{
+        //    if (group != null)
+        //    {
+        //        group.blocksRaycasts = IsShow;
+        //    }
+        //}
         protected virtual void OnShow()
         {
 #if QTween

@@ -268,8 +268,6 @@ namespace QTool.UI
                 }
                 else
 #else
-                
-
                 {
                    // FreshGroup();
                     OnShow();
@@ -285,7 +283,6 @@ namespace QTool.UI
                 }
                 else
 #else
-             
                 {
                    // FreshGroup();
                     OnHide();

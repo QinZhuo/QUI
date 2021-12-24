@@ -267,10 +267,9 @@ namespace QTool.UI
                     await showAnim.PlayAsync(true);
                 }
                 else
-#else
-                FreshGroup();
 #endif
                 {
+                    FreshGroup();
                     OnShow();
                 }
             }
@@ -281,11 +280,10 @@ namespace QTool.UI
                 {
                       await showAnim.PlayAsync(false);
                 }
-                else
-#else
-                FreshGroup();
+                else     
 #endif
                 {
+                    FreshGroup();
                     OnHide();
                 }
             }
@@ -304,7 +302,10 @@ namespace QTool.UI
         }
         void FreshGroup()
         {
-            if (group != null)
+#if QTween
+            if (showAnim == null)
+            { 
+#endif
             {
                 gameObject.SetActive(IsShow);
                // group.blocksRaycasts = IsShow;

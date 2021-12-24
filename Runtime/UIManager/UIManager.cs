@@ -208,7 +208,6 @@ namespace QTool.UI
                 group = GetComponent<CanvasGroup>();
             }
             IsShow = group.alpha >= 0.9f;
-            gameObject.SetActive
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
@@ -324,7 +323,6 @@ namespace QTool.UI
         }
         protected virtual void OnHide()
         {
-            gameObject.SetActive()
 #if QTween
            if (showAnim==0)
            {

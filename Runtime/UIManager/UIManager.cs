@@ -260,7 +260,7 @@ namespace QTool.UI
                 {
                     gameObject.SetActive(true);
                 }
-              
+
 #if QTween
                 if (showAnim != null)
                 {
@@ -268,11 +268,11 @@ namespace QTool.UI
                 }
                 else
 #else
+                FreshGroup();
+#endif
                 {
-                   // FreshGroup();
                     OnShow();
                 }
-#endif
             }
             else
             {
@@ -283,12 +283,11 @@ namespace QTool.UI
                 }
                 else
 #else
+                FreshGroup();
+#endif
                 {
-                   // FreshGroup();
                     OnHide();
                 }
-
-#endif
             }
         }
         public RectTransform rectTransform
@@ -303,22 +302,16 @@ namespace QTool.UI
         {
             protected set; get;
         }
-        //void FreshGroup()
-        //{
-        //    if (group != null)
-        //    {
-        //        group.blocksRaycasts = IsShow;
-        //    }
-        //}
-        protected virtual void OnShow()
+        void FreshGroup()
         {
-#if QTween
-            if (showAnim == null)
-#else
+            if (group != null)
             {
                 gameObject.SetActive(IsShow);
+               // group.blocksRaycasts = IsShow;
             }
-#endif
+        }
+        protected virtual void OnShow()
+        {
             transform.SetAsLastSibling();
             Fresh();
             //if (controlActive)
@@ -330,13 +323,6 @@ namespace QTool.UI
         }
         protected virtual void OnHide()
         {
-#if QTween
-            if (showAnim == null)
-#else
-            {
-                gameObject.SetActive(IsShow);
-            }
-#endif
             OnHideAction?.Invoke();
         }
      

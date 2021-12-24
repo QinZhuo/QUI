@@ -207,7 +207,7 @@ namespace QTool.UI
             {
                 group = GetComponent<CanvasGroup>();
             }
-            IsShow = group.alpha >= 0.9f;
+           // IsShow = group.alpha >= 0.9f;
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);

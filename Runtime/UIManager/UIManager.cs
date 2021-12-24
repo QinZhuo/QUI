@@ -207,14 +207,7 @@ namespace QTool.UI
             {
                 group = GetComponent<CanvasGroup>();
             }
-            if (group != null)
-            { 
-                IsShow = group.alpha >= 0.9f;
-            }
-            else
-            {
-                IsShow = gameObject.activeSelf;
-            }
+            IsShow = group.alpha >= 0.9f;
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
@@ -329,10 +322,7 @@ namespace QTool.UI
         }
         protected virtual void OnHide()
         {
-            if (group!=null)
-            {
-                gameObject.SetActive(IsShow);
-            }
+           
             OnHideAction?.Invoke();
         }
      

@@ -210,7 +210,7 @@ namespace QTool.UI
             IsShow = group.alpha >= 0.9f;
             UIManager.WindowChange += FreshWindow;
             base.Awake();
-            UIManager.ResisterPanel(name, GetComponent<RectTransform>(), ParentPanel);
+            UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
 #if QTween
             showAnim?.Anim.OnStart(() =>
             {

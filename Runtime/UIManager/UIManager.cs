@@ -304,7 +304,6 @@ namespace QTool.UI
         {
 #if QTween
             if (showAnim == null)
-            { 
 #endif
             {
                 gameObject.SetActive(IsShow);

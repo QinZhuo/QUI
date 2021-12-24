@@ -324,7 +324,7 @@ namespace QTool.UI
         protected virtual void OnHide()
         {
 #if QTween
-           if (showAnim==0)
+           if (showAnim==null)
            {
               group.alpha = 0;
            }

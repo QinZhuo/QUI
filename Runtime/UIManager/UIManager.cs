@@ -318,32 +318,21 @@ namespace QTool.UI
         }
         protected virtual void OnShow()
         {
-        
             transform.SetAsLastSibling();
             Fresh();
-#if QTween
-            if (showAnim != null)
-            {  
-                gameObject.SetActive(true);;
-            }
-#endif
-          
-
-            //group.interactable = true;
-            //group.alpha = 1;
+            //if (controlActive)
+            //{
+            //    gameObject.SetActive(IsShow);
+            //}
             OnShowAction?.Invoke();
 
         }
         protected virtual void OnHide()
         {
-#if QTween
-            if (showAnim != null)
-            {  
-                gameObject.SetActive(false);;
+            if (group!=null)
+            {
+                gameObject.SetActive(IsShow);
             }
-#endif
-            //group.interactable = false;
-            //group.alpha = 0;
             OnHideAction?.Invoke();
         }
      

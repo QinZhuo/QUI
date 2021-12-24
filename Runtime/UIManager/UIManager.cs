@@ -312,7 +312,7 @@ namespace QTool.UI
         protected virtual void OnShow()
         {
 #if QTween
-            if (showAnim != null)
+            if (showAnim == null)
 #else
             {
                 gameObject.SetActive(IsShow);
@@ -330,7 +330,7 @@ namespace QTool.UI
         protected virtual void OnHide()
         {
 #if QTween
-            if (showAnim != null)
+            if (showAnim == null)
 #else
             {
                 gameObject.SetActive(IsShow);

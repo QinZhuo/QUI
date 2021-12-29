@@ -426,7 +426,7 @@ namespace QTool.UI
         [ViewName("时间控制")]
         public float timeScale = -1;
         [ViewName("遮挡点击")]
-        public bool blockInput = false;
+        public bool blockInput = true;
         [ViewName("背景页面")]
         [FormerlySerializedAs("backView")]
         public string backPanel = "";

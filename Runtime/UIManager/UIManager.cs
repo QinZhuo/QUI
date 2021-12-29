@@ -425,6 +425,8 @@ namespace QTool.UI
         }
         [ViewName("时间控制")]
         public float timeScale = -1;
+        [ViewName("遮挡点击")]
+        public bool blockInput = false;
         [ViewName("背景页面")]
         [FormerlySerializedAs("backView")]
         public string backPanel = "";
@@ -472,13 +474,19 @@ namespace QTool.UI
             {
                 TimeManager.ChangeScale(gameObject, timeScale);
             }
-            UIManager.Push(this);
+            if (blockInput)
+            {
+                UIManager.Push(this);
+            }
         }
         protected override void OnHide()
         {;
             base.OnHide();
             TimeManager.RevertScale(gameObject);
-            UIManager.Remove(this);
+            if (blockInput)
+            {
+                UIManager.Remove(this);
+            }
             HideBack();
         }
     }

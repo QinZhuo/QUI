@@ -160,7 +160,20 @@ namespace QTool.UI
         public bool showOnStart=false;
         protected virtual void FreshWindow(IUIPanel window)
         {
-             group.interactable =window==null && IsShow || this.Equals(window) || transform.HasParentIs(window.rectTransform)&&IsShow||(window.BackUI!=null&&window.BackUI.Equals(this));
+            if (group == null) return;
+           
+             var value =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
+            if (value)
+            {
+                if (IsShow)
+                {
+                    group.interactable = true;
+                }
+            }
+            else
+            {
+                group.interactable = false;
+            }
         }
         protected virtual void OnLevelWasLoaded(int level)
         {

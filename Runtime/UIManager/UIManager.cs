@@ -160,7 +160,7 @@ namespace QTool.UI
         public bool showOnStart=false;
         protected virtual void FreshWindow(IUIPanel window)
         {
-             group.blocksRaycasts =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
+             group.interactable =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this))&&IsShow;
         }
         protected virtual void OnLevelWasLoaded(int level)
         {

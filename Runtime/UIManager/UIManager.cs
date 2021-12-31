@@ -320,7 +320,8 @@ namespace QTool.UI
 #endif
             {
                 gameObject.SetActive(IsShow);
-               // group.blocksRaycasts = IsShow;
+                group.interactable=IsShow;
+                // group.blocksRaycasts = IsShow;
             }
         }
         protected virtual void OnShow()

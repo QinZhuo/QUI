@@ -8,7 +8,7 @@ namespace QTool.UI
         public Transform target;
         private void LateUpdate()
         {
-            transform.position = Camera.main.WorldToViewportPoint(target.position);
+            transform.position = Camera.main.WorldToScreenPoint(target.position);
         }
     }
 

@@ -321,6 +321,7 @@ namespace QTool.UI
             {
                 gameObject.SetActive(IsShow);
                 group.interactable=IsShow;
+                group.alpha = IsShow ? 1 : 0;
                 // group.blocksRaycasts = IsShow;
             }
         }
@@ -474,8 +475,7 @@ namespace QTool.UI
                 BackUI.Show();
             }
         }
-      
-       
+
         protected virtual void HideBack()
         {
             BackUI?.Hide();

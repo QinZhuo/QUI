@@ -131,6 +131,7 @@ namespace QTool.UI
             }
             windowStack.Push(window);
             WindowChange?.Invoke(windowStack.StackPeek());
+            Debug.LogError("当前页面 " + (window as MonoBehaviour));
         }
         public static event System.Action<IUIPanel> WindowChange;
         public static void Remove(IUIPanel window)
@@ -177,7 +178,7 @@ namespace QTool.UI
         [ViewName("时间控制")]
         public float timeScale = -1;
         [ViewName("遮挡点击")]
-        public bool blockInput = true;
+        public bool blockInput = false;
         protected virtual void FreshWindow(IUIPanel window)
         {
             if (group == null) return;

@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 using QTool.Asset;
 using QTool.Inspector;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 #if QTween
 using QTool.Tween;
 #endif
@@ -175,7 +176,7 @@ namespace QTool.UI
                 group.interactable = false;
             }
         }
-        protected virtual void OnLevelWasLoaded(int level)
+        protected virtual void OnLevelWasLoaded(Scene scene,LoadSceneMode mode)
         {
             if(!string.IsNullOrEmpty(ParentPanel))
             {
@@ -212,15 +213,19 @@ namespace QTool.UI
         private void OnDestroy()
         {
             UIManager.WindowChange -= FreshWindow;
+            SceneManager.sceneLoaded -= OnLevelWasLoaded;
+
         }
         protected override void Awake()
         {
-
+            SceneManager.sceneLoaded += OnLevelWasLoaded;
             if (group==null)
             {
                 group = GetComponent<CanvasGroup>();
             }
             IsShow = group.alpha >= 0.9f;
+
+            SceneManager.sceneLoaded += OnLevelWasLoaded;
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);

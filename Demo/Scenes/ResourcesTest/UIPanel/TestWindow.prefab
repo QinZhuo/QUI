@@ -222,8 +222,8 @@ CanvasGroup:
   m_GameObject: {fileID: 3892174974325622649}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &2176340158056883347
 MonoBehaviour:
@@ -237,9 +237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b85c2a9fc55714883f152debb43ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showOnStart: 0
+  timeScale: -1
+  blockInput: 1
   ParentPanel: TestCanvas.Front.Test
   group: {fileID: 1648352842163412403}
-  showAnim: {fileID: 6049403496481952236}
   OnShowAction:
     m_PersistentCalls:
       m_Calls: []
@@ -258,6 +260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f79fe8b7559674d9321eaeb77e5b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curTime: 0
+  playOnAwake: 0
   OnShow:
     m_PersistentCalls:
       m_Calls: []
@@ -266,10 +270,11 @@ MonoBehaviour:
       m_Calls: []
   curve: 5
   animTime: 0.5
-  hideTime: 0.5
+  hideTimeScale: 2
   StartValue: 0
   EndValue: 1
   group: {fileID: 1648352842163412403}
+  controlRaycast: 1
 --- !u!1 &4718810617859951782
 GameObject:
   m_ObjectHideFlags: 0

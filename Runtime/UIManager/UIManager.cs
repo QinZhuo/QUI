@@ -16,17 +16,24 @@ namespace QTool.UI
     public class UIPanel : PrefabAssetList<UIPanel>
     {
     }
+    /// <summary>
+    /// UI管理器
+    /// </summary>
     public static class UIManager
     {
         static QDictionary<string, RectTransform> PanelList = new QDictionary<string, RectTransform>();
-
+        /// <summary>
+        /// 注册UI到管理器
+        /// </summary>
+        /// <param name="key">关键名</param>
+        /// <param name="panel">UI页面</param>
+        /// <param name="parentKey">父页面</param>
         public static void ResisterPanel(string key, RectTransform panel, string parentKey = "")
         {
             panel.name = key;
             PanelList[key] = panel;
             InitPanret(panel, parentKey);
         }
-   
         static async void InitPanret(RectTransform panel, string parentKey)
         {
             if (string.IsNullOrWhiteSpace(parentKey)) return;
@@ -43,16 +50,26 @@ namespace QTool.UI
                 }
             }
         }
+        /// <summary>
+        /// 异步获取UI
+        /// </summary>
+        /// <param name="key">UI关键名</param>
+        /// <returns></returns>
         public static async Task<IUIPanel> GetUI(string key)
         {
             return (await Get(key)).GetComponent<IUIPanel>();
         }
-      
+        /// <summary>
+        /// UI是否正在显示
+        /// </summary>
+        /// <param name="key">UI关键名</param>
+        /// <returns></returns>
         public static bool IsShow(string key)
         {
             if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<IUIPanel>().IsShow;
             return false;
         }
+
         public static async Task Show(string key,bool show,object obj)
         {
             if (show == IsShow(key))
@@ -115,6 +132,7 @@ namespace QTool.UI
             }
             windowStack.Push(window);
             WindowChange?.Invoke(windowStack.StackPeek());
+            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
         }
         public static event System.Action<IUIPanel> WindowChange;
         public static void Remove(IUIPanel window)
@@ -122,6 +140,7 @@ namespace QTool.UI
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);
             WindowChange?.Invoke(windowStack.StackPeek());
+            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
         }
     }
 
@@ -133,7 +152,6 @@ namespace QTool.UI
         void Hide();
         Task HideAsync();
         void ResetUI();
-        IUIPanel BackUI { get; }
         bool IsShow { get; }
         RectTransform rectTransform { get; }
     }
@@ -159,11 +177,15 @@ namespace QTool.UI
         //public bool controlActive = true;
         [ViewName("初始显示")]
         public bool showOnStart=false;
+        [ViewName("时间控制")]
+        public float timeScale = -1;
+        [ViewName("遮挡点击")]
+        public bool blockInput = false;
         protected virtual void FreshWindow(IUIPanel window)
         {
             if (group == null) return;
            
-             var value =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform)||(window.BackUI!=null&&window.BackUI.Equals(this));
+             var value =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform);
             if (value)
             {
                 if (IsShow)
@@ -339,11 +361,23 @@ namespace QTool.UI
             //    gameObject.SetActive(IsShow);
             //}
             OnShowAction?.Invoke();
-
+            if (timeScale >= 0)
+            {
+                TimeManager.ChangeScale(gameObject, timeScale);
+            }
+            if (blockInput)
+            {
+                UIManager.Push(this);
+            }
         }
         protected virtual void OnHide()
         {
             OnHideAction?.Invoke();
+            TimeManager.RevertScale(gameObject);
+            if (blockInput)
+            {
+                UIManager.Remove(this);
+            }
         }
      
 
@@ -436,79 +470,4 @@ namespace QTool.UI
 
       
     }
-    public abstract class UIWindow<T> : UIPanel<T> where T : UIWindow<T>
-    {
-        protected override void Reset()
-        {
-            base.Reset();
-            showOnStart = false;
-        }
-        [ViewName("时间控制")]
-        public float timeScale = -1;
-        [ViewName("遮挡点击")]
-        public bool blockInput = true;
-        [ViewName("背景页面")]
-        [FormerlySerializedAs("backView")]
-        public string backPanel = "";
-
-        IUIPanel _backUI;
-        public override IUIPanel BackUI
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(backPanel)) return null;
-                if (_backUI == null)
-                {
-                    InitBackUI();
-                }
-                return _backUI;
-            }
-        }
-        async void InitBackUI()
-        {
-            _backUI =await UIManager.GetUI(backPanel);
-        }
-        protected virtual void ShowBack()
-        {
-            if (BackUI != null)
-            {
-                if (transform.parent != BackUI.rectTransform.parent)
-                {
-                    BackUI.rectTransform.SetParent(transform.parent,false);
-                }
-        
-                BackUI.Show();
-            }
-        }
-
-        protected virtual void HideBack()
-        {
-            BackUI?.Hide();
-        }
-        protected override void OnShow()
-        {
-
-            ShowBack();
-            base.OnShow();
-            if (timeScale >= 0)
-            {
-                TimeManager.ChangeScale(gameObject, timeScale);
-            }
-            if (blockInput)
-            {
-                UIManager.Push(this);
-            }
-        }
-        protected override void OnHide()
-        {;
-            base.OnHide();
-            TimeManager.RevertScale(gameObject);
-            if (blockInput)
-            {
-                UIManager.Remove(this);
-            }
-            HideBack();
-        }
-    }
-
 }

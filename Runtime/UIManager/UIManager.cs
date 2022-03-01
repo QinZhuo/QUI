@@ -198,7 +198,7 @@ namespace QTool.UI
                 group.interactable = false;
             }
         }
-        protected virtual void OnLevelWasLoaded(Scene scene,LoadSceneMode mode)
+        protected virtual void LevelChange(Scene scene,LoadSceneMode mode)
         {
             if(!string.IsNullOrEmpty(ParentPanel))
             {
@@ -235,19 +235,19 @@ namespace QTool.UI
         private void OnDestroy()
         {
             UIManager.WindowChange -= FreshWindow;
-            SceneManager.sceneLoaded -= OnLevelWasLoaded;
+            SceneManager.sceneLoaded -= LevelChange;
 
         }
         protected override void Awake()
         {
-            SceneManager.sceneLoaded += OnLevelWasLoaded;
+            SceneManager.sceneLoaded += LevelChange;
             if (group==null)
             {
                 group = GetComponent<CanvasGroup>();
             }
             IsShow = group.alpha >= 0.9f;
 
-            SceneManager.sceneLoaded += OnLevelWasLoaded;
+            SceneManager.sceneLoaded += LevelChange;
             UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
@@ -405,7 +405,7 @@ namespace QTool.UI
         [ViewButton("显示")]
         public void Show()
         {
-            ShowAsync();
+            _ = ShowAsync();
         }
         List<object> showObj = new List<object>();
         
@@ -445,8 +445,8 @@ namespace QTool.UI
         [ViewButton("隐藏")]
         public void Hide()
         {
-            showObj.Clear();
-            HideAsync();
+            showObj.Clear(); 
+            _ = HideAsync();
         }
         public async Task HideAsync()
         {

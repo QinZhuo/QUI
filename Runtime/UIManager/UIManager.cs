@@ -132,7 +132,7 @@ namespace QTool.UI
             }
             windowStack.Push(window);
             WindowChange?.Invoke(windowStack.StackPeek());
-            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
+            Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
         }
         public static event System.Action<IUIPanel> WindowChange;
         public static void Remove(IUIPanel window)
@@ -140,7 +140,7 @@ namespace QTool.UI
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);
             WindowChange?.Invoke(windowStack.StackPeek());
-            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
+            Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
         }
     }
 

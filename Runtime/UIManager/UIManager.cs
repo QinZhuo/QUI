@@ -34,6 +34,13 @@ namespace QTool.UI
             PanelList[key] = panel;
             InitPanret(panel, parentKey);
         }
+        public static void UnResisterPanel(string key, RectTransform panel)
+        {
+            if (PanelList[key]==panel)
+            {
+                PanelList.RemoveKey(key);
+            }
+        }
         static async void InitPanret(RectTransform panel, string parentKey)
         {
             if (string.IsNullOrWhiteSpace(parentKey)) return;
@@ -99,10 +106,6 @@ namespace QTool.UI
             else if (!PanelList.ContainsKey(key))
             {
                 var obj = await UIPanel.GetInstance(key);
-                if (obj.transform.parent == null)
-                {
-                    GameObject.DontDestroyOnLoad(obj);
-                }
                 ResisterPanel(key, obj.GetComponent<RectTransform>());
             }
             else
@@ -132,7 +135,7 @@ namespace QTool.UI
             }
             windowStack.Push(window);
             WindowChange?.Invoke(windowStack.StackPeek());
-            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
+            Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
         }
         public static event System.Action<IUIPanel> WindowChange;
         public static void Remove(IUIPanel window)
@@ -140,7 +143,7 @@ namespace QTool.UI
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);
             WindowChange?.Invoke(windowStack.StackPeek());
-            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
+            Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
         }
     }
 
@@ -232,10 +235,13 @@ namespace QTool.UI
             showAnim?.Anim.Complete();
 #endif
         }
-        private void OnDestroy()
+        internal string PanelKey => name.Contains("(Clone)") ? name.Substring(0, name.IndexOf("(Clone)")) : name;
+      //  internal RectTransform rectTransform => transform as RectTransform;
+        protected void OnDestroy()
         {
             UIManager.WindowChange -= FreshWindow;
             SceneManager.sceneLoaded -= LevelChange;
+            UIManager.UnResisterPanel(PanelKey, rectTransform);
 
         }
         protected override void Awake()
@@ -246,11 +252,10 @@ namespace QTool.UI
                 group = GetComponent<CanvasGroup>();
             }
             IsShow = group.alpha >= 0.9f;
-
             SceneManager.sceneLoaded += LevelChange;
             UIManager.WindowChange += FreshWindow;
             base.Awake();
-            UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
+            UIManager.ResisterPanel(PanelKey, rectTransform, ParentPanel);
 #if QTween
             showAnim?.Anim.OnStart(() =>
             {

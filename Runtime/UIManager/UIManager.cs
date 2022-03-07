@@ -34,13 +34,6 @@ namespace QTool.UI
             PanelList[key] = panel;
             InitPanret(panel, parentKey);
         }
-        public static void UnResisterPanel(string key, RectTransform panel)
-        {
-            if (PanelList[key]==panel)
-            {
-                PanelList.RemoveKey(key);
-            }
-        }
         static async void InitPanret(RectTransform panel, string parentKey)
         {
             if (string.IsNullOrWhiteSpace(parentKey)) return;
@@ -106,6 +99,10 @@ namespace QTool.UI
             else if (!PanelList.ContainsKey(key))
             {
                 var obj = await UIPanel.GetInstance(key);
+                if (obj.transform.parent == null)
+                {
+                    GameObject.DontDestroyOnLoad(obj);
+                }
                 ResisterPanel(key, obj.GetComponent<RectTransform>());
             }
             else
@@ -201,7 +198,7 @@ namespace QTool.UI
                 group.interactable = false;
             }
         }
-        protected virtual void LevelChange(Scene scene,LoadSceneMode mode)
+        protected virtual void OnSceneChange(Scene last,Scene next)
         {
             if(!string.IsNullOrEmpty(ParentPanel))
             {
@@ -235,27 +232,23 @@ namespace QTool.UI
             showAnim?.Anim.Complete();
 #endif
         }
-        internal string PanelKey => name.Contains("(Clone)") ? name.Substring(0, name.IndexOf("(Clone)")) : name;
-      //  internal RectTransform rectTransform => transform as RectTransform;
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
             UIManager.WindowChange -= FreshWindow;
-            SceneManager.sceneLoaded -= LevelChange;
-            UIManager.UnResisterPanel(PanelKey, rectTransform);
-
+            SceneManager.activeSceneChanged -= OnSceneChange;
         }
         protected override void Awake()
         {
-            SceneManager.sceneLoaded += LevelChange;
+
             if (group==null)
             {
                 group = GetComponent<CanvasGroup>();
             }
             IsShow = group.alpha >= 0.9f;
-            SceneManager.sceneLoaded += LevelChange;
             UIManager.WindowChange += FreshWindow;
+            SceneManager.activeSceneChanged += OnSceneChange;
             base.Awake();
-            UIManager.ResisterPanel(PanelKey, rectTransform, ParentPanel);
+            UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
 #if QTween
             showAnim?.Anim.OnStart(() =>
             {
@@ -410,7 +403,7 @@ namespace QTool.UI
         [ViewButton("显示")]
         public void Show()
         {
-            _ = ShowAsync();
+            ShowAsync();
         }
         List<object> showObj = new List<object>();
         
@@ -450,8 +443,8 @@ namespace QTool.UI
         [ViewButton("隐藏")]
         public void Hide()
         {
-            showObj.Clear(); 
-            _ = HideAsync();
+            showObj.Clear();
+            HideAsync();
         }
         public async Task HideAsync()
         {

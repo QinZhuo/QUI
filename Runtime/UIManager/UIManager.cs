@@ -132,7 +132,7 @@ namespace QTool.UI
             }
             windowStack.Push(window);
             WindowChange?.Invoke(windowStack.StackPeek());
-            Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
+            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
         }
         public static event System.Action<IUIPanel> WindowChange;
         public static void Remove(IUIPanel window)
@@ -140,7 +140,7 @@ namespace QTool.UI
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);
             WindowChange?.Invoke(windowStack.StackPeek());
-            Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
+            Debug.LogError("当前页面 " + (windowStack.StackPeek() as MonoBehaviour) + " 移除：" + (window as MonoBehaviour));
         }
     }
 
@@ -198,7 +198,7 @@ namespace QTool.UI
                 group.interactable = false;
             }
         }
-        protected virtual void OnSceneChange(Scene last,Scene next)
+        protected virtual void OnSceneChange(Scene scene, Scene nextScene)
         {
             if(!string.IsNullOrEmpty(ParentPanel))
             {
@@ -236,17 +236,18 @@ namespace QTool.UI
         {
             UIManager.WindowChange -= FreshWindow;
             SceneManager.activeSceneChanged -= OnSceneChange;
+
         }
         protected override void Awake()
         {
-
             if (group==null)
             {
                 group = GetComponent<CanvasGroup>();
             }
             IsShow = group.alpha >= 0.9f;
-            UIManager.WindowChange += FreshWindow;
+
             SceneManager.activeSceneChanged += OnSceneChange;
+            UIManager.WindowChange += FreshWindow;
             base.Awake();
             UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
 #if QTween
@@ -403,7 +404,7 @@ namespace QTool.UI
         [ViewButton("显示")]
         public void Show()
         {
-            ShowAsync();
+            _ = ShowAsync();
         }
         List<object> showObj = new List<object>();
         
@@ -443,8 +444,8 @@ namespace QTool.UI
         [ViewButton("隐藏")]
         public void Hide()
         {
-            showObj.Clear();
-            HideAsync();
+            showObj.Clear(); 
+            _ = HideAsync();
         }
         public async Task HideAsync()
         {

@@ -362,7 +362,7 @@ namespace QTool.UI
             OnShowAction?.Invoke();
             if (timeScale >= 0)
             {
-                TimeManager.ChangeScale(gameObject, timeScale);
+                QTime.ChangeScale(gameObject, timeScale);
             }
             if (blockInput)
             {
@@ -372,7 +372,7 @@ namespace QTool.UI
         protected virtual void OnHide()
         {
             OnHideAction?.Invoke();
-            TimeManager.RevertScale(gameObject);
+            QTime.RevertScale(gameObject);
             if (blockInput)
             {
                 UIManager.Remove(this);

@@ -9,7 +9,7 @@ namespace QTool.UI
 
         public QTool.ObjectPool<GameObject> GetPool(int index)
         {
-            return PoolManager.GetPool(viewPrefab[index].name,viewPrefab[index]);
+            return QPoolManager.GetPool(viewPrefab[index].name,viewPrefab[index]);
         }
     
         public List<GameObject> GetObjList(int index)

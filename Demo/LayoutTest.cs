@@ -4,7 +4,7 @@ using UnityEngine;
 using QTool.UI;
 public class LayoutTest : UIPanel<LayoutTest>
 {
-    public QGameObjList testList;
+    public QObjectList testList;
     // Start is called before the first frame update
     void Start()
     {

@@ -7,12 +7,6 @@ namespace QTool.UI
     [ExecuteAlways]
     public class QShaderUI : MonoBehaviour
     {
-        //public class MatFloatValue : IKey<string>
-        //{
-        //    public string Key { get=> name; set { } }
-        //    public string name;
-        //    public float value;
-        //}
         public RectTransform rectTransform
         {
             get

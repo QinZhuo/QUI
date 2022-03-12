@@ -19,7 +19,7 @@ namespace QTool.UI
     /// <summary>
     /// UI管理器
     /// </summary>
-    public static class UIManager
+    public static class QUIManager
     {
         static QDictionary<string, RectTransform> PanelList = new QDictionary<string, RectTransform>();
         /// <summary>
@@ -234,7 +234,7 @@ namespace QTool.UI
         }
         protected virtual void OnDestroy()
         {
-            UIManager.WindowChange -= FreshWindow;
+            QUIManager.WindowChange -= FreshWindow;
             SceneManager.activeSceneChanged -= OnSceneChange;
 
         }
@@ -247,9 +247,9 @@ namespace QTool.UI
             IsShow = group.alpha >= 0.9f;
 
             SceneManager.activeSceneChanged += OnSceneChange;
-            UIManager.WindowChange += FreshWindow;
+            QUIManager.WindowChange += FreshWindow;
             base.Awake();
-            UIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
+            QUIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
 #if QTween
             showAnim?.Anim.OnStart(() =>
             {
@@ -366,7 +366,7 @@ namespace QTool.UI
             }
             if (blockInput)
             {
-                UIManager.Push(this);
+                QUIManager.Push(this);
             }
         }
         protected virtual void OnHide()
@@ -375,7 +375,7 @@ namespace QTool.UI
             QTime.RevertScale(gameObject);
             if (blockInput)
             {
-                UIManager.Remove(this);
+                QUIManager.Remove(this);
             }
         }
      

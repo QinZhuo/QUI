@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 namespace QTool.UI
 {
-    public class UIPanelControl : MonoBehaviour
+    public class QUIPanelControl : MonoBehaviour
     {
         IUIPanel _panel;
         async Task< IUIPanel> Panel()
         {
                 if (_panel == null)
                 {
-                    _panel = await UIManager.GetUI(panelName) ;
+                    _panel = await QUIManager.GetUI(panelName) ;
                 }
                 return _panel;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace QTool.UI
 {
-    public static class RectTransformExtend
+    public static class QRectTransformUtility
     {
         public static Vector2 UpRightRectOffset(this RectTransform rectTransform)
         {

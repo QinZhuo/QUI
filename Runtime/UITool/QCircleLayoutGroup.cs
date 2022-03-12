@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace QTool.UI
 {
-    public class CircleLayoutGroup : LayoutGroup
+    public class QCircleLayoutGroup : LayoutGroup
     {
         private Vector2 Center
         {

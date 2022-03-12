@@ -4,7 +4,7 @@ using UnityEngine;
 using QTool.Inspector;
 namespace QTool.UI
 {
-    public class UISetting:InstanceBehaviour<UISetting>
+    public class QUISetting:InstanceBehaviour<QUISetting>
     {
         public static List<string> curList = new List<string>();
         [ViewName("UI≈‰÷√")]
@@ -17,7 +17,7 @@ namespace QTool.UI
             foreach (var item in PanelList)
             {
                // if (curList.Contains(item)) continue;
-                var ui = await UIManager.GetUI(item);
+                var ui = await QUIManager.GetUI(item);
                 ui?.ResetUI();
             }
             curList.Clear();

@@ -5,15 +5,15 @@ using QTool.UI;
 #if QTween
 namespace QTool.Tween.Component
 {
-    [RequireComponent(typeof( QElementList))]
+    [RequireComponent(typeof( QGameObjList))]
     public class QTweenLayout: QTweenList
     {
         public Tween.QTweenList.TweenListType listType = Tween.QTweenList.TweenListType.顺序播放;
-        public QElementList layout;
+        public QGameObjList layout;
 
         private void Reset()
         {
-            layout = GetComponent<QElementList>();
+            layout = GetComponent<QGameObjList>();
         }
   
         private void Start()

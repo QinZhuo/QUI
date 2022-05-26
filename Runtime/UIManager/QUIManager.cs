@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -255,8 +255,8 @@ namespace QTool.UI
             {
                 if (IsShow)
                 {
-                    OnShow();
-                }
+					InvokeOnShow(true);
+				}
                 else
                 {
                     FreshGroup();
@@ -265,8 +265,8 @@ namespace QTool.UI
             {
                 if (!IsShow)
                 {
-                    OnHide();
-                }
+					InvokeOnShow(false);
+				}
                 else
                 {
                     FreshGroup();
@@ -287,6 +287,24 @@ namespace QTool.UI
         [ViewName("显示动画")]
         public QTweenBehavior showAnim;
 #endif
+		private void InvokeOnShow(bool show)
+		{
+			try
+			{
+				if (show)
+				{
+					OnShow();
+				}
+				else
+				{
+					OnHide();
+				}
+			}
+			catch (System.Exception e)
+			{
+				Debug.LogError((show ? "显示" : "隐藏") + typeof(T) + " 页面出错：\n" + e);
+			}
+		}
         
         public ActionEvent OnShowAction;
         public ActionEvent OnHideAction;
@@ -309,7 +327,7 @@ namespace QTool.UI
 #endif
                 {
                     FreshGroup();
-                    OnShow();
+					InvokeOnShow(true);
                 }
             }
             else
@@ -323,8 +341,8 @@ namespace QTool.UI
 #endif
                 {
                     FreshGroup();
-                    OnHide();
-                }
+					InvokeOnShow(false);
+				}
             }
         }
         public RectTransform rectTransform

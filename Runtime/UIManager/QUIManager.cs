@@ -412,8 +412,10 @@ namespace QTool.UI
 
         public static async void ShowWindow()
         {
-            await Tool.Wait(() => Instance != null);
-            Instance?.Show();
+            if(await Tool.Wait(() => Instance != null))
+			{
+				Instance?.Show();
+			}
         }
         public static void HideWindow()
         {

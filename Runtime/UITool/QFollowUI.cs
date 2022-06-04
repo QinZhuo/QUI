@@ -13,6 +13,13 @@ namespace QTool.UI
                 transform.position = Camera.main.WorldToScreenPoint(target.position);
             }
         }
+		public void Recover()
+		{
+			if (QFollowList.Instance != null)
+			{
+				QFollowList.Instance.objectList.Push(gameObject);
+			}
+		}
     }
 
 }

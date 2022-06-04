@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace QTool.UI
 {
+	[RequireComponent(typeof(QObjectList))]
 	public class QFollowList :UIPanel<QFollowList>
 	{
 		public QObjectList objectList;
+		protected override void Reset()
+		{
+			base.Reset();
+			objectList = GetComponent<QObjectList>();
+		}
 		public QFollowUI GetUI(Transform target)
 		{
 			if (target == null)

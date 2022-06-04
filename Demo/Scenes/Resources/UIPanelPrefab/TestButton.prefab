@@ -176,7 +176,7 @@ MonoBehaviour:
   showOnStart: 1
   timeScale: -1
   blockInput: 0
-  ParentPanel: TestCanvas
+  ParentPanel: TestCanvas.Back
   group: {fileID: 7591923041071275064}
   showAnim: {fileID: 0}
   OnShowAction:

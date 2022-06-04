@@ -89,16 +89,10 @@ namespace QTool.UI
             if (PanelList.ContainsKey(key)) return PanelList[key];
 
             await UIPanelPrefab.LoadAllAsync();
-            if (key.Contains("."))
-            {
-                var keys = key.Split('.');
-                var index = 0;
-                Transform parent = await Get(keys[index]);
-                for (index = 1; index < keys.Length - 1; index++)
-                {
-                    parent = parent.Find(keys[index]) ;
-                }
-                PanelList[key] = parent.Find(keys[index]) as RectTransform;
+            if (key.SplitTowString(".",out var start,out var end))
+			{
+				Transform parent = await Get(start);
+                PanelList[key] = parent.GetChild(end) as RectTransform;
             }
             else if (!PanelList.ContainsKey(key))
             {

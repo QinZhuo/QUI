@@ -6,15 +6,15 @@ namespace QTool.UI
 {
     public class QUIPanelControl : MonoBehaviour
     {
-        IUIPanel _panel;
-        async Task< IUIPanel> Panel()
-        {
-                if (_panel == null)
-                {
-                    _panel = await QUIManager.GetUI(panelName) ;
-                }
-                return _panel;
-        }
+        UIPanel _panel;
+		async Task<UIPanel> Panel()
+		{
+			if (_panel == null)
+			{
+				_panel = await QUIManager.GetUI(panelName);
+			}
+			return _panel;
+		}
         public string panelName;
         public async void Show()
         {

@@ -13,7 +13,7 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
-    public class UIPanel : PrefabAssetList<UIPanel>
+    public class UIPanelPrefab : PrefabAssetList<UIPanelPrefab>
     {
     }
     /// <summary>
@@ -50,14 +50,18 @@ namespace QTool.UI
                 }
             }
         }
-        /// <summary>
-        /// 异步获取UI
-        /// </summary>
-        /// <param name="key">UI关键名</param>
-        /// <returns></returns>
-        public static async Task<IUIPanel> GetUI(string key)
+		public static async Task<T> GetUI<T>(string key) where T:UIPanel
+		{
+			return (await Get(key)).GetComponent<T>();
+		}
+		/// <summary>
+		/// 异步获取UI
+		/// </summary>
+		/// <param name="key">UI关键名</param>
+		/// <returns></returns>
+		public static async Task<UIPanel> GetUI(string key)
         {
-            return (await Get(key)).GetComponent<IUIPanel>();
+            return (await Get(key)).GetComponent<UIPanel>();
         }
         /// <summary>
         /// UI是否正在显示
@@ -66,7 +70,7 @@ namespace QTool.UI
         /// <returns></returns>
         public static bool IsShow(string key)
         {
-            if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<IUIPanel>().IsShow;
+            if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<UIPanel>().IsShow;
             return false;
         }
 
@@ -84,7 +88,7 @@ namespace QTool.UI
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList.ContainsKey(key)) return PanelList[key];
 
-            await UIPanel.LoadAllAsync();
+            await UIPanelPrefab.LoadAllAsync();
             if (key.Contains("."))
             {
                 var keys = key.Split('.');
@@ -98,7 +102,7 @@ namespace QTool.UI
             }
             else if (!PanelList.ContainsKey(key))
             {
-                var obj = await UIPanel.GetInstance(key);
+                var obj = await UIPanelPrefab.GetInstance(key);
                 if (obj.transform.parent == null)
                 {
                     GameObject.DontDestroyOnLoad(obj);
@@ -119,8 +123,8 @@ namespace QTool.UI
                 return windowStack.Count;
             }
         }
-        public static List<IUIPanel> windowStack = new List<IUIPanel>();
-        public static void Push(IUIPanel window)
+        public static List<UIPanel> windowStack = new List<UIPanel>();
+        public static void Push(UIPanel window)
         {
             if (windowStack.StackPeek() == window)
             {
@@ -134,8 +138,8 @@ namespace QTool.UI
             WindowChange?.Invoke(windowStack.StackPeek());
             Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
         }
-        public static event System.Action<IUIPanel> WindowChange;
-        public static void Remove(IUIPanel window)
+        public static event System.Action<UIPanel> WindowChange;
+        public static void Remove(UIPanel window)
         {
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);
@@ -144,25 +148,42 @@ namespace QTool.UI
         }
     }
 
-    public interface IUIPanel
-    {
-        void Switch(bool show,object obj);
-        void Show();
-        Task ShowAsync();
-        void Hide();
-        Task HideAsync();
-        void ResetUI();
-        bool IsShow { get; }
-        RectTransform rectTransform { get; }
+    public abstract class UIPanel:MonoBehaviour
+	{
+		public abstract void Switch(bool show,object obj);
+		public abstract void Show();
+		public abstract Task ShowAsync();
+		public abstract void Hide();
+		public abstract Task HideAsync();
+		public abstract void ResetUI();
+		public abstract bool IsShow {protected set; get; }
+		public abstract RectTransform RectTransform { get; }
     }
     [RequireComponent(typeof(CanvasGroup))]
-    public abstract class UIPanel<T> : InstanceBehaviour<T, UIPanel>, IUIPanel where T : UIPanel<T>
+    public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
     {
+		static T _instance;
+		public static T Instance
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					Debug.LogError("未初始化显示页面 " + typeof(T));
+					return null;
+				}
+				else
+				{
+					return _instance;
+				}
+
+			}
+		}
         public static bool PanelIsShow
         {
             get
             {
-                if (_instance == null)
+                if (Instance == null)
                 {
                     return false;
                 }
@@ -172,20 +193,17 @@ namespace QTool.UI
                 }
             }
         }
-        public virtual IUIPanel BackUI => null;
-        //[ViewName("控制Active")]
-        //public bool controlActive = true;
         [ViewName("初始显示")]
         public bool showOnStart=false;
         [ViewName("时间控制")]
         public float timeScale = -1;
         [ViewName("遮挡点击")]
         public bool blockInput = false;
-        protected virtual void FreshWindow(IUIPanel window)
+        protected virtual void FreshWindow(UIPanel window)
         {
             if (group == null) return;
            
-             var value =window==null ||this.Equals(window) || transform.HasParentIs(window.rectTransform);
+             var value =window==null ||this.Equals(window) || transform.HasParentIs(window.RectTransform);
             if (value)
             {
                 if (IsShow)
@@ -212,7 +230,7 @@ namespace QTool.UI
             showAnim?.Anim.Complete();
 #endif
         }
-        public void ResetUI()
+        public override void ResetUI()
         {
             if (showOnStart)
             {
@@ -238,8 +256,19 @@ namespace QTool.UI
             SceneManager.activeSceneChanged -= OnSceneChange;
 
         }
-        protected override void Awake()
+        protected  void Awake()
         {
+			
+			if(this is T panel)
+			{
+				_instance = this as T;
+				Debug.Log("初始化页面" +  _instance);
+			}
+			else
+			{
+				Debug.LogError("页面类型不匹配："+_instance+":"+typeof(T));
+			}
+		
             if (group==null)
             {
                 group = GetComponent<CanvasGroup>();
@@ -248,7 +277,6 @@ namespace QTool.UI
 
             SceneManager.activeSceneChanged += OnSceneChange;
             QUIManager.WindowChange += FreshWindow;
-            base.Awake();
             QUIManager.ResisterPanel(name.Contains("(Clone)")?name.Substring(0,name.IndexOf("(Clone)")):name, GetComponent<RectTransform>(), ParentPanel);
 #if QTween
             showAnim?.Anim.OnStart(() =>
@@ -345,7 +373,7 @@ namespace QTool.UI
 				}
             }
         }
-        public RectTransform rectTransform
+        public override RectTransform RectTransform
         {
             get
             {
@@ -353,7 +381,7 @@ namespace QTool.UI
             }
         }
 
-        public bool IsShow
+        public override bool IsShow
         {
             protected set; get;
         }
@@ -422,13 +450,13 @@ namespace QTool.UI
             Instance?.Hide();
         }
         [ViewButton("显示")]
-        public void Show()
+        public override void Show()
         {
             _ = ShowAsync();
         }
         List<object> showObj = new List<object>();
         
-        public void Switch(bool show, object obj=null )
+        public override void Switch(bool show, object obj=null )
         {
             if (show)
             {
@@ -456,18 +484,18 @@ namespace QTool.UI
            
         }
 
-        public async Task ShowAsync()
+        public override async Task ShowAsync()
         {
             IsShow = true;
             await RunAnim();
         }
         [ViewButton("隐藏")]
-        public void Hide()
+        public override void Hide()
         {
             showObj.Clear(); 
             _ = HideAsync();
         }
-        public async Task HideAsync()
+        public override async Task HideAsync()
         {
             IsShow = false;
             await RunAnim();

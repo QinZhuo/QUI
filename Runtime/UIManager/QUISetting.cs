@@ -7,9 +7,9 @@ namespace QTool.UI
     public class QUISetting:InstanceBehaviour<QUISetting>
     {
         public static List<string> curList = new List<string>();
-        [ViewName("UI≈‰÷√")]
+        [ViewName("UIÈÖçÁΩÆ")]
         public List<string> PanelList;
-        public bool InitOver=false;
+        public bool InitOver { private set; get; } = false;
         protected async  void Start()
         {
             InitOver = false;

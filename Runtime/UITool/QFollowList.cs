@@ -12,14 +12,18 @@ namespace QTool.UI
 			base.Reset();
 			objectList = GetComponent<QObjectList>();
 		}
-		public QFollowUI GetUI(Transform target)
+		public static QFollowUI GetQFollowUI(Transform target)
 		{
 			if (target == null)
 			{
 				Debug.LogError("follow目标为空");
 				return null;
 			}
-			var obj= objectList[target.GetHashCode().ToString()];
+			if (Instance == null)
+			{
+				return null;
+			}
+			var obj=Instance.objectList[target.GetHashCode().ToString()];
 			var followUI = obj.GetComponent<QFollowUI>();
 			if(followUI!=null)
 			{

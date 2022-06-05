@@ -293,28 +293,32 @@ namespace QTool.UI
 		}
 
 
-		public static void SwitchWindow(bool switchBool)
+		public static void SwitchPanel(bool switchBool)
 		{
 			if (switchBool)
 			{
-				ShowWindow();
+				ShowPanel();
 			}
 			else
 			{
-				HideWindow();
+				HidePanel();
 			}
 		}
 
-		public static async void ShowWindow()
+		public static async void ShowPanel()
 		{
-			if (await Tool.Wait(() => Instance != null))
+			var ui= await QUIManager.GetUI(nameof(T));
+			if (ui!=null&& Application.isPlaying)
 			{
 				Instance?.Show();
 			}
 		}
-		public static void HideWindow()
+		public static void HidePanel()
 		{
-			Instance?.Hide();
+			if (PanelIsShow)
+			{
+				Instance.Hide();
+			}
 		}
 		[ViewButton("显示")]
 		public override void Show()

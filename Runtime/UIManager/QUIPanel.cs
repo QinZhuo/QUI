@@ -307,7 +307,7 @@ namespace QTool.UI
 
 		public static async void ShowPanel()
 		{
-			var ui= await QUIManager.GetUI(nameof(T));
+			var ui= await QUIManager.GetUI(typeof(T).Name);
 			if (ui!=null&& Application.isPlaying)
 			{
 				Instance?.Show();

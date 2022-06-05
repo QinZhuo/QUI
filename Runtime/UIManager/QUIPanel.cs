@@ -123,7 +123,7 @@ namespace QTool.UI
 			SceneManager.activeSceneChanged -= OnSceneChange;
 
 		}
-		protected void Awake()
+		protected virtual void Awake()
 		{
 
 			if (this is T panel)

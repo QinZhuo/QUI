@@ -83,7 +83,7 @@ namespace QTool.UI
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList.ContainsKey(key)) return PanelList[key];
 
-            await UIPanelPrefab.LoadAllAsync();
+            await UIPanelPrefabs.LoadAllAsync();
             if (key.SplitTowString(".",out var start,out var end))
 			{
 				Transform parent = await Get(start);
@@ -91,7 +91,7 @@ namespace QTool.UI
             }
             else if (!PanelList.ContainsKey(key))
             {
-                var prefab= await UIPanelPrefab.GetAsync(key);
+                var prefab= await UIPanelPrefabs.GetAsync(key);
 				var obj = GameObject.Instantiate(prefab);
                 if (obj.transform.parent == null)
                 {

@@ -50,7 +50,7 @@ namespace QTool.UI
 		{
 			get
 			{
-				if (Instance == null)
+				if (_instance == null)
 				{
 					return false;
 				}

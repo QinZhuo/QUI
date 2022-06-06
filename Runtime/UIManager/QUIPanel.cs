@@ -46,6 +46,10 @@ namespace QTool.UI
 
 			}
 		}
+		public static async Task<T> GetInstance()
+		{
+			return await QUIManager.GetUI(typeof(T).Name) as T;
+		}
 		public static bool PanelIsShow
 		{
 			get
@@ -307,8 +311,8 @@ namespace QTool.UI
 
 		public static async void ShowPanel()
 		{
-			var ui= await QUIManager.GetUI(typeof(T).Name);
-			if (ui!=null&& Application.isPlaying)
+			await GetInstance();
+			if (Application.isPlaying)
 			{
 				Instance?.Show();
 			}

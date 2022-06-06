@@ -99,7 +99,7 @@ namespace QTool.UI
                 }
                 ResisterPanel(key, obj.GetComponent<RectTransform>());
             }
-            else
+            else if(PanelList[key]==null)
             {
                 Debug.LogError("找不到【" + key + "】UI页面");
             }

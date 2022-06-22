@@ -11,7 +11,7 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
-	public class UIPanelPrefabs : PrefabAssetList<UIPanelPrefabs>
+	public class UIPanelPrefabs : PrefabLoader<UIPanelPrefabs>
 	{
 	}
 

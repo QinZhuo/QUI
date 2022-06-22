@@ -82,8 +82,6 @@ namespace QTool.UI
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList.ContainsKey(key)) return PanelList[key];
-
-            await UIPanelPrefabs.LoadAllAsync();
             if (key.SplitTowString(".",out var start,out var end))
 			{
 				Transform parent = await Get(start);

@@ -28,17 +28,18 @@ namespace QTool.UI
         protected async  void Start()
         {
             InitOver = false;
-            foreach (var uiKey in PanelList)
+			foreach (var uiKey in DestoryList)
+			{
+				QUIManager.Destory(uiKey);
+			}
+			foreach (var uiKey in PanelList)
             {
                 var ui = await QUIManager.GetUI(uiKey);
                 ui?.ResetUI();
             }
             curList.Clear();
             curList.AddRange(PanelList);
-			foreach (var uiKey in DestoryList)
-			{
-				QUIManager.Destory(uiKey);
-			}
+		
             InitOver = true;
         }
     }

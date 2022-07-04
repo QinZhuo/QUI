@@ -283,7 +283,7 @@ namespace QTool.UI
 			}
 			if (blockInput)
 			{
-				QUIManager.Push(this);
+				QUIManager.WindowPush(this);
 			}
 		}
 		protected virtual void OnHide()
@@ -292,7 +292,7 @@ namespace QTool.UI
 			QTime.RevertScale(gameObject);
 			if (blockInput)
 			{
-				QUIManager.Remove(this);
+				QUIManager.WindowRemove(this);
 			}
 		}
 

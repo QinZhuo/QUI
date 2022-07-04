@@ -103,8 +103,15 @@ namespace QTool.UI
             }
             return PanelList[key];
         }
-
-        public static int Count
+		public static void Destory(string key)
+		{
+			if (!string.IsNullOrWhiteSpace(key)&&PanelList.ContainsKey(key)){
+				var ui= PanelList[key];
+				PanelList.RemoveKey(key);
+				GameObject.Destroy(ui.gameObject);
+			}
+		}
+		public static int Count
         {
             get
             {
@@ -112,7 +119,7 @@ namespace QTool.UI
             }
         }
         public static List<UIPanel> windowStack = new List<UIPanel>();
-        public static void Push(UIPanel window)
+        public static void WindowPush(UIPanel window)
         {
             if (windowStack.StackPeek() == window)
             {
@@ -127,7 +134,8 @@ namespace QTool.UI
             Debug.Log("当前页面 " + (windowStack.StackPeek() as MonoBehaviour));
         }
         public static event System.Action<UIPanel> WindowChange;
-        public static void Remove(UIPanel window)
+		
+        public static void WindowRemove(UIPanel window)
         {
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);

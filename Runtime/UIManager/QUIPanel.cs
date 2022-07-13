@@ -17,7 +17,7 @@ namespace QTool.UI
 
 	public abstract class UIPanel : MonoBehaviour
 	{
-		public abstract void Switch(bool show, object obj);
+		public abstract void Switch(bool show);
 		public abstract void Show();
 		public abstract Task ShowAsync();
 		public abstract void Hide();
@@ -329,32 +329,33 @@ namespace QTool.UI
 		{
 			_ = ShowAsync();
 		}
-		List<object> showObj = new List<object>();
+		//List<object> showObj = new List<object>();
 
-		public override void Switch(bool show, object obj = null)
+		public override void Switch(bool show)
 		{
 			if (show)
 			{
 				Show();
-				if (obj != null)
-				{
-					showObj.AddCheckExist(obj);
-				}
+				//if (obj != null)
+				//{
+				//	showObj.AddCheckExist(obj);
+				//}
 			}
 			else
 			{
-				if (obj != null)
-				{
-					Hide();
-				}
-				else
-				{
-					showObj.Remove(obj);
-					if (showObj.Count == 0)
-					{
-						Hide();
-					}
-				}
+				Hide(); ;
+				//if (obj != null)
+				//{
+				//	Hide();
+				//}
+				//else
+				//{
+				//	showObj.Remove(obj);
+				//	if (showObj.Count == 0)
+				//	{
+				//		Hide();
+				//	}
+				//}
 			}
 
 		}
@@ -367,7 +368,7 @@ namespace QTool.UI
 		[ViewButton("隐藏")]
 		public override void Hide()
 		{
-			showObj.Clear();
+			//showObj.Clear();
 			_ = HideAsync();
 		}
 		public override async Task HideAsync()

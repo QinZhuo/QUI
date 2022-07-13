@@ -69,13 +69,13 @@ namespace QTool.UI
             return false;
         }
 
-        public static async Task Show(string key,bool show,object obj)
+        public static async Task Show(string key,bool show)
         {
             if (show == IsShow(key))
             {
                 return;
             }
-            (await GetUI(key)).Switch(show, obj);
+            (await GetUI(key)).Switch(show);
         }
       
         static async Task<RectTransform> Get(string key)

@@ -89,7 +89,7 @@ namespace QTool.UI
             }
             else if (!PanelList.ContainsKey(key))
             {
-                var prefab= await UIPanelPrefabs.LoadAsync(key);
+                var prefab= await UIPanelPrefabs.BothLoadAsync(key);
 				var obj = GameObject.Instantiate(prefab);
                 if (obj.transform.parent == null)
                 {

@@ -46,9 +46,19 @@ namespace QTool.UI
 
 			}
 		}
+		static Task<UIPanel> createTask;
 		public static async Task<T> GetInstance()
 		{
-			return await QUIManager.GetUI(typeof(T).Name) as T;
+			if (_instance == null)
+			{
+				if (createTask == null)
+				{
+					createTask = QUIManager.GetUI(typeof(T).Name);
+					createTask = null;
+				}
+				_instance=(await createTask) as T;
+			}
+			return _instance;
 		}
 		public static bool PanelIsShow
 		{

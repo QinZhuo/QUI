@@ -54,9 +54,9 @@ namespace QTool.UI
 				if (createTask == null)
 				{
 					createTask = QUIManager.GetUI(typeof(T).Name);
-					createTask = null;
 				}
 				_instance=(await createTask) as T;
+				createTask = null;
 			}
 			return _instance;
 		}

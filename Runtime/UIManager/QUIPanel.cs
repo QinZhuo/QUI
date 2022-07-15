@@ -297,11 +297,11 @@ namespace QTool.UI
 		}
 
 
-		public static void SwitchPanel(bool switchBool)
+		public static async Task SwitchPanel(bool switchBool)
 		{
 			if (switchBool)
 			{
-				ShowPanel();
+				await ShowPanel();
 			}
 			else
 			{
@@ -309,7 +309,7 @@ namespace QTool.UI
 			}
 		}
 
-		public static async void ShowPanel()
+		public static async Task ShowPanel()
 		{
 			await GetInstance();
 			if (Application.isPlaying)
@@ -336,26 +336,10 @@ namespace QTool.UI
 			if (show)
 			{
 				Show();
-				//if (obj != null)
-				//{
-				//	showObj.AddCheckExist(obj);
-				//}
 			}
 			else
 			{
 				Hide(); ;
-				//if (obj != null)
-				//{
-				//	Hide();
-				//}
-				//else
-				//{
-				//	showObj.Remove(obj);
-				//	if (showObj.Count == 0)
-				//	{
-				//		Hide();
-				//	}
-				//}
 			}
 
 		}

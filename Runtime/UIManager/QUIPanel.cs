@@ -287,13 +287,16 @@ namespace QTool.UI
 			//    gameObject.SetActive(IsShow);
 			//}
 			OnShowAction?.Invoke();
-			if (timeScale >= 0)
+			if (Application.isPlaying)
 			{
-				QTime.ChangeScale(gameObject, timeScale);
-			}
-			if (blockInput)
-			{
-				QUIManager.WindowPush(this);
+				if (timeScale >= 0)
+				{
+					QTime.ChangeScale(gameObject, timeScale);
+				}
+				if (blockInput)
+				{
+					QUIManager.WindowPush(this);
+				}
 			}
 		}
 		protected virtual void OnHide()

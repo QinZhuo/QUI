@@ -15,9 +15,9 @@ namespace QTool.UI
         }
 		public void Recover()
 		{
-			if (QFollowList.Instance != null)
+			if (QFollowList.PanelIsShow)
 			{
-				QFollowList.Instance.objectList.Push(gameObject);
+				QFollowList.Push(gameObject);
 			}
 		}
     }

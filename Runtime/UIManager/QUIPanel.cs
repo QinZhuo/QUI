@@ -30,7 +30,7 @@ namespace QTool.UI
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
 	{
 		static T _instance;
-		public static T Instance
+		protected static T Instance
 		{
 			get
 			{
@@ -47,7 +47,7 @@ namespace QTool.UI
 			}
 		}
 		static Task<UIPanel> createTask;
-		public static async Task<T> GetInstance()
+		protected static async Task<T> GetInstance()
 		{
 			if (_instance == null)
 			{

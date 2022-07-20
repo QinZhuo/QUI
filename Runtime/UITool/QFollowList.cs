@@ -12,6 +12,10 @@ namespace QTool.UI
 			base.Reset();
 			objectList = GetComponent<QObjectList>();
 		}
+		public static void Push(GameObject obj)
+		{
+			Instance.objectList.Push(obj);
+		}
 		public static QFollowUI GetQFollowUI(Transform target)
 		{
 			if (target == null)

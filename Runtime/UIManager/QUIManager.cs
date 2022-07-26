@@ -85,18 +85,22 @@ namespace QTool.UI
             if (key.SplitTowString(".",out var start,out var end))
 			{
 				Transform parent = await Get(start);
-                PanelList[key] = parent.GetChild(end) as RectTransform;
-            }
+				PanelList[key] = parent.GetChild(end) as RectTransform;
+			}
             else if (!PanelList.ContainsKey(key))
-            {
-                var prefab= await UIPanelPrefabs.LoadAsync(key);
+			{
+				var prefab = await UIPanelPrefabs.LoadAsync(key);
+				if (PanelList.ContainsKey(key))
+				{
+					return await Get(key);
+				}
 				var obj = GameObject.Instantiate(prefab);
-                if (obj.transform.parent == null)
-                {
-                    GameObject.DontDestroyOnLoad(obj);
-                }
-                ResisterPanel(key, obj.GetComponent<RectTransform>());
-            }
+				if (obj.transform.parent == null)
+				{
+					GameObject.DontDestroyOnLoad(obj);
+				}
+				ResisterPanel(key, obj.GetComponent<RectTransform>());
+			}
             else if(PanelList[key]==null)
             {
                 Debug.LogError("找不到【" + key + "】UI页面");

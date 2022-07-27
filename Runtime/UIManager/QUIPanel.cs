@@ -217,9 +217,14 @@ namespace QTool.UI
 
 		public ActionEvent OnShowAction;
 		public ActionEvent OnHideAction;
+		public virtual void OnStartAnim(bool show)
+		{
+
+		}
 		public async Task RunAnim()
 		{
 
+			OnStartAnim(IsShow);
 			if (IsShow)
 			{
 				if (!gameObject.activeSelf)

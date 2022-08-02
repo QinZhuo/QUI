@@ -332,7 +332,7 @@ namespace QTool.UI
 			await GetInstance();
 			if (Application.isPlaying)
 			{
-				Instance?.Show();
+				await Instance?.ShowAsync();
 			}
 		}
 		public static void HidePanel()

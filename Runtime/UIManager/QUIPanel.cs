@@ -17,20 +17,44 @@ namespace QTool.UI
 
 	public abstract class UIPanel : MonoBehaviour
 	{
-		public abstract void Switch(bool show);
-		public abstract void Show();
 		public abstract Task ShowAsync();
-		public abstract void Hide();
 		public abstract Task HideAsync();
 		public abstract void ResetUI();
-		public abstract bool IsShow { protected set; get; }
-		public abstract RectTransform RectTransform { get; }
+		[ViewButton("显示")]
+		public void Show()
+		{
+			_ = ShowAsync();
+		}
+		[ViewButton("隐藏")]
+		public void Hide()
+		{
+			_ = HideAsync();
+		}
+		public void Switch(bool show)
+		{
+			if (show)
+			{
+				Show();
+			}
+			else
+			{
+				Hide(); ;
+			}
+		}
+		public bool IsShow { protected set; get; }
+		public RectTransform RectTransform
+		{
+			get
+			{
+				return transform as RectTransform;
+			}
+		}
 	}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
 	{
 		static T _instance;
-		public static T Instance
+		protected static T Instance
 		{
 			get
 			{
@@ -47,10 +71,11 @@ namespace QTool.UI
 			}
 		}
 		static Task<UIPanel> createTask;
-		public static async Task<T> GetInstance()
+		protected static async Task<T> GetInstance()
 		{
 			if (_instance == null)
 			{
+				if (!Application.isPlaying) return null;
 				if (createTask == null)
 				{
 					createTask = QUIManager.GetUI(typeof(T).Name);
@@ -259,18 +284,8 @@ namespace QTool.UI
 				}
 			}
 		}
-		public override RectTransform RectTransform
-		{
-			get
-			{
-				return transform as RectTransform;
-			}
-		}
+	
 
-		public override bool IsShow
-		{
-			protected set; get;
-		}
 		void FreshGroup()
 		{
 #if QTween
@@ -327,52 +342,17 @@ namespace QTool.UI
 			}
 		}
 
-		public static async Task ShowPanel()
-		{
-			await GetInstance();
-			if (Application.isPlaying)
-			{
-				await Instance?.ShowAsync();
-			}
-		}
-		public static void HidePanel()
-		{
-			if (PanelIsShow)
-			{
-				Instance.Hide();
-			}
-		}
-		[ViewButton("显示")]
-		public override void Show()
-		{
-			_ = ShowAsync();
-		}
+	
+		
 		//List<object> showObj = new List<object>();
 
-		public override void Switch(bool show)
-		{
-			if (show)
-			{
-				Show();
-			}
-			else
-			{
-				Hide(); ;
-			}
-
-		}
 
 		public override async Task ShowAsync()
 		{
 			IsShow = true;
 			await RunAnim();
 		}
-		[ViewButton("隐藏")]
-		public override void Hide()
-		{
-			//showObj.Clear();
-			_ = HideAsync();
-		}
+	
 		public override async Task HideAsync()
 		{
 			IsShow = false;
@@ -392,7 +372,18 @@ namespace QTool.UI
 				await Task.Yield();
 			}
 		}
-
+		public static async Task ShowPanel()
+		{
+			await GetInstance();
+			await Instance?.ShowAsync();
+		}
+		public static async Task HidePanel()
+		{
+			if (PanelIsShow)
+			{
+				await Instance?.HideAsync();
+			}
+		}
 
 	}
 }

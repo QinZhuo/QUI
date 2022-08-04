@@ -50,6 +50,7 @@ namespace QTool.UI
 			}
 		}
 		
+
 	}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
@@ -366,9 +367,9 @@ namespace QTool.UI
 			await ShowAsync();
 			await WaitHide();
 		}
-		public async Task WaitHide()
+		public static async Task WaitHide()
 		{
-			while (IsShow && Application.isPlaying)
+			while (Instance.IsShow && Application.isPlaying)
 			{
 				await Task.Yield();
 			}

@@ -49,6 +49,7 @@ namespace QTool.UI
 				return transform as RectTransform;
 			}
 		}
+		
 	}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
@@ -384,6 +385,13 @@ namespace QTool.UI
 				await Instance?.HideAsync();
 			}
 		}
-
+		public static void InvokeEvent(string eventName)
+		{
+			Instance.gameObject.InvokeEvent(eventName);
+		}
+		public static void InvokeEvent(string eventName,bool value)
+		{
+			Instance.gameObject.InvokeEvent(eventName,value);
+		}
 	}
 }

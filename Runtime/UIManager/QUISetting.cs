@@ -22,7 +22,8 @@ namespace QTool.UI
 			}
 			else
 			{
-				return await QTask.Wait(() => Instance.InitOver);
+				await QTask.Wait(() => Instance.InitOver);
+				return true;
 			}
 		} 
         protected async  void Start()

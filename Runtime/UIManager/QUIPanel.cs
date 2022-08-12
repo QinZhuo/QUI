@@ -20,16 +20,17 @@ namespace QTool.UI
 		public abstract Task ShowAsync();
 		public abstract Task HideAsync();
 		public abstract void ResetUI();
-		[ViewButton("显示")]
-		public void Show()
-		{
-			_ = ShowAsync();
-		}
 		[ViewButton("隐藏")]
 		public void Hide()
 		{
 			_ = HideAsync();
 		}
+		[ViewButton("显示")]
+		public void Show()
+		{
+			_ = ShowAsync();
+		}
+		
 		public void Switch(bool show)
 		{
 			if (show)

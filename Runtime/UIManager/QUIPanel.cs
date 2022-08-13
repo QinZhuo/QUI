@@ -197,7 +197,7 @@ namespace QTool.UI
 				if (IsShow)
 				{
 					Group.interactable = true;
-					FreshData();
+					OnFresh();
 				}
 			}
 			else
@@ -208,7 +208,7 @@ namespace QTool.UI
 		/// <summary>
 		///  主页面切换时调用 刷新数据
 		/// </summary>
-		public virtual void FreshData()
+		public virtual void OnFresh()
 		{
 
 		}
@@ -331,7 +331,7 @@ namespace QTool.UI
 				}
 				else
 				{
-					FreshData();
+					OnFresh();
 				}
 			}
 			

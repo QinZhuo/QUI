@@ -1,4 +1,4 @@
-﻿using QTool.Inspector;
+using QTool.Inspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -78,8 +78,10 @@ namespace QTool.UI
                 case ModifyType.图片:
                     {
                         image.sprite = Resources.Load<Sprite>("QCircle512");
-                        image.type = Image.Type.Simple;
-                        image.SetVerticesDirty();
+                        image.type = Image.Type.Filled;
+						image.fillMethod = Image.FillMethod.Radial360;
+						image.fillAmount = angle/360;
+						//image.SetVerticesDirty();
                     }
                     break;
                 case ModifyType.顶点:

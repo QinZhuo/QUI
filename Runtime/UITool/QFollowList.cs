@@ -7,9 +7,8 @@ namespace QTool.UI
 	public class QFollowList :UIPanel<QFollowList>
 	{
 		public QObjectList objectList;
-		protected override void Reset()
+		protected void Reset()
 		{
-			base.Reset();
 			objectList = GetComponent<QObjectList>();
 		}
 		public static void Push(GameObject obj)

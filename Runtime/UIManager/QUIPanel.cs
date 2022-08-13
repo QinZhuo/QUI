@@ -75,200 +75,7 @@ namespace QTool.UI
 			}
 		}
 		#endregion
-
-		protected static async Task<T> GetInstance()
-		{
-			await QUIManager.GetUI(typeof(T).Name);
-			return Instance;
-		}
-	
-	
-		protected virtual void FreshWindow(UIPanel window)
-		{
-			if (group == null) return;
-
-			var value = window == null || this.Equals(window) || transform.HasParentIs(window.RectTransform);
-			if (value)
-			{
-				if (IsShow)
-				{
-					group.interactable = true;
-				}
-			}
-			else
-			{
-				group.interactable = false;
-			}
-		}
-		protected virtual void OnSceneChange(Scene scene, Scene nextScene)
-		{
-			if (!string.IsNullOrEmpty(ParentPanel))
-			{
-				HideAndComplete();
-			}
-		}
-
-		#region 基础属性
-		[Group(true)]
-		[ViewName("初始显示")]
-		public bool showOnStart = false;
-		[ViewName("时间控制")]
-		public float timeScale = -1;
-		[ViewName("遮挡点击")]
-		[Group(false)]
-		public bool blockInput = false;
-		#endregion
-		#region 基本生命周期
-
-		protected virtual void Reset()
-		{
-			group = GetComponent<CanvasGroup>();
-		}
-		protected virtual void Awake()
-		{
-			if (this is T panel)
-			{
-				_instance = this as T;
-				QDebug.Log("初始化页面" + _instance);
-			}
-			else
-			{
-				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
-			}
-			if (group == null)
-			{
-				group = GetComponent<CanvasGroup>();
-			}
-			IsShow = group.alpha >= 0.9f;
-
-			SceneManager.activeSceneChanged += OnSceneChange;
-			QUIManager.WindowChange += FreshWindow;
-			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
-
-		}
-		protected virtual void OnDestroy()
-		{
-			QUIManager.WindowChange -= FreshWindow;
-			SceneManager.activeSceneChanged -= OnSceneChange;
-
-		}
-		public override void ResetUI()
-		{
-			if (showOnStart)
-			{
-				if (!IsShow)
-				{
-					ShowAndComplete();
-				}
-			}
-			else
-			{
-				if (IsShow)
-				{
-					HideAndComplete();
-				}
-			}
-		}
-
-		public void ShowAndComplete()
-		{
-			Show();
-#if QTween
-			showAnim?.Complete();
-#endif
-		}
-		public void HideAndComplete()
-		{
-			Hide();
-#if QTween
-			showAnim?.Complete();
-#endif
-		}
-		#endregion
-
-
-		[ViewName("父页面")]
-		public string ParentPanel = "";
-		public CanvasGroup group;
-#if QTween
-		[ViewName("显示动画")]
-		public QTweenBehavior showAnim;
-#endif
-		private void InvokeOnShow()
-		{
-			try
-			{
-				if (IsShow)
-				{
-					OnShow();
-				}
-				else
-				{
-					OnHide();
-				}
-			}
-			catch (System.Exception e)
-			{
-				Debug.LogError((IsShow ? "显示" : "隐藏") + typeof(T) + " 页面出错：\n" + e);
-			}
-		}
-
-		public ActionEvent OnShowAction;
-		public ActionEvent OnHideAction;
-		protected virtual async Task RunAnim()
-		{
-		
-#if QTween
-			if (showAnim != null)
-			{
-				if (!gameObject.activeSelf)
-				{
-					if (IsShow)
-					{
-						gameObject.SetActive(true);
-					}
-				}
-				await showAnim.PlayAsync(IsShow);
-			}
-			else
-#endif
-			{
-				gameObject.SetActive(IsShow);
-				group.interactable = IsShow;
-				group.alpha = IsShow ? 1 : 0;
-			}
-			InvokeOnShow();
-		}
-	
-
-		protected virtual void OnShow()
-		{
-			transform.SetAsLastSibling();
-			Fresh();
-			OnShowAction?.Invoke();
-			if (Application.isPlaying)
-			{
-				if (timeScale >= 0)
-				{
-					QTime.ChangeScale(gameObject, timeScale);
-				}
-				if (blockInput)
-				{
-					QUIManager.WindowPush(this);
-				}
-			}
-		}
-		protected virtual void OnHide()
-		{
-			OnHideAction?.Invoke();
-			QTime.RevertScale(gameObject);
-			if (blockInput)
-			{
-				QUIManager.WindowRemove(this);
-			}
-		}
-
-
+		#region 静态公开接口
 		public static async Task SwitchPanel(bool switchBool)
 		{
 			if (switchBool)
@@ -277,21 +84,10 @@ namespace QTool.UI
 			}
 			else
 			{
-				_= HidePanel();
+				_ = HidePanel();
 			}
 		}
-		public override async Task ShowAsync()
-		{
-			IsShow = true;
-			await RunAnim();
-		}
-	
-		public override async Task HideAsync()
-		{
-			IsShow = false;
-			await RunAnim();
-		}
-		public virtual void Fresh() { }
+
 
 		public async Task ShowWaitHide()
 		{
@@ -335,9 +131,213 @@ namespace QTool.UI
 		{
 			Instance.gameObject.InvokeEvent(eventName);
 		}
-		public static void InvokeEvent(string eventName,bool value)
+		public static void InvokeEvent(string eventName, bool value)
 		{
-			Instance.gameObject.InvokeEvent(eventName,value);
+			Instance.gameObject.InvokeEvent(eventName, value);
 		}
+		#endregion
+		#region 基础属性
+		[Group(true)]
+		[ViewName("初始显示")]
+		public bool showOnStart = false;
+		[ViewName("遮挡点击")]
+		public bool blockInput = false;
+		[ViewName("控制TimeScale")]
+		public float timeScale = -1;
+#if QTween
+		[ViewName("显示动画")]
+		public QTweenBehavior showAnim;
+#endif
+		[ViewName("父页面")]
+		
+		public string ParentPanel = "";
+		public ActionEvent OnShowAction;
+		[Group(false)]
+		public ActionEvent OnHideAction;
+		CanvasGroup _group;
+		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
+
+		#endregion
+		#region 基本生命周期
+		protected static async Task<T> GetInstance()
+		{
+			await QUIManager.GetUI(typeof(T).Name);
+			return Instance;
+		}
+		protected virtual void Awake()
+		{
+			if (this is T panel)
+			{
+				_instance = this as T;
+				QDebug.Log("初始化页面" + _instance);
+			}
+			else
+			{
+				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
+			}
+			IsShow = Group.alpha >= 0.9f;
+
+			SceneManager.activeSceneChanged += OnSceneChange;
+			QUIManager.WindowChange += OnFresh;
+			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
+
+		}
+		protected virtual void OnDestroy()
+		{
+			QUIManager.WindowChange -= OnFresh;
+			SceneManager.activeSceneChanged -= OnSceneChange;
+
+		}
+		/// <summary>
+		///  主页面切换时调用 刷新数据 设置是否可以点击
+		/// </summary>
+		/// <param name="window"></param>
+		protected virtual void OnFresh(UIPanel window)
+		{
+			var value = window == null || this.Equals(window) || transform.HasParentIs(window.RectTransform);
+			if (value)
+			{
+				if (IsShow)
+				{
+					Group.interactable = true;
+				}
+			}
+			else
+			{
+				Group.interactable = false;
+			}
+		}
+		/// <summary>
+		/// 由UISettinng控制 是否初始化显示
+		/// </summary>
+		public override void ResetUI()
+		{
+			if (showOnStart)
+			{
+				if (!IsShow)
+				{
+					ShowAndComplete();
+				}
+			}
+			else
+			{
+				if (IsShow)
+				{
+					HideAndComplete();
+				}
+			}
+		}
+		/// <summary>
+		/// 切换场景时调用默认隐藏拥有 ParentPanel 的页面
+		/// </summary>
+		protected virtual void OnSceneChange(Scene scene, Scene nextScene)
+		{
+			if (!string.IsNullOrEmpty(ParentPanel))
+			{
+				HideAndComplete();
+			}
+		}
+
+
+
+		private void InvokeOnShow()
+		{
+			try
+			{
+				if (IsShow)
+				{
+					OnShow();
+				}
+				else
+				{
+					OnHide();
+				}
+			}
+			catch (System.Exception e)
+			{
+				Debug.LogError((IsShow ? "显示" : "隐藏") + typeof(T) + " 页面出错：\n" + e);
+			}
+		}
+		/// <summary>
+		/// 显示或隐藏页面时 最开始调用
+		/// </summary>
+		protected virtual async Task StartShow(bool IsShow)
+		{
+			this.IsShow = IsShow;
+#if QTween
+			if (showAnim != null)
+			{
+				if (!gameObject.activeSelf)
+				{
+					if (base.IsShow)
+					{
+						gameObject.SetActive(true);
+					}
+				}
+				await showAnim.PlayAsync(base.IsShow);
+			}
+			else
+#endif
+			{
+				gameObject.SetActive(base.IsShow);
+				Group.interactable = base.IsShow;
+				Group.alpha = base.IsShow ? 1 : 0;
+			}
+			InvokeOnShow();
+		}
+		public override async Task ShowAsync()
+		{
+			await StartShow(true);
+		}
+
+		public override async Task HideAsync()
+		{
+			await StartShow(false);
+		}
+
+		public void ShowAndComplete()
+		{
+			Show();
+#if QTween
+			showAnim?.Complete();
+#endif
+		}
+		public void HideAndComplete()
+		{
+			Hide();
+#if QTween
+			showAnim?.Complete();
+#endif
+		}
+
+		protected virtual void OnShow()
+		{
+			transform.SetAsLastSibling();
+			OnShowAction?.Invoke();
+			if (Application.isPlaying)
+			{
+				if (timeScale >= 0)
+				{
+					QTime.ChangeScale(gameObject, timeScale);
+				}
+				if (blockInput)
+				{
+					QUIManager.WindowPush(this);
+				}
+			}
+			OnFresh(this);
+		}
+		protected virtual void OnHide()
+		{
+			OnHideAction?.Invoke();
+			QTime.RevertScale(gameObject);
+			if (blockInput)
+			{
+				QUIManager.WindowRemove(this);
+			}
+		}
+
+		#endregion
+		
 	}
 }

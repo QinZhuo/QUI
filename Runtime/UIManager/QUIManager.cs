@@ -77,7 +77,6 @@ namespace QTool.UI
             }
             (await GetUI(key)).Switch(show);
         }
-      
         static async Task<RectTransform> Get(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
@@ -89,17 +88,16 @@ namespace QTool.UI
 			}
             else if (!PanelList.ContainsKey(key))
 			{
-				var prefab = await UIPanelPrefabs.LoadAsync(key);
-				if (PanelList.ContainsKey(key))
+				await QTask.RunOnlyOne(nameof(QUIManager)+"_"+key, async() =>
 				{
-					return await Get(key);
-				}
-				var obj = GameObject.Instantiate(prefab);
-				if (obj.transform.parent == null)
-				{
-					GameObject.DontDestroyOnLoad(obj);
-				}
-				ResisterPanel(key, obj.GetComponent<RectTransform>());
+					var prefab = await UIPanelPrefabs.LoadAsync(key);
+					var obj = GameObject.Instantiate(prefab);
+					if (obj.transform.parent == null)
+					{
+						GameObject.DontDestroyOnLoad(obj);
+					}
+					ResisterPanel(key, obj.GetComponent<RectTransform>());
+				});
 			}
             else if(PanelList[key]==null)
             {

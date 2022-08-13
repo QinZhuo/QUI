@@ -9,10 +9,10 @@ namespace QTool.UI
 	public class QUISetting : InstanceBehaviour<QUISetting>
 	{
 		public static List<string> curList = new List<string>();
-		[ViewName("初始化UI")]
-		public List<string> PanelList;
 		[ViewName("摧毁UI")]
 		public List<string> DestoryList;
+		[ViewName("初始化UI")]
+		public List<string> PanelList;
 		public bool InitOver { private set; get; } = false;
 		public static async Task<bool> WaitInitOver()
 		{
@@ -26,7 +26,7 @@ namespace QTool.UI
 				return true;
 			}
 		} 
-        protected async  void Start()
+        protected async void Start()
         {
             InitOver = false;
 			foreach (var uiKey in DestoryList)
@@ -40,7 +40,6 @@ namespace QTool.UI
             }
             curList.Clear();
             curList.AddRange(PanelList);
-		
             InitOver = true;
         }
     }

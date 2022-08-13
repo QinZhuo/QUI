@@ -56,6 +56,7 @@ namespace QTool.UI
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
 	{
+		#region 单例逻辑
 		static T _instance;
 		protected static T Instance
 		{
@@ -73,41 +74,15 @@ namespace QTool.UI
 
 			}
 		}
-		static Task<UIPanel> createTask;
+		#endregion
+
 		protected static async Task<T> GetInstance()
 		{
-			if (_instance == null)
-			{
-				if (!Application.isPlaying) return null;
-				if (createTask == null)
-				{
-					createTask = QUIManager.GetUI(typeof(T).Name);
-				}
-				_instance=(await createTask) as T;
-				createTask = null;
-			}
-			return _instance;
+			await QUIManager.GetUI(typeof(T).Name);
+			return Instance;
 		}
-		public static bool PanelIsShow
-		{
-			get
-			{
-				if (_instance == null)
-				{
-					return false;
-				}
-				else
-				{
-					return Instance.IsShow;
-				}
-			}
-		}
-		[ViewName("初始显示")]
-		public bool showOnStart = false;
-		[ViewName("时间控制")]
-		public float timeScale = -1;
-		[ViewName("遮挡点击")]
-		public bool blockInput = false;
+	
+	
 		protected virtual void FreshWindow(UIPanel window)
 		{
 			if (group == null) return;
@@ -129,45 +104,28 @@ namespace QTool.UI
 		{
 			if (!string.IsNullOrEmpty(ParentPanel))
 			{
-				FastHide();
+				HideAndComplete();
 			}
 		}
-		public void FastHide()
-		{
-			Hide();
-#if QTween
-			showAnim?.Anim.Complete();
-#endif
-		}
-		public override void ResetUI()
-		{
-			if (showOnStart)
-			{
-				if (!IsShow)
-				{
-					Show();
-				}
-			}
-			else
-			{
-				if (IsShow)
-				{
-					Hide();
-				}
-			}
-#if QTween
-			showAnim?.Anim.Complete();
-#endif
-		}
-		protected virtual void OnDestroy()
-		{
-			QUIManager.WindowChange -= FreshWindow;
-			SceneManager.activeSceneChanged -= OnSceneChange;
 
+		#region 基础属性
+		[Group(true)]
+		[ViewName("初始显示")]
+		public bool showOnStart = false;
+		[ViewName("时间控制")]
+		public float timeScale = -1;
+		[ViewName("遮挡点击")]
+		[Group(false)]
+		public bool blockInput = false;
+		#endregion
+		#region 基本生命周期
+
+		protected virtual void Reset()
+		{
+			group = GetComponent<CanvasGroup>();
 		}
 		protected virtual void Awake()
 		{
-
 			if (this is T panel)
 			{
 				_instance = this as T;
@@ -177,7 +135,6 @@ namespace QTool.UI
 			{
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
-
 			if (group == null)
 			{
 				group = GetComponent<CanvasGroup>();
@@ -186,37 +143,50 @@ namespace QTool.UI
 
 			SceneManager.activeSceneChanged += OnSceneChange;
 			QUIManager.WindowChange += FreshWindow;
-			QUIManager.ResisterPanel(name.Contains("(Clone)") ? name.Substring(0, name.IndexOf("(Clone)")) : name, GetComponent<RectTransform>(), ParentPanel);
-#if QTween
-			showAnim?.Anim.OnStart(() =>
-			{
-				if (IsShow)
-				{
-					InvokeOnShow(true);
-				}
-				else
-				{
-					FreshGroup();
-				}
-			}).OnComplete(() =>
+			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
+
+		}
+		protected virtual void OnDestroy()
+		{
+			QUIManager.WindowChange -= FreshWindow;
+			SceneManager.activeSceneChanged -= OnSceneChange;
+
+		}
+		public override void ResetUI()
+		{
+			if (showOnStart)
 			{
 				if (!IsShow)
 				{
-					InvokeOnShow(false);
+					ShowAndComplete();
 				}
-				else
+			}
+			else
+			{
+				if (IsShow)
 				{
-					FreshGroup();
+					HideAndComplete();
 				}
-			});
-#endif
-			// ResetUI();
+			}
 		}
 
-		protected virtual void Reset()
+		public void ShowAndComplete()
 		{
-			group = GetComponent<CanvasGroup>();
+			Show();
+#if QTween
+			showAnim?.Complete();
+#endif
 		}
+		public void HideAndComplete()
+		{
+			Hide();
+#if QTween
+			showAnim?.Complete();
+#endif
+		}
+		#endregion
+
+
 		[ViewName("父页面")]
 		public string ParentPanel = "";
 		public CanvasGroup group;
@@ -224,11 +194,11 @@ namespace QTool.UI
 		[ViewName("显示动画")]
 		public QTweenBehavior showAnim;
 #endif
-		private void InvokeOnShow(bool show)
+		private void InvokeOnShow()
 		{
 			try
 			{
-				if (show)
+				if (IsShow)
 				{
 					OnShow();
 				}
@@ -239,76 +209,42 @@ namespace QTool.UI
 			}
 			catch (System.Exception e)
 			{
-				Debug.LogError((show ? "显示" : "隐藏") + typeof(T) + " 页面出错：\n" + e);
+				Debug.LogError((IsShow ? "显示" : "隐藏") + typeof(T) + " 页面出错：\n" + e);
 			}
 		}
 
 		public ActionEvent OnShowAction;
 		public ActionEvent OnHideAction;
-		public virtual void OnStartAnim(bool show)
+		protected virtual async Task RunAnim()
 		{
-
-		}
-		public async Task RunAnim()
-		{
-
-			OnStartAnim(IsShow);
-			if (IsShow)
+		
+#if QTween
+			if (showAnim != null)
 			{
 				if (!gameObject.activeSelf)
 				{
-					gameObject.SetActive(true);
+					if (IsShow)
+					{
+						gameObject.SetActive(true);
+					}
 				}
-
-#if QTween
-				if (showAnim != null)
-				{
-					await showAnim.PlayAsync(true);
-				}
-				else
-#endif
-				{
-					FreshGroup();
-					InvokeOnShow(true);
-				}
+				await showAnim.PlayAsync(IsShow);
 			}
 			else
-			{
-#if QTween
-				if (showAnim != null)
-				{
-					await showAnim.PlayAsync(false);
-				}
-				else
-#endif
-				{
-					FreshGroup();
-					InvokeOnShow(false);
-				}
-			}
-		}
-	
-
-		void FreshGroup()
-		{
-#if QTween
-			if (showAnim == null)
 #endif
 			{
 				gameObject.SetActive(IsShow);
 				group.interactable = IsShow;
 				group.alpha = IsShow ? 1 : 0;
-				// group.blocksRaycasts = IsShow;
 			}
+			InvokeOnShow();
 		}
+	
+
 		protected virtual void OnShow()
 		{
 			transform.SetAsLastSibling();
 			Fresh();
-			//if (controlActive)
-			//{
-			//    gameObject.SetActive(IsShow);
-			//}
 			OnShowAction?.Invoke();
 			if (Application.isPlaying)
 			{
@@ -341,15 +277,9 @@ namespace QTool.UI
 			}
 			else
 			{
-				HidePanel();
+				_= HidePanel();
 			}
 		}
-
-	
-		
-		//List<object> showObj = new List<object>();
-
-
 		public override async Task ShowAsync()
 		{
 			IsShow = true;
@@ -385,6 +315,20 @@ namespace QTool.UI
 			if (PanelIsShow)
 			{
 				await Instance?.HideAsync();
+			}
+		}
+		public static bool PanelIsShow
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					return false;
+				}
+				else
+				{
+					return Instance.IsShow;
+				}
 			}
 		}
 		public static void InvokeEvent(string eventName)

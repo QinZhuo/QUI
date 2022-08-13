@@ -178,21 +178,18 @@ namespace QTool.UI
 			IsShow = Group.alpha >= 0.9f;
 
 			SceneManager.activeSceneChanged += OnSceneChange;
-			QUIManager.WindowChange += OnFresh;
+			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
 
 		}
 		protected virtual void OnDestroy()
 		{
-			QUIManager.WindowChange -= OnFresh;
+			QUIManager.WindowChange -= Fresh;
 			SceneManager.activeSceneChanged -= OnSceneChange;
 
 		}
-		/// <summary>
-		///  主页面切换时调用 刷新数据 设置是否可以点击
-		/// </summary>
-		/// <param name="window"></param>
-		protected virtual void OnFresh(UIPanel window)
+	
+		private void Fresh(UIPanel window)
 		{
 			var value = window == null || this.Equals(window) || transform.HasParentIs(window.RectTransform);
 			if (value)
@@ -200,12 +197,20 @@ namespace QTool.UI
 				if (IsShow)
 				{
 					Group.interactable = true;
+					OnFresh();
 				}
 			}
 			else
 			{
 				Group.interactable = false;
 			}
+		}
+		/// <summary>
+		///  主页面切换时调用 刷新数据
+		/// </summary>
+		protected virtual void OnFresh()
+		{
+
 		}
 		/// <summary>
 		/// 由UISettinng控制 是否初始化显示
@@ -324,8 +329,12 @@ namespace QTool.UI
 				{
 					QUIManager.WindowPush(this);
 				}
+				else
+				{
+					OnFresh();
+				}
 			}
-			OnFresh(this);
+			
 		}
 		protected virtual void OnHide()
 		{

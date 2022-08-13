@@ -84,7 +84,7 @@ namespace QTool.UI
 			}
 			else
 			{
-				_ = HidePanel();
+				await HidePanel();
 			}
 		}
 
@@ -249,13 +249,16 @@ namespace QTool.UI
 		{
 			try
 			{
-				if (IsShow)
+				if (Application.IsPlaying(this))
 				{
-					OnShow();
-				}
-				else
-				{
-					OnHide();
+					if (IsShow)
+					{
+						OnShow();
+					}
+					else
+					{
+						OnHide();
+					}
 				}
 			}
 			catch (System.Exception e)

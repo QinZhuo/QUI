@@ -271,7 +271,6 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual async Task StartShow(bool IsShow)
 		{
-			if (!this.IsShow&&!IsShow) return;
 			this.IsShow = IsShow;
 #if QTween
 			if (showAnim != null)
@@ -283,7 +282,12 @@ namespace QTool.UI
 						gameObject.SetActive(true);
 					}
 				}
-				await showAnim.PlayAsync(base.IsShow);
+				var animTask=showAnim.PlayAsync(base.IsShow);
+				await animTask;
+				if (animTask.Exception == null)
+				{
+					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
+				}
 			}
 			else
 #endif

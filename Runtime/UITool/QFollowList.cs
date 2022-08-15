@@ -30,7 +30,7 @@ namespace QTool.UI
 			var followUI = obj.GetComponent<QFollowUI>();
 			if(followUI!=null)
 			{
-				followUI.target = target;
+				followUI.Target = target;
 				return followUI;
 			}
 			else

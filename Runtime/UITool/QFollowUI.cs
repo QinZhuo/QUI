@@ -5,18 +5,28 @@ namespace QTool.UI
 {
     public class QFollowUI : MonoBehaviour
     {
-        public Transform target;
+		[SerializeField]
+        private Transform target;
+		public Transform Target
+		{
+			get => target;
+			set
+			{
+				target = value;
+				bounds= target.GetBounds();
+			}
+		}
 		[ViewName("使用包围盒高度")]
 		public bool useBoundsHeight=false;
+		Bounds bounds;
 		public Vector3 offset=Vector3.zero;
         private void LateUpdate()
         {
-            if (target != null)
+            if (target != null&&target.gameObject.activeInHierarchy)
             {
 				var runtimeOffset = offset;
 				if (useBoundsHeight)
 				{
-					var bounds = transform.GetBounds();
 					runtimeOffset += bounds.size.y*Vector3.up;
 				}
 				transform.position = Camera.main.WorldToScreenPoint(target.position+ runtimeOffset);

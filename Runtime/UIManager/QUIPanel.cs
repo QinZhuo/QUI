@@ -271,7 +271,7 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual async Task StartShow(bool IsShow)
 		{
-			if (this.IsShow=IsShow) return;
+			if (!this.IsShow&&!IsShow) return;
 			this.IsShow = IsShow;
 #if QTween
 			if (showAnim != null)

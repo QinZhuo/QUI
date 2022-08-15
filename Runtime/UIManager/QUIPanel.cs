@@ -284,7 +284,7 @@ namespace QTool.UI
 				}
 				var animTask=showAnim.PlayAsync(base.IsShow);
 				await animTask;
-				if (animTask.Exception == null)
+				if (animTask.Exception != null)
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
 				}

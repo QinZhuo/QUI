@@ -13,7 +13,13 @@ namespace QTool.UI
         {
             if (target != null)
             {
-                transform.position = Camera.main.WorldToScreenPoint(target.position+ offset + Vector3.up* (transform.GetBounds().max-transform.position).y*(useBoundsHeight ? 1:0));
+				var runtimeOffset = offset;
+				if (useBoundsHeight)
+				{
+					var bounds = transform.GetBounds();
+					runtimeOffset += bounds.size.y*Vector3.up;
+				}
+				transform.position = Camera.main.WorldToScreenPoint(target.position+ runtimeOffset);
             }
         }
 		public void Recover()

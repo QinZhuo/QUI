@@ -288,6 +288,7 @@ namespace QTool.UI
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
 				}
+				gameObject.SetActive(base.IsShow);
 			}
 			else
 #endif

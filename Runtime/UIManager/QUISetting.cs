@@ -10,9 +10,9 @@ namespace QTool.UI
 	{
 		public static List<string> curList = new List<string>();
 		[ViewName("摧毁UI")]
-		public List<string> DestoryList;
+		public List<string> DestoryList = new List<string>();
 		[ViewName("初始化UI")]
-		public List<string> PanelList;
+		public List<string> PanelList = new List<string>();
 		public bool InitOver { private set; get; } = false;
 		public static async Task<bool> WaitInitOver()
 		{

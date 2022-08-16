@@ -96,7 +96,11 @@ namespace QTool.UI
 		}
 		public static async Task WaitHide()
 		{
-			while (Instance.IsShow && Application.isPlaying)
+			while (Application.isPlaying&& (Instance.IsShow
+#if QTween
+			||Instance.showAnim==null||Instance.showAnim.Anim.IsPlaying
+#endif
+			))
 			{
 				await Task.Yield();
 			}

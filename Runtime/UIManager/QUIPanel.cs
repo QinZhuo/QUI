@@ -96,7 +96,11 @@ namespace QTool.UI
 		}
 		public static async Task WaitHide()
 		{
-			while (Application.isPlaying&&Instance.IsShow)
+			while (Application.isPlaying&& (Instance.IsShow
+#if QTween
+			||Instance.showAnim==null||Instance.showAnim.Anim.IsPlaying
+#endif
+			))
 			{
 				await Task.Yield();
 			}
@@ -271,6 +275,8 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual async Task StartShow(bool IsShow)
 		{
+
+			this.IsShow = IsShow;
 #if QTween
 			if (showAnim != null)
 			{
@@ -282,18 +288,17 @@ namespace QTool.UI
 					}
 				}
 				var animTask=showAnim.PlayAsync(IsShow);
-				this.IsShow = IsShow;
 				await animTask;
 				if (animTask.Exception != null)
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
-				}
-				gameObject.SetActive(base.IsShow);
+				}	
+				if (IsShow != base.IsShow) return;
+				gameObject.SetActive(IsShow);
 			}
 			else
 #endif
 			{
-				this.IsShow = IsShow;
 				gameObject.SetActive(IsShow);
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;

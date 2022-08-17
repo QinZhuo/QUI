@@ -275,31 +275,33 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual async Task StartShow(bool IsShow)
 		{
+
 			this.IsShow = IsShow;
 #if QTween
 			if (showAnim != null)
 			{
 				if (!gameObject.activeSelf)
 				{
-					if (base.IsShow)
+					if (IsShow)
 					{
 						gameObject.SetActive(true);
 					}
 				}
-				var animTask=showAnim.PlayAsync(base.IsShow);
+				var animTask=showAnim.PlayAsync(IsShow);
 				await animTask;
 				if (animTask.Exception != null)
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
-				}
-				gameObject.SetActive(base.IsShow);
+				}	
+				if (IsShow != base.IsShow) return;
+				gameObject.SetActive(IsShow);
 			}
 			else
 #endif
 			{
-				gameObject.SetActive(base.IsShow);
-				Group.interactable = base.IsShow;
-				Group.alpha = base.IsShow ? 1 : 0;
+				gameObject.SetActive(IsShow);
+				Group.interactable =IsShow;
+				Group.alpha = IsShow ? 1 : 0;
 			}
 			InvokeOnShow();
 		}

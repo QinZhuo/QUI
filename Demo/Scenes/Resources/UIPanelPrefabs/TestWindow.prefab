@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f79fe8b7559674d9321eaeb77e5b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curTime: 0
   playOnAwake: 0
+  hideTimeScale: 2
   OnShow:
     m_PersistentCalls:
       m_Calls: []
@@ -245,11 +245,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   curve: 5
-  animTime: 0.5
-  hideTimeScale: 2
+  animTime: 3
   StartValue: 0
   EndValue: 1
-  group: {fileID: 1648352842163412403}
   controlRaycast: 1
 --- !u!114 &5000167689974178792
 MonoBehaviour:
@@ -264,11 +262,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showOnStart: 0
-  timeScale: 0
   blockInput: 1
-  ParentPanel: TestCanvas.Front.Test
-  group: {fileID: 1648352842163412403}
+  timeScale: 0
   showAnim: {fileID: 6049403496481952236}
+  ParentPanel: TestCanvas.Front.Test
   OnShowAction:
     m_PersistentCalls:
       m_Calls: []

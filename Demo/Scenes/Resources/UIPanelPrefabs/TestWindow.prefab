@@ -147,6 +147,8 @@ GameObject:
   - component: {fileID: 1648352842163412403}
   - component: {fileID: 6049403496481952236}
   - component: {fileID: 5000167689974178792}
+  - component: {fileID: 2310644998089796398}
+  - component: {fileID: 4910563107594861130}
   m_Layer: 5
   m_Name: TestWindow
   m_TagString: Untagged
@@ -163,7 +165,7 @@ RectTransform:
   m_GameObject: {fileID: 3892174974325622649}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
   m_Children:
   - {fileID: 7611997656060067155}
   m_Father: {fileID: 0}
@@ -245,7 +247,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   curve: 5
-  animTime: 3
+  animTime: 1
   StartValue: 0
   EndValue: 1
   controlRaycast: 1
@@ -264,7 +266,7 @@ MonoBehaviour:
   showOnStart: 0
   blockInput: 1
   timeScale: 0
-  showAnim: {fileID: 6049403496481952236}
+  showAnim: {fileID: 4910563107594861130}
   ParentPanel: TestCanvas.Front.Test
   OnShowAction:
     m_PersistentCalls:
@@ -272,6 +274,57 @@ MonoBehaviour:
   OnHideAction:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2310644998089796398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892174974325622649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202baf7b91b533540b266841d5649be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 0
+  hideTimeScale: 2
+  OnShow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHide:
+    m_PersistentCalls:
+      m_Calls: []
+  curve: 5
+  animTime: 0.4
+  StartValue: {x: 0.5, y: 0.5}
+  EndValue: {x: 2, y: 2}
+--- !u!114 &4910563107594861130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892174974325622649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d83c75b851ac2040ab3763939459e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 0
+  hideTimeScale: 2
+  OnShow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHide:
+    m_PersistentCalls:
+      m_Calls: []
+  tweenList:
+  - name: 
+    qTween: {fileID: 6049403496481952236}
+    type: 0
+  - name: 
+    qTween: {fileID: 2310644998089796398}
+    type: 0
 --- !u!1 &4718810617859951782
 GameObject:
   m_ObjectHideFlags: 0

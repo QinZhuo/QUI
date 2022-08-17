@@ -249,27 +249,7 @@ namespace QTool.UI
 
 
 
-		private void InvokeOnShow()
-		{
-			try
-			{
-				if (Application.IsPlaying(this))
-				{
-					if (IsShow)
-					{
-						OnShow();
-					}
-					else
-					{
-						OnHide();
-					}
-				}
-			}
-			catch (System.Exception e)
-			{
-				Debug.LogError((IsShow ? "显示" : "隐藏") + typeof(T) + " 页面出错：\n" + e);
-			}
-		}
+	
 		/// <summary>
 		/// 显示或隐藏页面时 最开始调用
 		/// </summary>
@@ -277,6 +257,10 @@ namespace QTool.UI
 		{
 
 			this.IsShow = IsShow;
+			if (IsShow)
+			{
+				OnShow();
+			}
 #if QTween
 			if (showAnim != null)
 			{
@@ -303,7 +287,10 @@ namespace QTool.UI
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;
 			}
-			InvokeOnShow();
+			if (!IsShow)
+			{
+				OnHide();
+			}
 		}
 		public override async Task ShowAsync()
 		{

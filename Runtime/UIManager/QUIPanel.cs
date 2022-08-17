@@ -257,10 +257,6 @@ namespace QTool.UI
 		{
 
 			this.IsShow = IsShow;
-			if (IsShow)
-			{
-				OnShow();
-			}
 #if QTween
 			if (showAnim != null)
 			{
@@ -288,7 +284,11 @@ namespace QTool.UI
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;
 			}
-			if (!IsShow)
+			if (IsShow)
+			{
+				OnShow();
+			}
+			else
 			{
 				OnHide();
 			}

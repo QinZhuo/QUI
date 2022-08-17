@@ -253,7 +253,7 @@ namespace QTool.UI
 		/// <summary>
 		/// 显示或隐藏页面时 最开始调用
 		/// </summary>
-		private async Task StartShow(bool IsShow)
+		protected async Task StartShow(bool IsShow)
 		{
 
 			this.IsShow = IsShow;

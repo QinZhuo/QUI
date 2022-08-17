@@ -257,6 +257,10 @@ namespace QTool.UI
 		{
 
 			this.IsShow = IsShow;
+			if (IsShow)
+			{
+				OnShow();
+			}
 #if QTween
 			if (showAnim != null)
 			{
@@ -273,9 +277,10 @@ namespace QTool.UI
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
 				}
-				if (IsShow != base.IsShow) {
+				if (IsShow == base.IsShow) {
 					gameObject.SetActive(IsShow);
 				}
+
 			}
 			else
 #endif
@@ -284,11 +289,7 @@ namespace QTool.UI
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;
 			}
-			if (IsShow)
-			{
-				OnShow();
-			}
-			else
+			if (!IsShow)
 			{
 				OnHide();
 			}

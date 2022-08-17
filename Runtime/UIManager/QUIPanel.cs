@@ -165,7 +165,7 @@ namespace QTool.UI
 		#region 基本生命周期
 		protected static async Task<T> GetInstance()
 		{
-			await QUIManager.GetUI(typeof(T).Name);
+			_instance = await QUIManager.GetUI(typeof(T).Name) as T;
 			return Instance;
 		}
 		protected virtual void Awake()

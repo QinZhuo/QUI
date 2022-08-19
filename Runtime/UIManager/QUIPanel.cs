@@ -104,6 +104,7 @@ namespace QTool.UI
 			if (Instance.showAnim != null)
 			{
 				await Instance.showAnim.Anim.WaitOverAsync();
+				await QTask.Wait(0.1f);
 			}
 #endif
 		}

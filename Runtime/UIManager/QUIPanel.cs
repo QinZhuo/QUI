@@ -263,10 +263,6 @@ namespace QTool.UI
 			{
 				OnShow();
 			}
-			else
-			{
-				OnHide();
-			}
 #if QTween
 			if (showAnim != null)
 			{
@@ -294,6 +290,10 @@ namespace QTool.UI
 				gameObject.SetActive(IsShow);
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;
+			}
+			if (!IsShow)
+			{
+				OnHide();
 			}
 		}
 		public override async Task ShowAsync()

@@ -50,9 +50,13 @@ namespace QTool.UI
 				return transform as RectTransform;
 			}
 		}
-		
+		public static System.Action<Scene, Scene> OnActiveSceneChanged;
+		static UIPanel()
+		{
+			SceneManager.activeSceneChanged += (a, b) => { OnActiveSceneChanged?.Invoke(a, b); };
+		}
 
-	}
+}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
 	{
@@ -171,6 +175,7 @@ namespace QTool.UI
 			_instance = await QUIManager.GetUI(typeof(T).Name) as T;
 			return Instance;
 		}
+		
 		protected virtual void Awake()
 		{
 			if (this is T panel)
@@ -183,8 +188,7 @@ namespace QTool.UI
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
 			IsShow = Group.alpha >= 0.9f;
-
-			SceneManager.activeSceneChanged += OnSceneChange;
+			OnActiveSceneChanged += OnSceneChange;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
 
@@ -192,9 +196,9 @@ namespace QTool.UI
 		protected virtual void OnDestroy()
 		{
 			QUIManager.WindowChange -= Fresh;
-			SceneManager.activeSceneChanged -= OnSceneChange;
-
+			OnActiveSceneChanged -= OnSceneChange;
 		}
+
 	
 		private void Fresh(UIPanel window)
 		{

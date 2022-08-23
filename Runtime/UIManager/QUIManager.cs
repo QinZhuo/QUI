@@ -76,6 +76,7 @@ namespace QTool.UI
                 return;
             }
             (await GetUI(key)).Switch(show);
+			QDebug.Log("QUI["+key + "] 开关 " + show);
         }
         static async Task<RectTransform> Get(string key)
         {

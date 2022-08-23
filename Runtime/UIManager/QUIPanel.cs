@@ -172,6 +172,7 @@ namespace QTool.UI
 		#region 基本生命周期
 		protected static async Task<T> GetInstance()
 		{
+			if (_instance != null) return _instance;
 			_instance = await QUIManager.GetUI(typeof(T).Name) as T;
 			return Instance;
 		}

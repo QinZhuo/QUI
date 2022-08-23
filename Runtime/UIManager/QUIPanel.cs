@@ -262,7 +262,7 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual async Task StartShow(bool IsShow)
 		{
-
+			QDebug.Log("QUI[" + this + "] 开关 " + IsShow);
 			this.IsShow = IsShow;
 			if (IsShow)
 			{

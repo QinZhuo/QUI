@@ -64,10 +64,10 @@ namespace QTool.UI
         {
             get => modifyType == ModifyType.顶点;
         }
-        [ViewName("形状模式")]
+        [QName("形状模式")]
         public ModifyType modifyType = ModifyType.图片;
         [Range(3, 360)]
-        [ViewName("顶点复杂度", "VertexMode")]
+        [QName("顶点复杂度", "VertexMode")]
         public int smooth = 36;
         protected abstract List<UIVertex> Draw();
         public override void ModifyMesh(VertexHelper vh)
@@ -84,9 +84,9 @@ namespace QTool.UI
     {
         [FormerlySerializedAs("circle")]
         [Range(0, 256)]
-        [ViewName("圆角")]
+        [QName("圆角")]
         public float radius = 10;
-        [ViewName("线框", "VertexMode")]
+        [QName("线框", "VertexMode")]
         public float lineWidth = -1;
         public override void Fresh()
         {

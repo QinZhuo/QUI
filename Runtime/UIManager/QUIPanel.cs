@@ -149,17 +149,17 @@ namespace QTool.UI
 		#endregion
 		#region 基础属性
 		[Group(true)]
-		[ViewName("初始显示")]
+		[QName("初始显示")]
 		public bool showOnStart = false;
-		[ViewName("遮挡点击")]
+		[QName("遮挡点击")]
 		public bool blockInput = false;
-		[ViewName("控制TimeScale")]
+		[QName("控制TimeScale")]
 		public float timeScale = -1;
 #if QTween
-		[ViewName("显示动画")]
+		[QName("显示动画")]
 		public QTweenBehavior showAnim;
 #endif
-		[ViewName("父页面")]
+		[QName("父页面")]
 		
 		public string ParentPanel = "";
 		public ActionEvent OnShowAction;

@@ -66,10 +66,10 @@ namespace QTool.UI
     public class QCircle : QImageShapeEffect
     {
 
-        [ViewName("线框", "VertexMode")]
+        [QName("线框", "VertexMode")]
         public float lineWidth = -1;
         [Range(0,360)]
-        [ViewName("角度")]
+        [QName("角度")]
         public float angle = 360;
         public override void Fresh()
         {

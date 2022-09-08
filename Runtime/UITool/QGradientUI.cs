@@ -115,9 +115,9 @@ namespace QTool.UI
             TextCount,
         }
         [SerializeField]
-        [ViewName("过度颜色")]
+        [QName("过度颜色")]
         private Gradient _gradientColor = new Gradient();
-        [ViewName("过度方向")]
+        [QName("过度方向")]
         public LerpDir lerpDir = LerpDir.LeftRight;
       
         public Gradient GradientColor

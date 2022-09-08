@@ -16,7 +16,7 @@ namespace QTool.UI
 				bounds= target.GetBounds();
 			}
 		}
-		[ViewName("使用包围盒高度")]
+		[QName("使用包围盒高度")]
 		public bool useBoundsHeight=false;
 		Bounds bounds;
 		public Vector3 offset=Vector3.zero;

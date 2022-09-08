@@ -12,10 +12,10 @@ namespace QTool.UI
     {
 
         [Range(1, 500)]
-        [ViewName("阴影范围")]
+        [QName("阴影范围")]
         public float size=50;
         [Range(1,256)]
-        [ViewName("圆角")]
+        [QName("圆角")]
         public float radius = 0;
         public override void Fresh()
         {

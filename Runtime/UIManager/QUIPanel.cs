@@ -249,7 +249,7 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual void OnSceneChange(Scene scene, Scene nextScene)
 		{
-			if (!string.IsNullOrEmpty(ParentPanel))
+			if (!string.IsNullOrEmpty(ParentPanel)&& !nextScene.name.Contains( "Loading"))
 			{
 				HideAndComplete();
 			}

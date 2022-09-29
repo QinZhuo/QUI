@@ -92,6 +92,11 @@ namespace QTool.UI
 				{
 					var prefab = await UIPanelPrefabs.LoadAsync(key);
 					var obj = GameObject.Instantiate(prefab);
+					var ui= obj.GetComponent<UIPanel>();
+					if (ui != null)
+					{
+						ui.Prefab = prefab;
+					}
 					if (obj.transform.parent == null)
 					{
 						GameObject.DontDestroyOnLoad(obj);

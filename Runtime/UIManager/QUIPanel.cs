@@ -17,7 +17,7 @@ namespace QTool.UI
 
 	public abstract class UIPanel : MonoBehaviour
 	{
-		public GameObject Prefab;
+		internal GameObject Prefab;
 		public abstract Task ShowAsync();
 		public abstract Task HideAsync();
 		public abstract void ResetUI();

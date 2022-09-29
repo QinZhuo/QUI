@@ -207,7 +207,7 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual void OnSceneUnloaded(Scene scene)
 		{
-			if (!string.IsNullOrEmpty(ParentPanel)&& (QUISetting.Instance==null|| !QUISetting.Instance.PanelList.Contains(typeof(T).Name)))
+			if (!string.IsNullOrEmpty(ParentPanel))
 			{
 				Destroy(gameObject);
 				//HideAndComplete();

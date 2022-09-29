@@ -80,7 +80,7 @@ namespace QTool.UI
         static async Task<RectTransform> Get(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
-            if (PanelList.ContainsKey(key)) return PanelList[key];
+            if (PanelList.ContainsKey(key)&&PanelList[key]!=null) return PanelList[key];
             if (key.SplitTowString(".",out var start,out var end))
 			{
 				Transform parent = await Get(start);
@@ -107,7 +107,7 @@ namespace QTool.UI
         }
 		public static void Destory(string key)
 		{
-			if (!string.IsNullOrWhiteSpace(key)&&PanelList.ContainsKey(key)){
+			if (!key .IsNullOrEmpty()&& PanelList.ContainsKey(key)){
 				var ui= PanelList[key];
 				PanelList.RemoveKey(key);
 				GameObject.Destroy(ui.gameObject);

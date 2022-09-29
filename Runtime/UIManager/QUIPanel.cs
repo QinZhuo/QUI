@@ -200,6 +200,7 @@ namespace QTool.UI
 			}
 			SceneManager.activeSceneChanged -= OnSceneChanged;
 			QUIManager.WindowChange -= Fresh;
+			QUIManager.Remove(GetType().Name, RectTransform);
 			if (Prefab != null)
 			{
 				UIPanelPrefabs.Release(ref Prefab);

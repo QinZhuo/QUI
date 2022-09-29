@@ -101,12 +101,14 @@ namespace QTool.UI
 			}
             return PanelList[key];
         }
-		public static void Destory(string key)
+		public static void Remove(string key,RectTransform value)
 		{
 			if (!key .IsNullOrEmpty()&& PanelList.ContainsKey(key)){
 				var ui= PanelList[key];
-				PanelList.RemoveKey(key);
-				GameObject.Destroy(ui.gameObject);
+				if (ui == value)
+				{
+					PanelList.RemoveKey(key);
+				}
 			}
 		}
 		public static int Count

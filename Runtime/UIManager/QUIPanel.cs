@@ -179,7 +179,7 @@ namespace QTool.UI
 			if (this is T panel)
 			{
 				_instance = this as T;
-				QDebug.Log("初始化页面" + _instance);
+				Debug.Log("初始化页面" + _instance);
 			}
 			else
 			{
@@ -194,6 +194,10 @@ namespace QTool.UI
 		}
 		protected virtual void OnDestroy()
 		{
+			if (_instance == this)
+			{
+				_instance = null;
+			}
 			SceneManager.sceneUnloaded -= OnSceneUnloaded;
 			QUIManager.WindowChange -= Fresh;
 			if (Prefab != null)

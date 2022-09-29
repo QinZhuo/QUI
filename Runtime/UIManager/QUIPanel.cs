@@ -187,7 +187,7 @@ namespace QTool.UI
 			}
 			IsShow = Group.alpha >= 0.9f;
 
-			SceneManager.sceneUnloaded += OnSceneUnloaded;
+			SceneManager.activeSceneChanged += OnSceneChanged;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
 
@@ -198,7 +198,7 @@ namespace QTool.UI
 			{
 				_instance = null;
 			}
-			SceneManager.sceneUnloaded -= OnSceneUnloaded;
+			SceneManager.activeSceneChanged -= OnSceneChanged;
 			QUIManager.WindowChange -= Fresh;
 			if (Prefab != null)
 			{
@@ -209,7 +209,7 @@ namespace QTool.UI
 		/// <summary>
 		/// 切换场景时调用默认隐藏拥有 ParentPanel 的页面
 		/// </summary>
-		protected virtual void OnSceneUnloaded(Scene scene)
+		protected virtual void OnSceneChanged(Scene scene,Scene next)
 		{
 			if (!string.IsNullOrEmpty(ParentPanel))
 			{

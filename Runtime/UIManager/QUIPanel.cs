@@ -337,23 +337,31 @@ namespace QTool.UI
 
 		protected virtual void OnShow()
 		{
-			transform.SetAsLastSibling();
-			OnShowAction?.Invoke();
-			if (Application.isPlaying)
+			try
 			{
-				if (timeScale >= 0)
+				transform.SetAsLastSibling();
+				OnShowAction?.Invoke();
+				if (Application.isPlaying)
 				{
-					QTime.ChangeScale(gameObject, timeScale);
-				}
-				if (blockInput)
-				{
-					QUIManager.WindowPush(this);
-				}
-				else
-				{
-					OnFresh();
+					if (timeScale >= 0)
+					{
+						QTime.ChangeScale(gameObject, timeScale);
+					}
+					if (blockInput)
+					{
+						QUIManager.WindowPush(this);
+					}
+					else
+					{
+						OnFresh();
+					}
 				}
 			}
+			catch (System.Exception e)
+			{
+				Debug.LogError(this + " " + nameof(OnShow) + " 出错：" + e);
+			}
+			
 			
 		}
 		protected virtual void OnHide()

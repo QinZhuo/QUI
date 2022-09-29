@@ -194,12 +194,12 @@ namespace QTool.UI
 		}
 		protected virtual void OnDestroy()
 		{
+			SceneManager.sceneUnloaded -= OnSceneUnloaded;
+			QUIManager.WindowChange -= Fresh;
 			if (Prefab != null)
 			{
 				UIPanelPrefabs.Release(ref Prefab);
 			}
-			QUIManager.WindowChange -= Fresh;
-			SceneManager.sceneUnloaded -= OnSceneUnloaded;
 		}
 
 		/// <summary>
@@ -209,8 +209,8 @@ namespace QTool.UI
 		{
 			if (!string.IsNullOrEmpty(ParentPanel))
 			{
+				HideAndComplete();
 				Destroy(gameObject);
-				//HideAndComplete();
 			}
 		}
 

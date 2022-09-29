@@ -80,13 +80,13 @@ namespace QTool.UI
         static async Task<RectTransform> Get(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
-            if (PanelList.ContainsKey(key)&&PanelList[key]!=null) return PanelList[key];
+            if (PanelList[key]!=null) return PanelList[key];
             if (key.SplitTowString(".",out var start,out var end))
 			{
 				Transform parent = await Get(start);
-				PanelList[key] = parent.GetChild(end) as RectTransform;
+				PanelList[key] = parent.GetChild(end,true) as RectTransform;
 			}
-            else if (!PanelList.ContainsKey(key))
+            else if (PanelList[key] == null)
 			{
 				await QTask.RunOnlyOne(nameof(QUIManager)+"_"+key, async() =>
 				{
@@ -99,10 +99,6 @@ namespace QTool.UI
 					ResisterPanel(key, obj.GetComponent<RectTransform>());
 				});
 			}
-            else if(PanelList[key]==null)
-            {
-                Debug.LogError("找不到【" + key + "】UI页面");
-            }
             return PanelList[key];
         }
 		public static void Destory(string key)

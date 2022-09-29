@@ -17,6 +17,7 @@ namespace QTool.UI
 
 	public abstract class UIPanel : MonoBehaviour
 	{
+		public GameObject Prefab;
 		public abstract Task ShowAsync();
 		public abstract Task HideAsync();
 		public abstract void ResetUI();
@@ -50,13 +51,9 @@ namespace QTool.UI
 				return transform as RectTransform;
 			}
 		}
-		public static System.Action<Scene, Scene> OnActiveSceneChanged;
-		static UIPanel()
-		{
-			SceneManager.activeSceneChanged += (a, b) => { OnActiveSceneChanged?.Invoke(a, b); };
-		}
 
-}
+
+	}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
 	{
@@ -189,18 +186,34 @@ namespace QTool.UI
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
 			IsShow = Group.alpha >= 0.9f;
-			OnActiveSceneChanged += OnSceneChange;
+
+			SceneManager.activeSceneChanged += OnSceneChange;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
 
 		}
 		protected virtual void OnDestroy()
 		{
+			if (Prefab != null)
+			{
+				UIPanelPrefabs.Release(ref Prefab);
+			}
 			QUIManager.WindowChange -= Fresh;
-			OnActiveSceneChanged -= OnSceneChange;
+			SceneManager.activeSceneChanged -= OnSceneChange;
 		}
 
-	
+		/// <summary>
+		/// 切换场景时调用默认隐藏拥有 ParentPanel 的页面
+		/// </summary>
+		protected virtual void OnSceneChange(Scene scene, Scene nextScene)
+		{
+			if (!string.IsNullOrEmpty(ParentPanel))
+			{
+				Destroy(gameObject);
+				//HideAndComplete();
+			}
+		}
+
 		private void Fresh(UIPanel window)
 		{
 			var value = window == null || this.Equals(window) || transform.HasParentIs(window.RectTransform);
@@ -244,16 +257,7 @@ namespace QTool.UI
 				}
 			}
 		}
-		/// <summary>
-		/// 切换场景时调用默认隐藏拥有 ParentPanel 的页面
-		/// </summary>
-		protected virtual void OnSceneChange(Scene scene, Scene nextScene)
-		{
-			if (!string.IsNullOrEmpty(ParentPanel)&& !nextScene.name.ToLower().Contains( "loading"))
-			{
-				HideAndComplete();
-			}
-		}
+	
 
 
 

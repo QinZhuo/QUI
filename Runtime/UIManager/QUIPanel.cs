@@ -65,7 +65,6 @@ namespace QTool.UI
 			{
 				if (_instance == null)
 				{
-					Debug.LogError("未初始化显示页面 " + typeof(T));
 					return null;
 				}
 				else

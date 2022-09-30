@@ -45,7 +45,7 @@ namespace QTool.UI
                 }
             }
         }
-		public static async Task<T> GetUI<T>(string key) where T:UIPanel
+		public static async Task<T> GetUI<T>(string key) where T:QUIPanel
 		{
 			return (await Get(key)).GetComponent<T>();
 		}
@@ -54,9 +54,9 @@ namespace QTool.UI
 		/// </summary>
 		/// <param name="key">UI关键名</param>
 		/// <returns></returns>
-		public static async Task<UIPanel> GetUI(string key)
+		public static async Task<QUIPanel> GetUI(string key)
         {
-            return (await Get(key)).GetComponent<UIPanel>();
+            return (await Get(key)).GetComponent<QUIPanel>();
         }
         /// <summary>
         /// UI是否正在显示
@@ -65,7 +65,7 @@ namespace QTool.UI
         /// <returns></returns>
         public static bool IsShow(string key)
         {
-            if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<UIPanel>().IsShow;
+            if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<QUIPanel>().IsShow;
             return false;
         }
 
@@ -90,9 +90,9 @@ namespace QTool.UI
 			{
 				await QTask.RunOnlyOne(nameof(QUIManager)+"_"+key, async() =>
 				{
-					var prefab = await UIPanelPrefabs.LoadAsync(key);
+					var prefab = await QUIPanelPrefab.LoadAsync(key);
 					var obj = GameObject.Instantiate(prefab);
-					var ui= obj.GetComponent<UIPanel>();
+					var ui= obj.GetComponent<QUIPanel>();
 					if (ui != null)
 					{
 						ui.Prefab = prefab;
@@ -123,8 +123,8 @@ namespace QTool.UI
                 return windowStack.Count;
             }
         }
-        public static List<UIPanel> windowStack = new List<UIPanel>();
-        public static void WindowPush(UIPanel window)
+        public static List<QUIPanel> windowStack = new List<QUIPanel>();
+        public static void WindowPush(QUIPanel window)
         {
             if (windowStack.StackPeek() == window)
             {
@@ -140,9 +140,9 @@ namespace QTool.UI
 			QEventManager.Trigger("UI页面", windowStack.ToOneString());
 #endif
 		}
-        public static event System.Action<UIPanel> WindowChange;
+        public static event System.Action<QUIPanel> WindowChange;
 		
-        public static void WindowRemove(UIPanel window)
+        public static void WindowRemove(QUIPanel window)
         {
             if (windowStack.Count == 0||!windowStack.Contains(window)) return;
             windowStack.Remove(window);

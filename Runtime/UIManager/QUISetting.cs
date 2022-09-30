@@ -28,7 +28,7 @@ namespace QTool.UI
         protected async void Start()
         {
             InitOver = false;
-			List<Task<UIPanel>> uiTaskList = new List<Task<UIPanel>>(); 
+			List<Task<QUIPanel>> uiTaskList = new List<Task<QUIPanel>>(); 
 			foreach (var uiKey in PanelList)
             {
 				uiTaskList.Add(QUIManager.GetUI(uiKey));

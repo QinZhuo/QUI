@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace QTool.UI.Demo
 {
-	public class TestWindow:UIPanel<TestWindow>
+	public class TestWindow:QUIPanel<TestWindow>
 	{
 		
 	}

@@ -11,11 +11,11 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
-	public class UIPanelPrefabs : QPrefabLoader<UIPanelPrefabs>
+	public class QUIPanelPrefab : QPrefabLoader<QUIPanelPrefab>
 	{
 	}
 
-	public abstract class UIPanel : MonoBehaviour
+	public abstract class QUIPanel : MonoBehaviour
 	{
 		internal GameObject Prefab;
 		public abstract Task ShowAsync();
@@ -55,7 +55,7 @@ namespace QTool.UI
 
 	}
 	[RequireComponent(typeof(CanvasGroup))]
-	public abstract class UIPanel<T> : UIPanel where T : UIPanel<T>
+	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
 	{
 		#region 单例逻辑
 		static T _instance;
@@ -203,7 +203,7 @@ namespace QTool.UI
 			QUIManager.Remove(GetType().Name, RectTransform);
 			if (Prefab != null)
 			{
-				UIPanelPrefabs.Release(ref Prefab);
+				QUIPanelPrefab.Release(ref Prefab);
 			}
 		}
 
@@ -219,8 +219,9 @@ namespace QTool.UI
 			}
 		}
 
-		private void Fresh(UIPanel window)
+		private void Fresh(QUIPanel window)
 		{
+			if (this == null) return;
 			var value = window == null || this.Equals(window) || transform.HasParentIs(window.RectTransform);
 			if (value)
 			{

@@ -5,7 +5,7 @@ using QTool;
 namespace QTool.UI
 {
 
-    public class LayoutTest : UIPanel<LayoutTest>
+    public class LayoutTest : QUIPanel<LayoutTest>
     {
         public QObjectList testList;
         // Start is called before the first frame update

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace QTool.UI
 {
 	[RequireComponent(typeof(QObjectList))]
-	public class QFollowList :UIPanel<QFollowList>
+	public class QFollowList :QUIPanel<QFollowList>
 	{
 		public QObjectList objectList;
 		protected void Reset()

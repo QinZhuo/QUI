@@ -35,14 +35,14 @@ namespace QTool.UI
             base.Reset();
             Fresh();
 		}
-#endif
 		protected override void OnValidate()
         {
             base.OnValidate();
             Fresh();
         }
 
-        protected override void OnEnable()
+#endif
+		protected override void OnEnable()
         {
             base.OnEnable();
             Canvas.willRenderCanvases += Fresh;

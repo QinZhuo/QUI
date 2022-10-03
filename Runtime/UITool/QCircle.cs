@@ -77,7 +77,8 @@ namespace QTool.UI
 			set
 			{
 				angle = value;
-				OnValidate();
+				graphic.SetVerticesDirty();
+				Fresh();
 			}
 		}
         public override void Fresh()

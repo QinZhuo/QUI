@@ -34,13 +34,14 @@ namespace QTool.UI
         {
             base.Reset();
             Fresh();
-        }
-        protected override void OnValidate()
+		}
+#endif
+		protected override void OnValidate()
         {
             base.OnValidate();
             Fresh();
         }
-#endif
+
         protected override void OnEnable()
         {
             base.OnEnable();

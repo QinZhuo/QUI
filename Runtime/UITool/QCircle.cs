@@ -71,6 +71,15 @@ namespace QTool.UI
         [Range(0,360)]
         [QName("角度")]
         public float angle = 360;
+		public float Angle
+		{
+			get => angle;
+			set
+			{
+				angle = value;
+				Fresh();
+			}
+		}
         public override void Fresh()
         {
             switch (modifyType)

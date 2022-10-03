@@ -13,9 +13,13 @@ namespace QTool.UI
 			set
 			{
 				target = value;
-				bounds= target.GetBounds();
+				if (target!=null&& useBoundsHeight)
+				{
+					bounds = target.GetBounds();
+				}
 			}
 		}
+		public bool worldPosition = false;	
 		[QName("使用包围盒高度")]
 		public bool useBoundsHeight=false;
 		Bounds bounds;
@@ -29,7 +33,8 @@ namespace QTool.UI
 				{
 					runtimeOffset += bounds.size.y*Vector3.up;
 				}
-				transform.position = Camera.main.WorldToScreenPoint(target.position+ runtimeOffset);
+				var position = target.position + runtimeOffset;
+				transform.position = worldPosition? position: Camera.main.WorldToScreenPoint(position);
             }
         }
 		public void Recover()

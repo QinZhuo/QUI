@@ -77,7 +77,7 @@ namespace QTool.UI
 			set
 			{
 				angle = value;
-				Fresh();
+				OnValidate();
 			}
 		}
         public override void Fresh()

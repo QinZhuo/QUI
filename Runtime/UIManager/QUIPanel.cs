@@ -275,37 +275,34 @@ namespace QTool.UI
 		{
 			QDebug.Log("QUI[" + this + "] 开关 " + IsShow);
 			this.IsShow = IsShow;
-			if (!gameObject.activeSelf)
-			{
-				if (IsShow)
-				{
-					gameObject.SetActive(true);
-				}
-			}
-			else
-			{
-				OnShow();
-			}
+			
 #if QTween
 			if (showAnim != null)
 			{
+				if (!gameObject.activeSelf)
+				{
+					if (IsShow)
+					{
+						gameObject.SetActive(true);
+					}
+				}
 				var animTask=showAnim.PlayAsync(IsShow);
 				await animTask;
 				if (animTask.Exception != null)
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
 				}
+				if (IsShow == base.IsShow) {
+					gameObject.SetActive(IsShow);
+				}
 
 			}
 			else
 #endif
 			{
+				gameObject.SetActive(IsShow);
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;
-			}
-			if (IsShow == base.IsShow)
-			{
-				gameObject.SetActive(IsShow);
 			}
 		}
 		protected virtual void OnEnable()

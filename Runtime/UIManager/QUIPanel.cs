@@ -235,7 +235,6 @@ namespace QTool.UI
 				Group.interactable = false;
 			}
 		}
-
 		/// <summary>
 		///  主页面切换时调用 刷新数据
 		/// </summary>
@@ -275,7 +274,10 @@ namespace QTool.UI
 		{
 			QDebug.Log("QUI[" + this + "] 开关 " + IsShow);
 			this.IsShow = IsShow;
-			
+			if (IsShow)
+			{
+				OnShow();
+			}
 #if QTween
 			if (showAnim != null)
 			{
@@ -304,14 +306,10 @@ namespace QTool.UI
 				Group.interactable =IsShow;
 				Group.alpha = IsShow ? 1 : 0;
 			}
-		}
-		protected virtual void OnEnable()
-		{
-			OnShow();
-		}
-		protected virtual void OnDisable()
-		{
-			OnHide();
+			if (!IsShow)
+			{
+				OnHide();
+			}
 		}
 		public override async Task ShowAsync()
 		{
@@ -354,10 +352,7 @@ namespace QTool.UI
 					{
 						QUIManager.WindowPush(this);
 					}
-					else
-					{
-						OnFresh();
-					}
+					OnFresh();
 				}
 			}
 			catch (System.Exception e)

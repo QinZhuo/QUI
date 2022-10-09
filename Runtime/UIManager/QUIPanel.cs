@@ -21,12 +21,12 @@ namespace QTool.UI
 		public abstract Task ShowAsync();
 		public abstract Task HideAsync();
 		public abstract void ResetUI();
-		[ViewButton("隐藏")]
+		[QButton("隐藏")]
 		public void Hide()
 		{
 			_ = HideAsync();
 		}
-		[ViewButton("显示")]
+		[QButton("显示")]
 		public void Show()
 		{
 			_ = ShowAsync();
@@ -144,7 +144,7 @@ namespace QTool.UI
 		}
 		#endregion
 		#region 基础属性
-		[Group(true)]
+		[QGroup(true)]
 		[QName("初始显示")]
 		public bool showOnStart = false;
 		[QName("遮挡点击")]
@@ -159,7 +159,7 @@ namespace QTool.UI
 		
 		public string ParentPanel = "";
 		public ActionEvent OnShowAction;
-		[Group(false)]
+		[QGroup(false)]
 		public ActionEvent OnHideAction;
 		CanvasGroup _group;
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();

@@ -11,7 +11,7 @@ namespace QTool.UI
 		public static List<string> curList = new List<string>();
 		
 		[QName("初始化UI")]
-		[ViewEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.GetEditorList))]
+		[QEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.GetEditorList))]
 		public List<string> PanelList = new List<string>();
 		public bool InitOver { private set; get; } = false;
 		public static async Task<bool> WaitInitOver()

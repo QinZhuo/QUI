@@ -185,6 +185,10 @@ namespace QTool.UI
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
 			IsShow = Group.alpha >= 0.9f&&gameObject.activeSelf;
+			if (gameObject.activeSelf != IsShow)
+			{
+				gameObject.SetActive(IsShow);
+			}
 			SceneManager.activeSceneChanged += OnSceneChanged;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);

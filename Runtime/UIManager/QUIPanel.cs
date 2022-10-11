@@ -43,7 +43,7 @@ namespace QTool.UI
 				Hide(); ;
 			}
 		}
-		public bool IsShow { protected set; get; }
+		public bool IsShow => gameObject.activeSelf;
 		public RectTransform RectTransform
 		{
 			get
@@ -184,8 +184,6 @@ namespace QTool.UI
 			{
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
-			IsShow = Group.alpha >= 0.9f;
-
 			SceneManager.activeSceneChanged += OnSceneChanged;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
@@ -273,7 +271,6 @@ namespace QTool.UI
 		protected virtual async Task StartShow(bool IsShow)
 		{
 			QDebug.Log("QUI[" + this + "] 开关 " + IsShow);
-			this.IsShow = IsShow;
 			if (IsShow)
 			{
 				OnShow();

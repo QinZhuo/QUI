@@ -246,7 +246,6 @@ namespace QTool.UI
 		/// </summary>
 		public override void ResetUI()
 		{
-			Debug.LogError("Reset " + this + " " + showOnStart + ":" + IsShow);
 			if (showOnStart)
 			{
 				if (!IsShow)

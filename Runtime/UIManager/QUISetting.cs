@@ -16,16 +16,11 @@ namespace QTool.UI
 #endif
 		public List<string> PanelList = new List<string>();
 		public bool InitOver { private set; get; } = false;
-		public static async Task<bool> WaitInitOver()
+		public static async Task InitOverAsync()
 		{
-			if (Instance == null)
-			{
-				return true;
-			}
-			else
+			if (Instance != null)
 			{
 				await QTask.Wait(() => Instance.InitOver);
-				return true;
 			}
 		} 
         protected async void Start()

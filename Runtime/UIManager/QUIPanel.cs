@@ -201,7 +201,8 @@ namespace QTool.UI
 			QUIManager.Remove(GetType().Name, RectTransform);
 			if (Prefab != null)
 			{
-				QUIPanelPrefab.Release(ref Prefab);
+				QUIPanelPrefab.Release(Prefab);
+				Prefab = null;
 			}
 		}
 

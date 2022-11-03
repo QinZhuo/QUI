@@ -248,18 +248,7 @@ namespace QTool.UI
 		/// </summary>
 		public virtual void OnFresh()
 		{
-			if (QUIPanelButtons.Instance != null)
-			{
-				QUIPanelButtons.Instance.Clear();
-				foreach (var buttonData in Buttons)
-				{
-					var button= QUIPanelButtons.Instance[buttonData.key];
-					button.InvokeEvent("关键名", buttonData.key);
-					button.InvokeEvent("显示名", buttonData.viewName);
-					button.GetComponentInChildren<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
-					button.GetComponentInChildren<UnityEngine.UI.Button>().onClick.AddListener( buttonData.onClick.Invoke);
-				}
-			}
+		
 		}
 		/// <summary>
 		/// 由UISettinng控制 是否初始化显示

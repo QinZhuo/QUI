@@ -266,7 +266,6 @@ MonoBehaviour:
   showOnStart: 0
   blockInput: 1
   timeScale: 0
-  showAnim: {fileID: 4910563107594861130}
   ParentPanel: TestCanvas.Front.Test
   OnShowAction:
     m_PersistentCalls:
@@ -274,6 +273,24 @@ MonoBehaviour:
   OnHideAction:
     m_PersistentCalls:
       m_Calls: []
+  Buttons:
+  - key: "\u5173\u95ED"
+    name: "\u5173\u95ED"
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5000167689974178792}
+          m_TargetAssemblyTypeName: QTool.UI.QUIPanel, QUI
+          m_MethodName: Hide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &2310644998089796398
 MonoBehaviour:
   m_ObjectHideFlags: 0

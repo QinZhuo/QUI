@@ -54,6 +54,13 @@ namespace QTool.UI
 
 
 	}
+	[System.Serializable]
+	public class QUIPanelButton
+	{
+		public string key;
+		public string viewName;
+		public ActionEvent onClick;
+	}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
 	{
@@ -161,6 +168,7 @@ namespace QTool.UI
 		public ActionEvent OnShowAction;
 		[QGroup(false)]
 		public ActionEvent OnHideAction;
+		public List<QUIPanelButton> Buttons = new List<QUIPanelButton>();
 		CanvasGroup _group;
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
 
@@ -240,7 +248,18 @@ namespace QTool.UI
 		/// </summary>
 		public virtual void OnFresh()
 		{
-
+			if (QUIPanelButtons.Instance != null)
+			{
+				QUIPanelButtons.Instance.Clear();
+				foreach (var buttonData in Buttons)
+				{
+					var button= QUIPanelButtons.Instance[buttonData.key];
+					button.InvokeEvent("关键名", buttonData.key);
+					button.InvokeEvent("显示名", buttonData.viewName);
+					button.GetComponentInChildren<UnityEngine.UI.Button>().onClick.RemoveAllListeners();
+					button.GetComponentInChildren<UnityEngine.UI.Button>().onClick.AddListener( buttonData.onClick.Invoke);
+				}
+			}
 		}
 		/// <summary>
 		/// 由UISettinng控制 是否初始化显示

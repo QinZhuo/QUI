@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "GUID:8c4295a259d9a934784fb95a11fa9e58",
-        "GUID:24a932a217b594b47a735a1f916a201a"
+        "GUID:24a932a217b594b47a735a1f916a201a",
+        "GUID:0359e8cb563338145ab0b8c6897b4a7a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -22,6 +23,11 @@
             "name": "com.qtool.qtool",
             "expression": "",
             "define": "QTool"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "QInputSystem"
         }
     ],
     "noEngineReferences": false

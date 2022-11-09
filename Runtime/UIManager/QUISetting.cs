@@ -30,7 +30,6 @@ namespace QTool.UI
             {
 				var ui= await QUIManager.GetUI(uiKey);
 				ui?.ResetUI();
-				await QTask.Wait(0.3f);
             }
             curList.Clear();
             curList.AddRange(PanelList);

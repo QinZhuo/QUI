@@ -105,7 +105,7 @@ namespace QTool.UI
 		{
 			while (Application.isPlaying&& Instance.IsShow)
 			{
-				await Task.Yield();
+				await QTask.Step();
 			}
 #if QTween
 			if (Instance.showAnim != null)

@@ -221,8 +221,8 @@ namespace QTool.UI
 		{
 			if (!string.IsNullOrEmpty(ParentPanel))
 			{
-				OnHide();
-				Destroy(gameObject);
+				//OnHide();
+				//Destroy(gameObject);
 			}
 		}
 

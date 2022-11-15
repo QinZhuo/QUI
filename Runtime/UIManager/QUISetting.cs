@@ -22,10 +22,14 @@ namespace QTool.UI
 			{
 				await QTask.Wait(() => Instance.InitOver);
 			}
-		} 
-        protected async void Start()
+		}
+		protected override void Awake()
+		{
+			base.Awake();
+			InitOver = false;
+		}
+		protected async void Start()
         {
-            InitOver = false;
 			foreach (var uiKey in PanelList)
             {
 				var ui= await QUIManager.GetUI(uiKey);

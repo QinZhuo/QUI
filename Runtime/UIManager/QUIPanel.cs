@@ -193,7 +193,7 @@ namespace QTool.UI
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
 			IsShow = Group.alpha >= 0.9f&&gameObject.activeSelf;
-			SceneManager.activeSceneChanged += OnSceneChanged;
+			SceneManager.sceneLoaded += OnSceneChanged;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
 
@@ -204,7 +204,7 @@ namespace QTool.UI
 			{
 				_instance = null;
 			}
-			SceneManager.activeSceneChanged -= OnSceneChanged;
+			SceneManager.sceneLoaded -= OnSceneChanged;
 			QUIManager.WindowChange -= Fresh;
 			QUIManager.Remove(GetType().Name, RectTransform);
 			if (Prefab != null)
@@ -217,7 +217,7 @@ namespace QTool.UI
 		/// <summary>
 		/// 切换场景时调用默认隐藏拥有 ParentPanel 的页面
 		/// </summary>
-		protected virtual void OnSceneChanged(Scene scene,Scene next)
+		protected virtual void OnSceneChanged(Scene scene, LoadSceneMode mode)
 		{
 			if (!string.IsNullOrEmpty(ParentPanel))
 			{

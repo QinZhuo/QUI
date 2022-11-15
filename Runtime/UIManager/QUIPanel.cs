@@ -221,10 +221,14 @@ namespace QTool.UI
 		{
 			if (!string.IsNullOrEmpty(ParentPanel))
 			{
-				OnHide();
 				if(QUISetting.Instance == null && !QUISetting.Instance.PanelList.Contains(name))
 				{
+					OnHide();
 					Destroy(gameObject);
+				}
+				else
+				{
+					HideAndComplete();
 				}
 			}
 		}

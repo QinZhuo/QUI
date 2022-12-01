@@ -196,9 +196,9 @@ namespace QTool.UI
 			SceneManager.sceneLoaded += OnSceneChanged;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
-			if (ParentPanel.IsNullOrEmpty()&&IsShow)
+			if (ParentPanel.IsNullOrEmpty()&&IsShow&&gameObject.activeInHierarchy)
 			{
-				OnShow();
+				OnFresh();
 			}
 		}
 		protected virtual void OnDestroy()

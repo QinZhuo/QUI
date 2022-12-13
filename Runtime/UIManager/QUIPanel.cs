@@ -105,9 +105,9 @@ namespace QTool.UI
 		{
 			await QTask.Wait(() =>!(Application.isPlaying && PanelIsShow));
 #if QTween
-			if (Instance.showAnim != null)
+			if (Instance?.showAnim != null)
 			{
-				await Instance.showAnim.Anim.WaitOverAsync();
+				await Instance.showAnim.Anim.WaitOverAsync	();
 				await QTask.Step(); 
 			}
 #endif

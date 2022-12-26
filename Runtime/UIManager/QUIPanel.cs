@@ -332,12 +332,12 @@ namespace QTool.UI
 		}
 		public override async Task ShowAsync()
 		{
-			await StartShow(true);
+			await StartShow(true).Run();
 		}
 
 		public override async Task HideAsync()
 		{
-			await StartShow(false);
+			await StartShow(false).Run();
 		}
 
 		public void ShowAndComplete()

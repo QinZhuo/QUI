@@ -148,7 +148,6 @@ namespace QTool.UI
 		}
 		#endregion
 		#region 基础属性
-		[QGroup(true)]
 		[QName("初始显示")]
 		public bool showOnStart = false;
 		[QName("遮挡点击")]
@@ -163,7 +162,6 @@ namespace QTool.UI
 		
 		public string ParentPanel = "";
 		public ActionEvent OnShowAction;
-		[QGroup(false)]
 		public ActionEvent OnHideAction;
 		public List<QUIPanelButton> Buttons = new List<QUIPanelButton>();
 		CanvasGroup _group;

@@ -319,7 +319,7 @@ namespace QTool.UI
 			else
 #endif
 			{
-				if (gameObject != null)
+				if (this != null)
 				{
 					gameObject.SetActive(IsShow);
 					Group.interactable = IsShow;

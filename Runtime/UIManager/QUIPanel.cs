@@ -31,17 +31,6 @@ namespace QTool.UI
 			_ = ShowAsync();
 		}
 		
-		public void Switch(bool show)
-		{
-			if (show)
-			{
-				Show();
-			}
-			else
-			{
-				Hide(); ;
-			}
-		}
 		public bool IsShow { protected set; get; }
 		public RectTransform RectTransform
 		{

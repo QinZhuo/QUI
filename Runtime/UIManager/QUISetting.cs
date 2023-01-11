@@ -12,32 +12,19 @@ namespace QTool.UI
 		
 		[QName("初始化UI")]
 #if UNITY_EDITOR
-		[QEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.GetEditorList))]
+		[QEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.LoadAll))]
 #endif
 		public List<string> PanelList = new List<string>();
-		public bool InitOver { private set; get; } = false;
-		public static async Task InitOverAsync()
-		{
-			if (Instance != null)
-			{
-				await QTask.Wait(() => Instance.InitOver);
-			}
-		}
 		protected override void Awake()
 		{
 			base.Awake();
-			InitOver = false;
-		}
-		protected void Start()
-        {
 			foreach (var uiKey in PanelList)
-            {
-				var ui= QUIManager.GetUI(uiKey);
+			{
+				var ui = QUIManager.GetUI(uiKey);
 				ui?.ResetUI();
-            }
-            curList.Clear();
-            curList.AddRange(PanelList);
-            InitOver = true;
-        }
+			}
+			curList.Clear();
+			curList.AddRange(PanelList);
+		}
     }
 }

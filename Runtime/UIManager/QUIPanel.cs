@@ -221,10 +221,6 @@ namespace QTool.UI
 			{
 				if(QUISetting.Instance != null&& !QUISetting.Instance.PanelList.Contains(name))
 				{
-					if (blockInput)
-					{
-						QUIManager.WindowRemove(this);
-					}
 					OnHide();
 					Destroy(gameObject);
 				}
@@ -300,13 +296,6 @@ namespace QTool.UI
 			{
 				OnShow();
 			}
-			else
-			{
-				if (blockInput)
-				{
-					QUIManager.WindowRemove(this);
-				}
-			}
 #if QTween
 			if (showAnim != null)
 			{
@@ -365,9 +354,7 @@ namespace QTool.UI
 			showAnim?.Complete();
 #endif
 		}
-		/// <summary>
-		/// UI调用Show时 动画播放前调用
-		/// </summary>
+
 		protected virtual void OnShow()
 		{
 			try
@@ -398,6 +385,10 @@ namespace QTool.UI
 		{
 			OnHideAction?.Invoke();
 			QTime.RevertScale(gameObject);
+			if (blockInput)
+			{
+				QUIManager.WindowRemove(this);
+			}
 		}
 
 		#endregion

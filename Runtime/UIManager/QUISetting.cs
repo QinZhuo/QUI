@@ -28,11 +28,11 @@ namespace QTool.UI
 			base.Awake();
 			InitOver = false;
 		}
-		protected async void Start()
+		protected void Start()
         {
 			foreach (var uiKey in PanelList)
             {
-				var ui= await QUIManager.GetUI(uiKey);
+				var ui= QUIManager.GetUI(uiKey);
 				ui?.ResetUI();
             }
             curList.Clear();

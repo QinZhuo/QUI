@@ -17,7 +17,6 @@ namespace QTool.UI
 
 	public abstract class QUIPanel : MonoBehaviour
 	{
-		internal GameObject Prefab;
 		public abstract Task ShowAsync();
 		public abstract Task HideAsync();
 		public abstract void ResetUI();
@@ -114,7 +113,7 @@ namespace QTool.UI
 		}
 		public static async Task ShowPanel()
 		{
-			await GetInstance();
+			GetInstance();
 			await Instance?.ShowAsync();
 		}
 		public static async Task HidePanel()
@@ -169,10 +168,10 @@ namespace QTool.UI
 
 		#endregion
 		#region 基本生命周期
-		protected static async Task<T> GetInstance()
+		protected static T GetInstance()
 		{
 			if (_instance != null) return _instance;
-			_instance = await QUIManager.GetUI(typeof(T).Name) as T;
+			_instance =QUIManager.GetUI(typeof(T).Name) as T;
 			return Instance;
 		}
 		
@@ -205,11 +204,6 @@ namespace QTool.UI
 			SceneManager.sceneLoaded -= OnSceneChanged;
 			QUIManager.WindowChange -= Fresh;
 			QUIManager.Remove(GetType().Name, RectTransform);
-			if (Prefab != null)
-			{
-				QUIPanelPrefab.Release(Prefab);
-				Prefab = null;
-			}
 		}
 
 		/// <summary>

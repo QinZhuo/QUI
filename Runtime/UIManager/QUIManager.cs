@@ -29,10 +29,10 @@ namespace QTool.UI
             PanelList[key] = panel;
             InitPanret(panel, parentKey);
         }
-        static async void InitPanret(RectTransform panel, string parentKey)
+        static void InitPanret(RectTransform panel, string parentKey)
         {
             if (string.IsNullOrWhiteSpace(parentKey)) return;
-            var parent = await Get(parentKey);
+            var parent =Get(parentKey);
             if (parent != null && parent != panel)
             {
                 var scale = panel.localScale;
@@ -45,18 +45,18 @@ namespace QTool.UI
                 }
             }
         }
-		public static async Task<T> GetUI<T>(string key) where T:QUIPanel
+		public static T GetUI<T>(string key) where T:QUIPanel
 		{
-			return (await Get(key)).GetComponent<T>();
+			return Get(key).GetComponent<T>();
 		}
 		/// <summary>
 		/// 异步获取UI
 		/// </summary>
 		/// <param name="key">UI关键名</param>
 		/// <returns></returns>
-		public static async Task<QUIPanel> GetUI(string key)
+		public static QUIPanel GetUI(string key)
         {
-            return (await Get(key)).GetComponent<QUIPanel>();
+            return ( Get(key)).GetComponent<QUIPanel>();
         }
         /// <summary>
         /// UI是否正在显示
@@ -69,40 +69,33 @@ namespace QTool.UI
             return false;
         }
 
-        public static async Task Show(string key,bool show)
-        {
-            if (show == IsShow(key))
-            {
-                return;
-            }
-            (await GetUI(key)).Switch(show);
-        }
-        static async Task<RectTransform> Get(string key)
+		public static void Show(string key, bool show)
+		{
+			if (show == IsShow(key))
+			{
+				return;
+			}
+			GetUI(key).Switch(show);
+		}
+        static RectTransform Get(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) return null;
             if (PanelList[key]!=null) return PanelList[key];
             if (key.SplitTowString(".",out var start,out var end))
 			{
-				Transform parent = await Get(start);
+				Transform parent = Get(start);
 				PanelList[key] = parent.GetChild(end,true) as RectTransform;
 			}
             else if (PanelList[key] == null)
 			{
-				await QTask.RunOnlyOne(nameof(QUIManager)+"_"+key, async() =>
+				var prefab = QUIPanelPrefab.Load(key);
+				var obj = GameObject.Instantiate(prefab);
+				var ui = obj.GetComponent<QUIPanel>();
+				if (obj.transform.parent == null)
 				{
-					var prefab = await QUIPanelPrefab.LoadAsync(key);
-					var obj = GameObject.Instantiate(prefab);
-					var ui= obj.GetComponent<QUIPanel>();
-					if (ui != null)
-					{
-						ui.Prefab = prefab;
-					}
-					if (obj.transform.parent == null)
-					{
-						GameObject.DontDestroyOnLoad(obj);
-					}
-					ResisterPanel(key, obj.GetComponent<RectTransform>());
-				});
+					GameObject.DontDestroyOnLoad(obj);
+				}
+				ResisterPanel(key, obj.GetComponent<RectTransform>());
 			}
             return PanelList[key];
         }

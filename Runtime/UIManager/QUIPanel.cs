@@ -325,7 +325,7 @@ namespace QTool.UI
 				Group.interactable = IsShow;
 				Group.alpha = IsShow ? 1 : 0;
 			}
-			if (!IsShow)
+			if (!this.IsShow)
 			{
 				OnHide();
 			}

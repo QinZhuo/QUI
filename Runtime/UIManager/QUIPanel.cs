@@ -31,7 +31,7 @@ namespace QTool.UI
 			_ = ShowAsync();
 		}
 		
-		public bool IsShow { protected set; get; }
+		public bool IsShow { internal set; get; }
 		public RectTransform RectTransform
 		{
 			get

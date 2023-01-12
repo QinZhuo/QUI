@@ -15,9 +15,8 @@ namespace QTool.UI
 		[QEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.LoadAll))]
 #endif
 		public List<string> PanelList = new List<string>();
-		protected override void Awake()
+		private void Start()
 		{
-			base.Awake();
 			foreach (var uiKey in PanelList)
 			{
 				var ui = QUIManager.GetUI(uiKey);
@@ -26,5 +25,5 @@ namespace QTool.UI
 			curList.Clear();
 			curList.AddRange(PanelList);
 		}
-    }
+	}
 }

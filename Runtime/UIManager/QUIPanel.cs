@@ -204,7 +204,8 @@ namespace QTool.UI
 			{
 				if(QUISetting.Instance == null||!QUISetting.Instance.PanelList.Contains(name))
 				{
-					HideAndComplete();
+					OnHide();
+					Destroy(gameObject);
 				}
 			}
 		}

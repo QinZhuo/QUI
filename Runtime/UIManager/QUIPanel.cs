@@ -200,6 +200,7 @@ namespace QTool.UI
 		/// </summary>
 		protected virtual void OnSceneChanged(Scene scene, LoadSceneMode mode)
 		{
+			if (this == null) return;
 			if (!string.IsNullOrEmpty(ParentPanel)&& mode== LoadSceneMode.Single)
 			{
 				if(QUISetting.Instance == null||!QUISetting.Instance.PanelList.Contains(name))

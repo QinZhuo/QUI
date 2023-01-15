@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QTool.UI
 {
-	public class QUISetting : InstanceBehaviour<QUISetting>
+	public class QSceneUISetting : InstanceBehaviour<QSceneUISetting>
 	{
 		[QName("初始化UI")]
 		[QEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.LoadAll))]

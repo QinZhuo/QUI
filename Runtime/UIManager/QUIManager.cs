@@ -108,7 +108,7 @@ namespace QTool.UI
         }
 		public static void Remove(string key,RectTransform value)
 		{
-			if (!key .IsNullOrEmpty()&& PanelList.ContainsKey(key)){
+			if (!key.IsNull()&& PanelList.ContainsKey(key)){
 				var ui= PanelList[key];
 				if (ui == value)
 				{

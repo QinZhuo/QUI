@@ -292,9 +292,10 @@ namespace QTool.UI
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
 				}
-				if (IsShow == base.IsShow) {
-					gameObject.SetActive(IsShow);
+				if (IsShow != base.IsShow) {
+					return;
 				}
+				gameObject.SetActive(IsShow);
 
 			}
 			else

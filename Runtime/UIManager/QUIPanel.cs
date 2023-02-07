@@ -287,7 +287,10 @@ namespace QTool.UI
 					}
 				}
 				var animTask=showAnim.PlayAsync(IsShow);
-				await animTask;
+				if(await animTask.IsCancel())
+				{
+					return;
+				}
 				if (animTask.Exception != null)
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
@@ -295,7 +298,7 @@ namespace QTool.UI
 				if (IsShow != base.IsShow) {
 					return;
 				}
-				if (Application.IsPlaying(this))
+				if (Application.IsPlaying(gameObject))
 				{
 					gameObject.SetActive(IsShow);
 				}
@@ -304,7 +307,7 @@ namespace QTool.UI
 #endif
 			{
 				if (this == null) return;
-				if (Application.IsPlaying(this))
+				if (Application.IsPlaying(gameObject))
 				{
 					gameObject.SetActive(IsShow);
 				}

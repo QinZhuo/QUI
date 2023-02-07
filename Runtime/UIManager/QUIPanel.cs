@@ -298,7 +298,7 @@ namespace QTool.UI
 				if (IsShow != base.IsShow) {
 					return;
 				}
-				if (Application.IsPlaying(gameObject))
+				if (Application.isPlaying)
 				{
 					gameObject.SetActive(IsShow);
 				}
@@ -307,7 +307,7 @@ namespace QTool.UI
 #endif
 			{
 				if (this == null) return;
-				if (Application.IsPlaying(gameObject))
+				if (Application.isPlaying)
 				{
 					gameObject.SetActive(IsShow);
 				}

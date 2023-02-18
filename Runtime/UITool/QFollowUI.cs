@@ -19,12 +19,22 @@ namespace QTool.UI
 				}
 			}
 		}
-		public bool worldPosition = false;	
+		public RectTransform rectTransform => transform as RectTransform;
+		public Canvas canvas { get;private set; }
 		[QName("使用包围盒高度")]
 		public bool useBoundsHeight=false;
 		Bounds bounds;
 		public Vector3 offset=Vector3.zero;
-        private void LateUpdate()
+		private void Awake()
+		{
+			canvas = GetComponentInParent<Canvas>();
+			if(canvas.renderMode!= RenderMode.WorldSpace)
+			{
+				rectTransform.anchorMin = Vector2.zero;
+				rectTransform.anchorMax = Vector2.zero;
+			}
+		}
+		private void LateUpdate()
         {
             if (target != null&&target.gameObject.activeInHierarchy)
             {
@@ -34,7 +44,14 @@ namespace QTool.UI
 					runtimeOffset += bounds.size.y*Vector3.up;
 				}
 				var position = target.position + runtimeOffset;
-				transform.position = worldPosition? position: Camera.main.WorldToScreenPoint(position);
+				if(canvas.renderMode == RenderMode.WorldSpace)
+				{
+					rectTransform.position = position;
+				}
+				else
+				{
+					rectTransform.anchoredPosition= Camera.main.WorldToScreenPoint(position);
+				}
             }
         }
 		public void Recover()

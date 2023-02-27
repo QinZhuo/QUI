@@ -214,7 +214,7 @@ namespace QTool.UI
 		private void Fresh(QUIPanel window)
 		{
 			if (this == null) return;
-			var value = window == null || this.Equals(window) || transform.HasParentIs(window.RectTransform);
+			var value = window == null || this.Equals(window) || transform.ParentHas(window.RectTransform);
 			if (value)
 			{
 				if (IsShow)

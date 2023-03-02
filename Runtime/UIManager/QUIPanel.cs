@@ -151,7 +151,6 @@ namespace QTool.UI
 		public string ParentPanel = "";
 		public ActionEvent OnShowAction;
 		public ActionEvent OnHideAction;
-		public List<QUIPanelButton> Buttons = new List<QUIPanelButton>();
 		CanvasGroup _group;
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
 

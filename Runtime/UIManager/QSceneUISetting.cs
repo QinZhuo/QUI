@@ -14,7 +14,7 @@ namespace QTool.UI
 		protected override void Awake()
 		{
 			base.Awake();
-			QSceneTool.PreLoadTaskList.Add(PreLoad());
+			QSceneTool.PreLoadList.Add(PreLoad());
 		}
 		private async Task PreLoad()
 		{

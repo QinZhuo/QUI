@@ -13,7 +13,7 @@ namespace QTool.UI
 		public List<string> PanelList = new List<string>();
 		private void Start()
 		{
-			QTool.PreLoadTaskList.Add(PreLoad());
+			QSceneTool.PreLoadTaskList.Add(PreLoad());
 		}
 		private async Task PreLoad()
 		{

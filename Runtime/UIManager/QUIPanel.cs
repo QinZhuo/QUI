@@ -168,7 +168,6 @@ namespace QTool.UI
 			if (this is T panel)
 			{
 				_instance = this as T;
-				QDebug.Log("初始化页面" + _instance);
 			}
 			else
 			{

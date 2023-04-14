@@ -95,6 +95,7 @@ namespace QTool.UI
 			}
             else if (PanelList[key] == null)
 			{
+				var startTime = QDebug.Timestamp;
 				var prefab = QUIPanelPrefab.Load(key);
 				var obj = GameObject.Instantiate(prefab);
 				var ui = obj.GetComponent<QUIPanel>();
@@ -103,6 +104,7 @@ namespace QTool.UI
 					GameObject.DontDestroyOnLoad(obj);
 				}
 				ResisterPanel(key, obj.GetComponent<RectTransform>());
+				QDebug.Log("动态创建" + nameof(QUIPanel) + "." + key, startTime);
 			}
             return PanelList[key];
         }

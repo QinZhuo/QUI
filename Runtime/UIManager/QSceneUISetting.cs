@@ -21,7 +21,10 @@ namespace QTool.UI
 			var taskList = new List<Task>();
 			foreach (var uiKey in PanelList)
 			{
-				taskList.Add(QUIPanelPrefab.LoadAsync(uiKey));
+				if (!QUIManager.PanelList.ContainsKey(uiKey))
+				{
+					taskList.Add(QUIPanelPrefab.LoadAsync(uiKey));
+				}
 			}
 			await taskList.WaitAllOver();
 			foreach (var uiKey in PanelList)

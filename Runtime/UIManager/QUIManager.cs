@@ -16,7 +16,7 @@ namespace QTool.UI
     /// </summary>
     public static class QUIManager
     {
-        static QDictionary<string, RectTransform> PanelList = new QDictionary<string, RectTransform>();
+        internal static QDictionary<string, RectTransform> PanelList = new QDictionary<string, RectTransform>();
         /// <summary>
         /// 注册UI到管理器
         /// </summary>

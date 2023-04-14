@@ -11,8 +11,9 @@ namespace QTool.UI
 		[QName("预加载UI")]
 		[QEnum(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.LoadAll))]
 		public List<string> PanelList = new List<string>();
-		private void Start()
+		protected override void Awake()
 		{
+			base.Awake();
 			QSceneTool.PreLoadTaskList.Add(PreLoad());
 		}
 		private async Task PreLoad()

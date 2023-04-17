@@ -18,7 +18,7 @@ namespace QTool.UI
 		}
 		private async Task PreLoad()
 		{
-			QDebug.BeginMarker("预加载场景UI");
+			QDebug.Begin("预加载场景UI");
 			foreach (var uiKey in PanelList)
 			{
 				if (!QUIManager.PanelList.ContainsKey(uiKey))
@@ -27,7 +27,7 @@ namespace QTool.UI
 					QUIManager.GetUI(uiKey)?.ResetUI();
 				}
 			}
-			QDebug.EndMarker("预加载场景UI");
+			QDebug.End("预加载场景UI");
 		}
 	}
 }

@@ -25,6 +25,7 @@ namespace QTool.UI
 				{
 					await QUIPanelPrefab.LoadAsync(uiKey);
 					QUIManager.GetUI(uiKey)?.ResetUI();
+					await QTask.Step();
 				}
 			}
 			QDebug.End("预加载场景UI");

@@ -19,18 +19,13 @@ namespace QTool.UI
 		private async Task PreLoad()
 		{
 			var startTime = QDebug.Timestamp;
-			var taskList = new List<Task>();
 			foreach (var uiKey in PanelList)
 			{
 				if (!QUIManager.PanelList.ContainsKey(uiKey))
 				{
-					taskList.Add(QUIPanelPrefab.LoadAsync(uiKey));
+					await QUIPanelPrefab.LoadAsync(uiKey);
+					QUIManager.GetUI(uiKey)?.ResetUI();
 				}
-			}
-			await taskList.WaitAllOver();
-			foreach (var uiKey in PanelList)
-			{
-				QUIManager.GetUI(uiKey)?.ResetUI();
 			}
 			QDebug.Log("预加载场景UI完成", startTime);
 		}

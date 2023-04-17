@@ -14,11 +14,11 @@ namespace QTool.UI
 		protected override void Awake()
 		{
 			base.Awake();
-			QSceneTool.PreLoadList.Add(PreLoad());
+			QSceneTool.PreLoadList.Add(PreLoad().Run());
 		}
 		private async Task PreLoad()
 		{
-			var startTime = QDebug.Timestamp;
+			QDebug.BeginMarker("预加载场景UI");
 			foreach (var uiKey in PanelList)
 			{
 				if (!QUIManager.PanelList.ContainsKey(uiKey))
@@ -27,7 +27,7 @@ namespace QTool.UI
 					QUIManager.GetUI(uiKey)?.ResetUI();
 				}
 			}
-			QDebug.Log("预加载场景UI完成", startTime);
+			QDebug.EndMarker("预加载场景UI");
 		}
 	}
 }

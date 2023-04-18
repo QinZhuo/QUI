@@ -14,7 +14,22 @@ namespace QTool.UI
 		protected override void Awake()
 		{
 			base.Awake();
-			QSceneTool.PreLoadList.Add(PreLoad().Run());
+			if (QSceneTool.IsLoading)
+			{
+				QSceneTool.PreLoadList.Add(PreLoad().Run());
+			}
+			else
+			{
+				QDebug.Begin("加载场景UI");
+				foreach (var uiKey in PanelList)
+				{
+					if (!QUIManager.PanelList.ContainsKey(uiKey))
+					{
+						QUIManager.GetUI(uiKey)?.ResetUI();
+					}
+				}
+				QDebug.End("加载场景UI");
+			}
 		}
 		private async Task PreLoad()
 		{

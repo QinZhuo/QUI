@@ -296,7 +296,7 @@ namespace QTool.UI
 				if (IsShow != base.IsShow) {
 					return;
 				}
-				if (Application.IsPlaying(this))
+				if (this!=null&&Application.IsPlaying(this))
 				{
 					gameObject.SetActive(IsShow);
 				}

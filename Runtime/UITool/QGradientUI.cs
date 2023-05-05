@@ -72,15 +72,13 @@ namespace QTool.UI
                     if ('>'.Equals(c))
                     {
                         ignore = false;
-                     //   Debug.LogError("end"+i+"/"+text.Length);
                     }
                 }
                 else
                 {
                     if ('<'.Equals(c))
-                    {
-                        ignore = true;
-                     //   Debug.LogError("ignore"+i+"/"+text.Length);
+					{
+						ignore = true;
                     }
                     else
                     {
@@ -88,7 +86,6 @@ namespace QTool.UI
                     }
                 }
             }
-            Debug.LogError(index + " => " + trueIndex);
             return trueIndex;
         }
         public static string RemoveText(this string text,char start,char end)
@@ -173,15 +170,8 @@ namespace QTool.UI
                 case LerpDir.TextCount:
                     var cIndex = index / 4;
                     var offset = index - cIndex*4;
-                    if (textOneLine)
-                    {
-                        cIndex= index / 4;
-                    }
-                    else
-                    {
-                        cIndex= text.text.ToRichTextIndex(index / 4);
-                    }
-                    if (offset == 0 || offset == 3)
+					cIndex = index / 4;
+					if (offset == 0 || offset == 3)
                     {
                         return cIndex*2;
                     }
@@ -193,15 +183,10 @@ namespace QTool.UI
                     return 0;
             }
         }
-        bool textOneLine = false;
         void Init(VertexHelper vh)
         {
             minValue = float.MaxValue;
             maxValue = float.MinValue;
-            if(lerpDir== LerpDir.TextCount&&text!=null)
-            {
-                textOneLine = text.text.CheckRichTextOneLine(vh.currentVertCount);
-            }
             for (int i = 0; i < vh.currentVertCount; i++)
             {
                 vh.PopulateUIVertex(ref v, i); 

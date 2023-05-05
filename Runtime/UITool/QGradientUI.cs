@@ -1,4 +1,4 @@
-﻿using QTool.Inspector;
+using QTool.Inspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -150,7 +150,6 @@ namespace QTool.UI
 
             for (int i = 0; i < index.Length; i++)
             {
-
                 alphaKeys[index[i]].time =Mathf.Lerp(-(index.Length-1)*delay,1, t )+ delay* i;
             }
             GradientColor.SetKeys(GradientColor.colorKeys, alphaKeys); ;

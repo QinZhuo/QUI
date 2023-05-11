@@ -203,7 +203,10 @@ namespace QTool.UI
 			{
 				if(QSceneUISetting.Instance == null||!QSceneUISetting.Instance.PanelList.Contains(name))
 				{
-					OnHide();
+					if (PanelIsShow)
+					{
+						OnHide();
+					}
 					Destroy(gameObject);
 				}
 			}

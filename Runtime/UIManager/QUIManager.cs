@@ -139,7 +139,7 @@ namespace QTool.UI
             windowStack.Push(window);
             WindowChange?.Invoke(windowStack.StackPeek());
 #if QDebug
-			QEventManager.Trigger("UI页面", windowStack.ToOneString());
+			QEventManager.InvokeEvent("UI页面", windowStack.ToOneString());
 #endif
 		}
         public static event System.Action<QUIPanel> WindowChange;
@@ -150,7 +150,7 @@ namespace QTool.UI
             windowStack.Remove(window);
             WindowChange?.Invoke(windowStack.StackPeek());
 #if QDebug
-			QEventManager.Trigger("UI页面", windowStack.ToOneString());
+			QEventManager.InvokeEvent("UI页面", windowStack.ToOneString());
 #endif
         }
     }

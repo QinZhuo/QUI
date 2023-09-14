@@ -106,6 +106,7 @@ namespace QTool.UI
 				yield return Instance.showAnim.Anim.WaitOver();
 			}
 #endif
+			yield break;
 		}
 		public static async Task ShowPanel()
 		{

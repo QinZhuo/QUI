@@ -5,104 +5,34 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace QTool.UI
 {
-    public static class ColorExtend
-    {
-        public static string ToHtmlStringRGB(this Color color)
-        {
-            return ColorUtility.ToHtmlStringRGB(color);
-        }
-        public static Color ChangeAlpha(this Color color,float a)
-        {
-            return new Color(color.r, color.g, color.b, a);
-        }
-    }
     public static class TextExtend
     {
-        public static Vector3 GetPos(this Text text,int index)
-        {
-            string textStr = text.text;
-            Vector3 charPos = Vector3.zero;
-            if (index <= textStr.Length && index > 0)
-            {
-                TextGenerator textGen = new TextGenerator(textStr.Length);
-                var size = text.rectTransform.rect.size;
-                textGen.Populate(textStr, text.GetGenerationSettings(size));
+		public static Vector3 GetPos(this Text text, int index)
+		{
+			string textStr = text.text;
+			Vector3 charPos = Vector3.zero;
+			if (index <= textStr.Length && index > 0)
+			{
+				TextGenerator textGen = new TextGenerator(textStr.Length);
+				var size = text.rectTransform.rect.size;
+				textGen.Populate(textStr, text.GetGenerationSettings(size));
 
-                int newLine = textStr.Substring(0, index).Split('\n').Length - 1;
-                int whiteSpace = textStr.Substring(0, index).Split(' ').Length - 1;
-                int indexOfTextQuad = (index * 4) + (newLine * 4) - 4;
-                if (indexOfTextQuad < textGen.vertexCount)
-                {
-                    charPos = (textGen.verts[indexOfTextQuad].position +
-                        textGen.verts[indexOfTextQuad + 1].position +
-                        textGen.verts[indexOfTextQuad + 2].position +
-                        textGen.verts[indexOfTextQuad + 3].position) / 4f;
-                }
-            }
-            charPos /= text.GetComponentInParent<Canvas>().scaleFactor;//适应不同分辨率的屏幕
-            charPos = text.transform.TransformPoint(charPos);//转换为世界坐标
-            return charPos;
-        }
-        public static bool CheckRichTextOneLine(this string text,int count)
-        {
-            if (text.Length == count)
-            {
-                if (text.Contains("<") && text.Contains(">"))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-       
-        public static int RichTextLength(this string text)
-        {
-            var trueText = text.RemoveText('<', '>');
-            return trueText.Length;
-        }
-        public static int ToRichTextIndex(this string text,int index)
-        {
-            var trueIndex = 0;
-            bool ignore=false;
-            for (int i = 0; i <=index; i++)
-            {
-                var c = text[i];
-                if (ignore)
-                {
-                    if ('>'.Equals(c))
-                    {
-                        ignore = false;
-                    }
-                }
-                else
-                {
-                    if ('<'.Equals(c))
-					{
-						ignore = true;
-                    }
-                    else
-                    {
-                        trueIndex++;
-                    }
-                }
-            }
-            return trueIndex;
-        }
-        public static string RemoveText(this string text,char start,char end)
-        {
-            var endText = text;
-            var startIndex = endText.IndexOf(start);
-            var endIndex = endText.IndexOf(end);
-            while (startIndex>=0&&endIndex>=0)
-            {
-                Debug.LogError(startIndex + "-" + endIndex);
-                endText = endText.Remove(startIndex, endIndex - startIndex+1);
-                startIndex = endText.IndexOf(start);
-                endIndex = endText.IndexOf(end);
-            }
-            return endText;
-        }
-    }
+				int newLine = textStr.Substring(0, index).Split('\n').Length - 1;
+				int whiteSpace = textStr.Substring(0, index).Split(' ').Length - 1;
+				int indexOfTextQuad = (index * 4) + (newLine * 4) - 4;
+				if (indexOfTextQuad < textGen.vertexCount)
+				{
+					charPos = (textGen.verts[indexOfTextQuad].position +
+						textGen.verts[indexOfTextQuad + 1].position +
+						textGen.verts[indexOfTextQuad + 2].position +
+						textGen.verts[indexOfTextQuad + 3].position) / 4f;
+				}
+			}
+			charPos /= text.GetComponentInParent<Canvas>().scaleFactor;//适应不同分辨率的屏幕
+			charPos = text.transform.TransformPoint(charPos);//转换为世界坐标
+			return charPos;
+		}
+	}
     public class QGradientUI : BaseMeshEffect
     {
         public enum LerpDir
@@ -158,7 +88,6 @@ namespace QTool.UI
         }
         float minValue = float.MaxValue;
         float maxValue = float.MinValue;
-      //  float length = 0;
         float GetValue(UIVertex v, int index)
         {
             switch (lerpDir)

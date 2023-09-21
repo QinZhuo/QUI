@@ -10,10 +10,11 @@ namespace QTool.UI
 		{
 			return QUIManager.GetUI(panelName);
 		}
-        public string panelName;
+		[QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
+		public string panelName;
         public void Show()
         {
-          Panel()?.Show();
+			Panel()?.Show();
         }
 		public void Hide()
 		{

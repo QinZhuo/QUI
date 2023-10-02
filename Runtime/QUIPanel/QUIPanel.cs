@@ -53,20 +53,14 @@ namespace QTool.UI
 	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
 	{
 		#region 单例逻辑
-		static T _instance;
+		private static T _instance;
 		protected static T Instance
 		{
 			get
 			{
-				if (_instance == null)
-				{
-					return null;
-				}
-				else
-				{
-					return _instance;
-				}
-
+				if (_instance != null) return _instance;
+				_instance = QUIManager.GetUI(typeof(T).Name) as T;
+				return _instance;
 			}
 		}
 		#endregion
@@ -110,7 +104,6 @@ namespace QTool.UI
 		}
 		public static async Task ShowPanel()
 		{
-			GetInstance();
 			await Instance?.ShowAsync();
 		}
 		public static async Task HidePanel()
@@ -136,11 +129,11 @@ namespace QTool.UI
 		}
 		public static void InvokeEvent(string eventName)
 		{
-			Instance.gameObject.InvokeEvent(eventName);
+			_instance?.gameObject.InvokeEvent(eventName);
 		}
 		public static void InvokeEvent(string eventName, bool value)
 		{
-			Instance.gameObject.InvokeEvent(eventName, value);
+			_instance?.gameObject.InvokeEvent(eventName, value);
 		}
 		#endregion
 		#region 基础属性
@@ -164,12 +157,7 @@ namespace QTool.UI
 
 		#endregion
 		#region 基本生命周期
-		protected static T GetInstance()
-		{
-			if (_instance != null) return _instance;
-			_instance =QUIManager.GetUI(typeof(T).Name) as T;
-			return Instance;
-		}
+		
 		
 		protected virtual void Awake()
 		{

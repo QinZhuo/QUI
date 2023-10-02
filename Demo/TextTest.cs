@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +15,10 @@ namespace QTool.UI
             if (rect != null)
             {
                 var text= GetComponent<Text>();
-                rect.transform.position= text.GetPos(text.text.Length-1);
+				if (text!=null)
+				{
+					rect.transform.position = text.GetPos(text.text.Length - 1);
+				}
             }
         }
     }

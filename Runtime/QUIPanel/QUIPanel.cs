@@ -58,7 +58,7 @@ namespace QTool.UI
 		{
 			get
 			{
-				if (_instance != null) return _instance;
+				if (_instance != null || !Application.isPlaying) return _instance;
 				_instance = QUIManager.GetUI(typeof(T).Name) as T;
 				return _instance;
 			}

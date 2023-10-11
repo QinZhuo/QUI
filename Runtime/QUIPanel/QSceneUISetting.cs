@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QTool.UI
 {
-	public class QSceneUISetting : InstanceBehaviour<QSceneUISetting>
+	public class QSceneUISetting : QInstanceBehaviour<QSceneUISetting>
 	{
 		[QName("预加载UI")]
 		[QPopup(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.LoadAll))]

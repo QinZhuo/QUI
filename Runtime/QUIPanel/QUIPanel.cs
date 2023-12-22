@@ -139,7 +139,7 @@ namespace QTool.UI
 		[QName("初始显示")]
 		public bool showOnStart = false;
 		[QName("遮挡点击")]
-		public bool blockInput = false;
+		public bool blockInput = true;
 		[QName("控制TimeScale")]
 		public float timeScale = -1;
 #if QTween
@@ -216,12 +216,20 @@ namespace QTool.UI
 				if (IsShow)
 				{
 					Group.interactable = true;
+					if (blockInput)
+					{
+						Group.blocksRaycasts = true;
+					}
 					OnFresh();
 				}
 			}
 			else
 			{
 				Group.interactable = false;
+				if (blockInput)
+				{
+					Group.blocksRaycasts = false;
+				}
 			}
 		}
 		/// <summary>
@@ -307,6 +315,10 @@ namespace QTool.UI
 					gameObject.SetActive(IsShow);
 				}
 				Group.interactable = IsShow;
+				if (blockInput)
+				{
+					Group.blocksRaycasts = IsShow;
+				}
 				Group.alpha = IsShow ? 1 : 0;
 			}
 			if (!this.IsShow)

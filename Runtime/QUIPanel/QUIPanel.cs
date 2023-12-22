@@ -380,7 +380,10 @@ namespace QTool.UI
 		protected virtual void OnHide()
 		{
 			OnHideAction?.Invoke();
-			QTime.RevertScale(gameObject);
+			if (this != null)
+			{
+				QTime.RevertScale(gameObject);
+			}
 			if (blockInput)
 			{
 				QUIManager.WindowRemove(this);

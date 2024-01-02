@@ -9,7 +9,7 @@ namespace QTool.UI
     public class QCircle : QImageEffect
     {
 
-        [QName("线框", "VertexMode")]
+        [QName("线框")]
         public float lineWidth = -1;
         [Range(0,360)]
         [QName("角度")]

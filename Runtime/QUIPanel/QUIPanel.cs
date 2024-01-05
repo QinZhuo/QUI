@@ -144,7 +144,7 @@ namespace QTool.UI
 		public float timeScale = -1;
 #if QTween
 		[QName("显示动画")]
-		public QTweenBehavior showAnim;
+		public QTweenComponent showAnim;
 #endif
 		[QName("父页面")]
 		

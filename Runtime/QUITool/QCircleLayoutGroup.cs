@@ -22,7 +22,7 @@ namespace QTool.UI
 		}
 
 
-		[UnityEngine.Serialization.FormerlySerializedAs("distance"),SerializeField]
+		[UnityEngine.Serialization.FormerlySerializedAs("distance"), SerializeField]
 		private float _spacing = 20;
 		public float Spacing { get => _spacing; set => _spacing = value; }
 		[QName("控制旋转")]
@@ -120,7 +120,7 @@ namespace QTool.UI
 			childPositions[i] = Center + pos;
 			if (rotate)
 			{
-				childRotations[i] = Quaternion.Euler(0, 0, -angle / Mathf.PI * 180 - 90);
+				childRotations[i] = Quaternion.Euler(0, 0, -angle / Mathf.PI * 180);
 			}
 		}
 	}

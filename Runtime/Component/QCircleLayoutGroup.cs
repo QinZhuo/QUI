@@ -67,26 +67,26 @@ namespace QTool.UI
 				case TextAnchor.MiddleLeft:
 				case TextAnchor.UpperLeft:
 					reverse = true;
-					startAngle = -90 + padding.left;
+					startAngle = -90 + padding.right;
 					break;
 				case TextAnchor.LowerLeft:
-					startAngle = 90 + padding.left;
+					startAngle = 90 + padding.right;
 					break;
 				case TextAnchor.UpperRight:
 				case TextAnchor.MiddleRight:
-					startAngle = -90 + padding.right;
+					startAngle = -90 + padding.left;
 					break;
 				case TextAnchor.LowerRight:
 					reverse = true;
-					startAngle = 90 + padding.right;
+					startAngle = 90 + padding.left;
 					break;
 
 				case TextAnchor.MiddleCenter:
 				case TextAnchor.UpperCenter:
-					startAngle = -(90 + (rectChildren.Count - 1) * Spacing / 2) + padding.left;
+					startAngle = -(90 + (rectChildren.Count - 1) * Spacing / 2) + padding.left + padding.right;
 					break;
 				case TextAnchor.LowerCenter:
-					startAngle = 90 - (rectChildren.Count - 1) * Spacing / 2 + padding.left;
+					startAngle = 90 - (rectChildren.Count - 1) * Spacing / 2 + padding.left + padding.right;
 					break;
 				default:
 					break;

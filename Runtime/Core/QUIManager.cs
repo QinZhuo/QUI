@@ -96,13 +96,13 @@ namespace QTool.UI
 			{
 				QDebug.Begin("动态创建"+nameof(QUIPanel)+"<"+key+">");
 				var prefab = QUIPanelPrefab.Load(key);
-				var obj = GameObject.Instantiate(prefab);
+				var obj = Object.Instantiate(prefab);
 				var ui = obj.GetComponent<QUIPanel>();
 				if (obj.transform.parent == null)
 				{
-					GameObject.DontDestroyOnLoad(obj);
+					Object.DontDestroyOnLoad(obj);
 				}
-				ResisterPanel(key, obj.GetComponent<RectTransform>());
+				ResisterPanel(key, obj.GetComponent<RectTransform>(true));
 				QDebug.End("动态创建" + nameof(QUIPanel) + "<" + key + ">");
 			}
             return PanelList[key];

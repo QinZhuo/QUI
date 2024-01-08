@@ -154,5 +154,8 @@ namespace QTool.UI
         }
     }
 
-	
+
+	public class QUIPanelPrefab : QPrefabLoader<QUIPanelPrefab>
+	{
+	}
 }

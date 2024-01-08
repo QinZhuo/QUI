@@ -10,44 +10,7 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
-	public class QUIPanelPrefab : QPrefabLoader<QUIPanelPrefab>
-	{
-	}
 
-	public abstract class QUIPanel : MonoBehaviour
-	{
-		public abstract Task ShowAsync();
-		public abstract Task HideAsync();
-		public abstract void ResetUI();
-		[QName("隐藏")]
-		public void Hide()
-		{
-			_ = HideAsync();
-		}
-		[QName("显示")]
-		public void Show()
-		{
-			_ = ShowAsync();
-		}
-		
-		public bool IsShow { internal set; get; }
-		public RectTransform RectTransform
-		{
-			get
-			{
-				return transform as RectTransform;
-			}
-		}
-
-
-	}
-	[System.Serializable]
-	public class QUIPanelButton
-	{
-		public string key;
-		public string viewName;
-		public ActionEvent onClick;
-	}
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
 	{
@@ -392,5 +355,32 @@ namespace QTool.UI
 
 		#endregion
 		
+	}
+	public abstract class QUIPanel : MonoBehaviour
+	{
+		public abstract Task ShowAsync();
+		public abstract Task HideAsync();
+		public abstract void ResetUI();
+		[QName("隐藏")]
+		public void Hide()
+		{
+			_ = HideAsync();
+		}
+		[QName("显示")]
+		public void Show()
+		{
+			_ = ShowAsync();
+		}
+
+		public bool IsShow { internal set; get; }
+		public RectTransform RectTransform
+		{
+			get
+			{
+				return transform as RectTransform;
+			}
+		}
+
+
 	}
 }

@@ -102,7 +102,7 @@ namespace QTool.UI
 				{
 					Object.DontDestroyOnLoad(obj);
 				}
-				ResisterPanel(key, obj.GetComponent<RectTransform>(true));
+				ResisterPanel(key, ui.RectTransform);
 				QDebug.End("动态创建" + nameof(QUIPanel) + "<" + key + ">");
 			}
             return PanelList[key];

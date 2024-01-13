@@ -14,7 +14,7 @@ namespace QTool.UI
 	{
 		public virtual void Set<TObj>(TObj obj)
 		{
-
+			throw new System.Exception("未实现QUIPanel Set函数[" + typeof(TObj) + "]" + obj);
 		}
 		public virtual Task ShowAsync()
 		{

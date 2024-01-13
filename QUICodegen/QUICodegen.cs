@@ -38,7 +38,7 @@ namespace QTool.UI.Codegen
 					}
 				}
 			}
-			return true;
+			return false;
 		}
 	}
 }

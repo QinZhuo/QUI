@@ -24,12 +24,16 @@ namespace QTool.UI.Codegen
 					{
 						UIs.Enqueue(type.Name);
 					}
-					else
+					else if (type.IsType<QUIPanel>())
 					{
-						foreach (var item in UIs) 
+						if (UIs.Count > 0)
 						{
-							Log(Assembly.Name.Name + " " + item);
-							type.Fields.Add(new FieldDefinition(item, FieldAttributes.Static | FieldAttributes.Public | FieldAttributes.Private | FieldAttributes.InitOnly, Get<string>()));
+							foreach (var item in UIs)
+							{
+								Log(Assembly.Name.Name + " " + item);
+								type.Fields.Add(new FieldDefinition(item, FieldAttributes.Static | FieldAttributes.Public | FieldAttributes.Private | FieldAttributes.InitOnly, Get<string>()));
+							}
+							return true;
 						}
 					}
 				}

@@ -27,7 +27,7 @@ namespace QTool.UI.Codegen
 			var enumType = new TypeDefinition("QTool.UI", "QUI",
 				TypeAttributes.AnsiClass | TypeAttributes.NotPublic | TypeAttributes.Public | TypeAttributes.AutoLayout | TypeAttributes.Sealed | TypeAttributes.BeforeFieldInit,
 				 Get<object>());
-			if (UIs.Count > 0)
+			if (UIs.Count > 0 && IsAssembly("QUI"))
 			{
 				foreach (var item in UIs)
 				{
@@ -35,8 +35,9 @@ namespace QTool.UI.Codegen
 					enumType.Fields.Add(new FieldDefinition(item, FieldAttributes.Static | FieldAttributes.Public | FieldAttributes.Private | FieldAttributes.InitOnly, Get<string>()));
 				}
 				Assembly.MainModule.Types.Add(enumType);
+				return true;
 			}
-			return UIs.Count > 0;
+			return false;
 		}
 	}
 }

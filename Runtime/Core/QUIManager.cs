@@ -52,7 +52,7 @@ namespace QTool.UI
             return false;
         }
 
-		public static async Task Show(this string key, bool show)
+		public static async Task Switch(this string key, bool show)
 		{
 			if (show == IsShow(key))
 			{
@@ -66,6 +66,21 @@ namespace QTool.UI
 			{
 				await Get(key).HideAsync();
 			}
+		}
+		public static async Task Show(this string key)
+		{
+			if (IsShow(key)) return;
+			await Get(key).ShowAsync();
+		}
+		public static async Task Hide(this string key)
+		{
+			if (!IsShow(key)) return;
+			await Get(key).HideAsync();
+		}
+		public static async Task Show<T>(this string key, T obj)
+		{
+			Get(key).Set(obj);
+			await Show(key);
 		}
 		public static QUIPanel Get(this string key)
 		{

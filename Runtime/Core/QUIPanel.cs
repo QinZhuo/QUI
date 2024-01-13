@@ -83,6 +83,17 @@ namespace QTool.UI
 				}
 			}
 		}
+		public static async Task ShowPanel()
+		{
+			await Instance?.ShowAsync();
+		}
+		public static async Task HidePanel()
+		{
+			if (PanelIsShow)
+			{
+				await Instance?.HideAsync();
+			}
+		}		
 		#region 基础属性
 		[QName("初始显示")]
 		public bool showOnStart = false;

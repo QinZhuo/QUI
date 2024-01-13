@@ -15,16 +15,18 @@ namespace QTool.UI.Codegen
 
 		public override bool ChangeAssembly()
 		{
-			Assembly.MainModule.Types.Add(new TypeDefinition("QTool.UI", "QUI",
+			var enumType = new TypeDefinition("QTool.UI", "QUI",
 					TypeAttributes.AnsiClass | TypeAttributes.NotPublic | TypeAttributes.Public | TypeAttributes.AutoLayout | TypeAttributes.Sealed | TypeAttributes.BeforeFieldInit,
-					 Get<short>()));
-			foreach (var type in Assembly.MainModule.GetAllTypes().ToArray())
+					 Get<object>());
+		
+			foreach (var type in Assembly.MainModule.GetAllTypes().ToArray()) 
 			{
 				if (!type.IsAbstract && type.BaseType.CanBeResolved() && type.Is<QUIPanel>())
 				{
-					//Log(type.Name);
+					enumType.Fields.Add(new FieldDefinition(type.Name, FieldAttributes.Static | FieldAttributes.Public | FieldAttributes.Private | FieldAttributes.InitOnly, Get<string>()));
 				}
 			}
+			Assembly.MainModule.Types.Add(enumType);
 			return true|| base.ChangeAssembly();
 		}
 	}

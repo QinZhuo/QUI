@@ -14,16 +14,18 @@ namespace QTool.UI
 	{
 		public virtual void Set<TObj>(TObj obj)
 		{
-			throw new System.Exception("未实现QUIPanel Set函数[" + typeof(TObj) + "]" + obj);
+			throw new System.Exception("未实现" + GetType() + ".Set函数[" + typeof(TObj) + "]" + obj);
 		}
 		public virtual Task ShowAsync()
 		{
+			IsShow = true;
 			gameObject.SetActive(true);
 			return Task.CompletedTask;
 		}
 
 		public virtual Task HideAsync()
 		{
+			IsShow = false;
 			gameObject.SetActive(false);
 			return Task.CompletedTask;
 		}
@@ -115,8 +117,8 @@ namespace QTool.UI
 
 		#endregion
 		#region 基本生命周期
-		
-		
+
+
 		protected virtual void Awake()
 		{
 			if (this is T panel)
@@ -127,11 +129,10 @@ namespace QTool.UI
 			{
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
-			IsShow = Group.alpha >= 0.9f&&gameObject.activeSelf;
-			SceneManager.sceneLoaded += OnSceneChanged;
+			IsShow = Group.alpha >= 0.9f && gameObject.activeSelf;
 			QUIManager.WindowChange += Fresh;
 			QUIManager.ResisterPanel(this, ParentPanel);
-			if (ParentPanel.IsNull()&&IsShow&&gameObject.activeInHierarchy)
+			if (ParentPanel.IsNull() && IsShow && gameObject.activeInHierarchy)
 			{
 				OnFresh();
 			}
@@ -142,29 +143,11 @@ namespace QTool.UI
 			{
 				_instance = null;
 			}
-			SceneManager.sceneLoaded -= OnSceneChanged;
 			QUIManager.WindowChange -= Fresh;
 			QUIManager.Remove(this);
 		}
 
-		/// <summary>
-		/// 切换场景时调用默认隐藏拥有 ParentPanel 的页面
-		/// </summary>
-		protected virtual void OnSceneChanged(Scene scene, LoadSceneMode mode)
-		{
-			if (this == null) return;
-			if (!string.IsNullOrEmpty(ParentPanel)&& mode== LoadSceneMode.Single)
-			{
-				if(QSceneUISetting.Instance == null||!QSceneUISetting.Instance.PanelList.Contains(name))
-				{
-					if (PanelIsShow)
-					{
-						OnHide();
-					}
-					Destroy(gameObject);
-				}
-			}
-		}
+
 
 		private void Fresh(QUIPanel window)
 		{
@@ -309,7 +292,6 @@ namespace QTool.UI
 			showAnim?.Complete();
 #endif
 		}
-
 		protected virtual void OnShow()
 		{
 			try
@@ -333,8 +315,6 @@ namespace QTool.UI
 			{
 				Debug.LogError(this + " " + nameof(OnShow) + " 出错：" + e);
 			}
-			
-			
 		}
 		protected virtual void OnHide()
 		{
@@ -348,8 +328,6 @@ namespace QTool.UI
 				QUIManager.WindowRemove(this);
 			}
 		}
-
 		#endregion
-		
 	}
 }

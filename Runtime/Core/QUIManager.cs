@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 namespace QTool.UI
 {
-  
-    /// <summary>
-    /// UI管理器
-    /// </summary>
-    public static class QUIManager
-    {
-        internal static QDictionary<string, QUIPanel> PanelList = new QDictionary<string, QUIPanel>();
+
+	/// <summary>
+	/// UI管理器
+	/// </summary>
+	public static class QUIManager
+	{
+		internal static QDictionary<string, QUIPanel> PanelList = new QDictionary<string, QUIPanel>();
 		/// <summary>
 		/// 注册UI到管理器
 		/// </summary>
 		/// <param name="key">关键名</param>
 		/// <param name="panel">UI页面</param>
 		/// <param name="parentKey">父页面</param>
-		public static void ResisterPanel(QUIPanel panel, string parentKey = "")
+		internal static void ResisterPanel(QUIPanel panel, string parentKey = "")
 		{
 			PanelList[panel.QName()] = panel;
 			if (!parentKey.IsNull())
@@ -41,48 +41,49 @@ namespace QTool.UI
 				}
 			}
 		}
-        /// <summary>
-        /// UI是否正在显示
-        /// </summary>
-        /// <param name="key">UI关键名</param>
-        /// <returns></returns>
-        public static bool IsShow(this string key)
-        {
-            if (PanelList.ContainsKey(key)) return PanelList[key].GetComponent<QUIPanel>().IsShow;
-            return false;
-        }
-
-		public static async Task Switch(this string key, bool show)
+		/// <summary>
+		/// UI是否正在显示
+		/// </summary>
+		/// <param name="key">UI关键名</param>
+		/// <returns></returns>
+		public static bool IsShow(this System.Enum enumKey)
 		{
-			if (show == IsShow(key))
+			var key = enumKey?.ToString();
+			if (PanelList.ContainsKey(key)) return PanelList[key.ToString()].GetComponent<QUIPanel>().IsShow;
+			return false;
+		}
+
+		public static async Task Switch(this System.Enum enumKey, bool show)
+		{
+			if (show == IsShow(enumKey))
 			{
 				return;
 			}
 			if (show)
 			{
-				await Get(key).ShowAsync();
+				await Get(enumKey.ToString()).ShowAsync();
 			}
 			else
 			{
-				await Get(key).HideAsync();
+				await Get(enumKey.ToString()).HideAsync();
 			}
 		}
-		public static async Task Show(this string key)
+		public static async Task Show(this System.Enum key)
 		{
 			if (IsShow(key)) return;
-			await Get(key).ShowAsync();
+			await Get(key.ToString()).ShowAsync();
 		}
-		public static async Task Hide(this string key)
+		public static async Task Hide(this System.Enum key)
 		{
 			if (!IsShow(key)) return;
-			await Get(key).HideAsync();
+			await Get(key.ToString()).HideAsync();
 		}
-		public static async Task Show<T>(this string key, T obj)
+		public static async Task Show<T>(this System.Enum key, T obj)
 		{
-			Get(key).Set(obj);
+			Get(key.ToString()).Set(obj);
 			await Show(key);
 		}
-		public static QUIPanel Get(this string key)
+		internal static QUIPanel Get(this string key)
 		{
 			if (key.IsNull()) return Get(nameof(Canvas));
 			if (PanelList[key] == null)
@@ -97,15 +98,11 @@ namespace QTool.UI
 				var panel = Object.Instantiate(prefab).GetComponent<QUIPanel>(true);
 				panel.name = key;
 				ResisterPanel(panel);
-				if (panel.transform.parent == null)
-				{
-					Object.DontDestroyOnLoad(panel.RectTransform.gameObject);
-				}
 				QDebug.End("动态创建" + nameof(QUIPanel) + "<" + key + ">");
 			}
 			return PanelList[key];
 		}
-		public static void Remove(QUIPanel panel)
+		internal static void Remove(QUIPanel panel)
 		{
 			var key = panel.name;
 			if (!key.IsNull() && PanelList.ContainsKey(key))
@@ -118,41 +115,41 @@ namespace QTool.UI
 			}
 		}
 		public static int Count
-        {
-            get
-            {
-                return windowStack.Count;
-            }
-        }
-        public static List<QUIPanel> windowStack = new List<QUIPanel>();
-        public static void WindowPush(QUIPanel window)
-        {
-            if (windowStack.StackPeek() == window)
-            {
-                return;
-            }
-            if (windowStack.Contains(window))
-            {
-                windowStack.Remove(window);
-            }
-            windowStack.Push(window);
-            WindowChange?.Invoke(windowStack.StackPeek());
+		{
+			get
+			{
+				return windowStack.Count;
+			}
+		}
+		public static List<QUIPanel> windowStack = new List<QUIPanel>();
+		internal static void WindowPush(QUIPanel window)
+		{
+			if (windowStack.StackPeek() == window)
+			{
+				return;
+			}
+			if (windowStack.Contains(window))
+			{
+				windowStack.Remove(window);
+			}
+			windowStack.Push(window);
+			WindowChange?.Invoke(windowStack.StackPeek());
 #if QDebug
 			QEventManager.InvokeEvent("UI页面", windowStack.ToOneString());
 #endif
 		}
-        public static event System.Action<QUIPanel> WindowChange;
-		
-        public static void WindowRemove(QUIPanel window)
-        {
-            if (windowStack.Count == 0||!windowStack.Contains(window)) return;
-            windowStack.Remove(window);
-            WindowChange?.Invoke(windowStack.StackPeek());
+		public static event System.Action<QUIPanel> WindowChange;
+
+		internal static void WindowRemove(QUIPanel window)
+		{
+			if (windowStack.Count == 0 || !windowStack.Contains(window)) return;
+			windowStack.Remove(window);
+			WindowChange?.Invoke(windowStack.StackPeek());
 #if QDebug
 			QEventManager.InvokeEvent("UI页面", windowStack.ToOneString());
 #endif
-        }
-    }
+		}
+	}
 
 
 	public class QUIPanelPrefab : QPrefabLoader<QUIPanelPrefab>

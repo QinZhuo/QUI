@@ -10,8 +10,9 @@ namespace QTool.UI
         public QObjectList testList;
         // Start is called before the first frame update
         void Start()
-        {
-            for (int i = 0; i < 10; i++)
+		{
+			
+			for (int i = 0; i < 10; i++)
             {
                 var view = testList[i.ToString()];
                 view.transform.localScale = Vector3.zero;

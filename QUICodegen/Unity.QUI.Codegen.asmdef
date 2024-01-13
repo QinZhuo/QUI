@@ -1,0 +1,22 @@
+{
+    "name": "Unity.QUI.Codegen",
+    "rootNamespace": "",
+    "references": [
+        "GUID:af968f272ce506845b1565dee49fe58c",
+        "GUID:d5e242df989578041a6e45a1b40157aa"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Unity.Burst.Cecil.dll",
+        "Unity.Burst.Cecil.Rocks.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

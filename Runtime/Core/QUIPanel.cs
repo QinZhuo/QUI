@@ -139,6 +139,10 @@ namespace QTool.UI
 		}
 		protected virtual void OnDestroy()
 		{
+			if (IsShow)
+			{
+				OnHide();
+			}
 			if (_instance == this)
 			{
 				_instance = null;

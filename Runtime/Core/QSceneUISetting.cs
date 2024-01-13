@@ -28,7 +28,7 @@ namespace QTool.UI
 				{
 					if (!QUIManager.PanelList.ContainsKey(uiKey))
 					{
-						QUIManager.GetUI(uiKey)?.ResetUI();
+						QUIManager.Get(uiKey)?.ResetUI();
 					}
 				}
 				QDebug.End("加载场景UI");
@@ -42,7 +42,7 @@ namespace QTool.UI
 				if (!QUIManager.PanelList.ContainsKey(uiKey))
 				{
 					await QUIPanelPrefab.LoadAsync(uiKey);
-					QUIManager.GetUI(uiKey)?.ResetUI();
+					QUIManager.Get(uiKey)?.ResetUI();
 					await QTask.Step();
 				}
 			}

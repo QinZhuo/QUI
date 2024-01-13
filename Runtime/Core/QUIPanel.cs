@@ -10,6 +10,45 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
+	public class QUIPanel : MonoBehaviour
+	{
+		public virtual Task ShowAsync()
+		{
+			gameObject.SetActive(true);
+			return Task.CompletedTask;
+		}
+
+		public virtual Task HideAsync()
+		{
+			gameObject.SetActive(false);
+			return Task.CompletedTask;
+		}
+
+		public virtual void ResetUI()
+		{
+			gameObject.SetActive(true);
+		}
+		[QName("隐藏")]
+		public void Hide()
+		{
+			_ = HideAsync();
+		}
+		[QName("显示")]
+		public void Show()
+		{
+			_ = ShowAsync();
+		}
+
+		public bool IsShow { internal set; get; }
+		public RectTransform RectTransform
+		{
+			get
+			{
+				return transform as RectTransform;
+			}
+		}
+
+	}
 
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
@@ -21,7 +60,7 @@ namespace QTool.UI
 			get
 			{
 				if (_instance != null || !Application.isPlaying) return _instance;
-				_instance = QUIManager.GetUI(typeof(T).Name) as T;
+				_instance = QUIManager.Get(typeof(T).Name) as T;
 				return _instance;
 			}
 		}
@@ -109,7 +148,7 @@ namespace QTool.UI
 		[QName("显示动画")]
 		public QTweenComponent showAnim;
 #endif
-		[QName("父页面")]
+		[QName("父页面"),QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
 		
 		public string ParentPanel = "";
 		public ActionEvent OnShowAction;
@@ -134,7 +173,7 @@ namespace QTool.UI
 			IsShow = Group.alpha >= 0.9f&&gameObject.activeSelf;
 			SceneManager.sceneLoaded += OnSceneChanged;
 			QUIManager.WindowChange += Fresh;
-			QUIManager.ResisterPanel(typeof(T).Name, GetComponent<RectTransform>(), ParentPanel);
+			QUIManager.ResisterPanel(this, ParentPanel);
 			if (ParentPanel.IsNull()&&IsShow&&gameObject.activeInHierarchy)
 			{
 				OnFresh();
@@ -148,7 +187,7 @@ namespace QTool.UI
 			}
 			SceneManager.sceneLoaded -= OnSceneChanged;
 			QUIManager.WindowChange -= Fresh;
-			QUIManager.Remove(GetType().Name, RectTransform);
+			QUIManager.Remove(this);
 		}
 
 		/// <summary>
@@ -355,32 +394,5 @@ namespace QTool.UI
 
 		#endregion
 		
-	}
-	public abstract class QUIPanel : MonoBehaviour
-	{
-		public abstract Task ShowAsync();
-		public abstract Task HideAsync();
-		public abstract void ResetUI();
-		[QName("隐藏")]
-		public void Hide()
-		{
-			_ = HideAsync();
-		}
-		[QName("显示")]
-		public void Show()
-		{
-			_ = ShowAsync();
-		}
-
-		public bool IsShow { internal set; get; }
-		public RectTransform RectTransform
-		{
-			get
-			{
-				return transform as RectTransform;
-			}
-		}
-
-
 	}
 }

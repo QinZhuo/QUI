@@ -5,6 +5,6 @@ namespace QTool.UI.Demo
 {
 	public class TestButton:QUIPanel<TestButton>
 	{
-		
+		 
 	}
 }

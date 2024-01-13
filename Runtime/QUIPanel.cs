@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-namespace QTool.UI.Demo
+namespace QTool.UI
 {
-	public class TestWindow:QUIPanel<TestWindow>
-	{ 
-		
-	}
+	
 }
+

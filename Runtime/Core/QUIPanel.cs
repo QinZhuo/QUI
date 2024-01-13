@@ -12,6 +12,10 @@ namespace QTool.UI
 {
 	public class QUIPanel : MonoBehaviour
 	{
+		public virtual void Set<TObj>(TObj obj)
+		{
+
+		}
 		public virtual Task ShowAsync()
 		{
 			gameObject.SetActive(true);
@@ -66,6 +70,11 @@ namespace QTool.UI
 		}
 		#endregion
 		#region 静态公开接口
+		public static void ShowPanel<TObj>(TObj obj)
+		{
+			Instance.Set(obj);
+			_ = ShowPanel();
+		}
 		public static async Task SwitchPanel(bool switchBool)
 		{
 			if (switchBool)

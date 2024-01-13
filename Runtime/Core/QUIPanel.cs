@@ -69,55 +69,6 @@ namespace QTool.UI
 			}
 		}
 		#endregion
-		#region 静态公开接口
-		public static async Task SwitchPanel(bool switchBool)
-		{
-			if (switchBool)
-			{
-				await ShowPanel();
-			}
-			else
-			{
-				await HidePanel();
-			}
-		}
-
-
-		public async Task ShowWaitHide()
-		{
-			await ShowAsync();
-			await WaitHideAsync();
-		}
-		public static async Task WaitHideAsync()
-		{
-#if QTween
-			if (Instance?.showAnim != null)
-			{
-				await Instance.showAnim.Anim.WaitOverAsync();
-			}
-#endif
-		}
-		public static IEnumerator WaitHide()
-		{
-#if QTween
-			if (Instance?.showAnim != null)
-			{
-				yield return Instance.showAnim.Anim.WaitOver();
-			}
-#endif
-			yield break;
-		}
-		public static async Task ShowPanel()
-		{
-			await Instance?.ShowAsync();
-		}
-		public static async Task HidePanel()
-		{
-			if (PanelIsShow)
-			{
-				await Instance?.HideAsync();
-			}
-		}
 		public static bool PanelIsShow
 		{
 			get
@@ -132,15 +83,6 @@ namespace QTool.UI
 				}
 			}
 		}
-		public static void InvokeEvent(string eventName)
-		{
-			_instance?.gameObject.InvokeEvent(eventName);
-		}
-		public static void InvokeEvent(string eventName, bool value)
-		{
-			_instance?.gameObject.InvokeEvent(eventName, value);
-		}
-		#endregion
 		#region 基础属性
 		[QName("初始显示")]
 		public bool showOnStart = false;

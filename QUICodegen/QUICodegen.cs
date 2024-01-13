@@ -36,7 +36,7 @@ namespace QTool.UI.Codegen
 				}
 				Assembly.MainModule.Types.Add(enumType);
 			}
-			return UIs.Count > 0 || base.ChangeAssembly();
+			return UIs.Count > 0;
 		}
 	}
 }

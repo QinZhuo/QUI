@@ -17,7 +17,7 @@ namespace QTool.UI.Codegen
 		{
 			Assembly.MainModule.Types.Add(new TypeDefinition("QTool.UI", "QUI",
 					TypeAttributes.AnsiClass | TypeAttributes.NotPublic | TypeAttributes.Public | TypeAttributes.AutoLayout | TypeAttributes.Sealed | TypeAttributes.BeforeFieldInit,
-					 Get<System.Enum>())); 
+					 Get<short>()));
 			foreach (var type in Assembly.MainModule.GetAllTypes().ToArray())
 			{
 				if (!type.IsAbstract && type.BaseType.CanBeResolved() && type.Is<QUIPanel>())

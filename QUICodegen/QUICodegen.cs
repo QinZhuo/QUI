@@ -11,7 +11,7 @@ namespace QTool.UI.Codegen
 	{
 		public override bool WillChange()
 		{
-			return IsAssembly("QUI") || ContainsAssembly("QUI");
+			return ContainsAssembly("QUI");
 		}
 		public static ConcurrentQueue<string> UIs = new ConcurrentQueue<string>();
 		public override bool ChangeAssembly()
@@ -24,19 +24,22 @@ namespace QTool.UI.Codegen
 					{
 						UIs.Enqueue(type.Name);
 					}
-					else if (type.IsType<QUIPanel>())
-					{
-						if (UIs.Count > 0)
-						{
-							foreach (var item in UIs)
-							{
-								Log(Assembly.Name.Name + " " + item);
-								type.Fields.Add(new FieldDefinition(item, FieldAttributes.Static | FieldAttributes.Public | FieldAttributes.Private | FieldAttributes.InitOnly, Get<string>()));
-							}
-							return true;
-						}
-					}
 				}
+			}
+
+
+			if (UIs.Count > 0)
+			{
+				var type = new TypeDefinition(nameof(QUIPanel), GetType().Name,
+							  TypeAttributes.BeforeFieldInit | TypeAttributes.Class | TypeAttributes.AnsiClass | TypeAttributes.Public | TypeAttributes.AutoClass | TypeAttributes.Abstract | TypeAttributes.Sealed,
+							   Get<object>());
+				foreach (var item in UIs)
+				{
+					Log(Assembly.Name.Name + " " + item);
+					type.Fields.Add(new FieldDefinition(item, FieldAttributes.Static | FieldAttributes.Public | FieldAttributes.Private | FieldAttributes.InitOnly, Get<string>()));
+				}
+				Assembly.MainModule.Types.Add(type);
+				return true;
 			}
 			return false;
 		}

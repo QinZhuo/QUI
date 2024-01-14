@@ -30,7 +30,7 @@ namespace QTool.UI
 			return Task.CompletedTask;
 		}
 
-		public virtual void ResetUI()
+		public virtual void Awake()
 		{
 			gameObject.SetActive(true);
 		}
@@ -59,7 +59,7 @@ namespace QTool.UI
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
 	{
-		#region 单例逻辑
+		#region 静态逻辑
 		private static T _instance;
 		protected static T Instance
 		{
@@ -70,7 +70,6 @@ namespace QTool.UI
 				return _instance;
 			}
 		}
-		#endregion
 		public static bool PanelIsShow
 		{
 			get
@@ -95,12 +94,13 @@ namespace QTool.UI
 			{
 				await Instance?.HideAsync();
 			}
-		}		
+		}
+		#endregion
 		#region 基础属性
 		[QName("初始显示")]
 		public bool showOnStart = false;
-		[QName("遮挡点击")]
-		public bool blockInput = true;
+		[QName("弹窗模式"),UnityEngine.Serialization.FormerlySerializedAs("blockInput")]
+		public bool isWindow = true;
 		[QName("控制TimeScale")]
 		public float timeScale = -1;
 #if QTween
@@ -110,16 +110,14 @@ namespace QTool.UI
 		[QName("父页面"),QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
 		
 		public string ParentPanel = "";
-		public ActionEvent OnShowAction;
-		public ActionEvent OnHideAction;
-		CanvasGroup _group;
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
+		CanvasGroup _group;
 
 		#endregion
 		#region 基本生命周期
 
 
-		protected virtual void Awake()
+		public override void Awake()
 		{
 			if (this is T panel)
 			{
@@ -130,66 +128,9 @@ namespace QTool.UI
 				Debug.LogError("页面类型不匹配：" + _instance + ":" + typeof(T));
 			}
 			IsShow = Group.alpha >= 0.9f && gameObject.activeSelf;
-			QUIManager.WindowChange += Fresh;
+			QUIManager.OnCurrentWindowChange += Fresh;
 			QUIManager.ResisterPanel(this, ParentPanel);
-			if (ParentPanel.IsNull() && IsShow && gameObject.activeInHierarchy)
-			{
-				OnFresh();
-			}
-		}
-		protected virtual void OnDestroy()
-		{
-			if (IsShow)
-			{
-				OnHide();
-			}
-			if (_instance == this)
-			{
-				_instance = null;
-			}
-			QUIManager.WindowChange -= Fresh;
-			QUIManager.Remove(this);
-		}
 
-
-
-		private void Fresh(QUIPanel window)
-		{
-			if (this == null) return;
-			var value = window == null || this.Equals(window) || transform.ParentHas(window.RectTransform);
-			if (value)
-			{
-				if (IsShow)
-				{
-					Group.interactable = true;
-					if (blockInput)
-					{
-						Group.blocksRaycasts = true;
-					}
-					OnFresh();
-				}
-			}
-			else
-			{
-				Group.interactable = false;
-				if (blockInput)
-				{
-					Group.blocksRaycasts = false;
-				}
-			}
-		}
-		/// <summary>
-		///  主页面切换时调用 刷新数据
-		/// </summary>
-		public virtual void OnFresh()
-		{
-		
-		}
-		/// <summary>
-		/// 由UISettinng控制 是否初始化显示
-		/// </summary>
-		public override void ResetUI()
-		{
 			if (showOnStart)
 			{
 				if (!IsShow)
@@ -209,34 +150,115 @@ namespace QTool.UI
 				gameObject.SetActive(IsShow);
 			}
 		}
-	
+		protected virtual void OnDestroy()
+		{
+			if (_instance == this)
+			{
+				_instance = null;
+			}
+			QUIManager.OnCurrentWindowChange -= Fresh;
+			QUIManager.Remove(this);
+		}
+		protected virtual void OnEnable()
+		{
+			try
+			{
+				transform.SetAsLastSibling();
+				if (Application.isPlaying)
+				{
+					if (timeScale >= 0)
+					{
+						QTime.ChangeScale(gameObject, timeScale);
+					}
+					if (isWindow)
+					{
+						QUIManager.WindowPush(this);
+					}
+					OnFresh();
+				}
+			}
+			catch (System.Exception e)
+			{
+				QDebug.LogError(this + " " + nameof(OnEnable) + " 出错：" + e);
+			}
+		}
+		protected virtual void OnDisable()
+		{
+			try
+			{
+				if (this != null)
+				{
+					QTime.RevertScale(gameObject);
+				}
+				if (isWindow)
+				{
+					QUIManager.WindowRemove(this);
+				}
+			}
+			catch (System.Exception e)
+			{
+				QDebug.LogError(this + " " + nameof(OnDisable) + " 出错：" + e);
+			}
+		}
+
+
+		private void Fresh(QUIPanel window)
+		{
+			if (this == null) return;
+			var value = window == null || this.Equals(window) || transform.ParentHas(window.RectTransform);
+			if (value)
+			{
+				if (IsShow)
+				{
+					Group.interactable = true;
+					if (isWindow)
+					{
+						Group.blocksRaycasts = true;
+					}
+					OnFresh();
+				}
+			}
+			else
+			{
+				Group.interactable = false;
+				if (isWindow)
+				{
+					Group.blocksRaycasts = false;
+				}
+			}
+		}
+		/// <summary>
+		///  主页面切换时调用 刷新数据
+		/// </summary>
+		public virtual void OnFresh()
+		{
+		
+		}
+		/// <summary>
+		/// 由UISettinng控制 是否初始化显示
+		/// </summary>
 
 
 
-	
+
+
+
 		/// <summary>
 		/// 显示或隐藏页面时 最开始调用
 		/// </summary>
-		protected virtual async Task StartShow(bool IsShow)
+		protected virtual async Task Switch(bool IsShow)
 		{
 			if (this == null) return;
 			this.IsShow = IsShow;
 			if (IsShow)
 			{
-				OnShow();
+				gameObject.SetActive(true);
 			}
 #if QTween
 			if (showAnim != null)
 			{
-				if (!gameObject.activeSelf)
-				{
-					if (IsShow)
-					{
-						gameObject.SetActive(true);
-					}
-				}
-				var animTask=showAnim.PlayAsync(IsShow);
-				if(await animTask.IsCancel())
+				var animTask = showAnim.PlayAsync(IsShow);
+				if (await animTask.IsCancel())
 				{
 					return;
 				}
@@ -244,10 +266,11 @@ namespace QTool.UI
 				{
 					Debug.LogError("播放页面" + this + "动画出错 " + animTask.Exception);
 				}
-				if (IsShow != base.IsShow) {
+				if (IsShow != base.IsShow)
+				{
 					return;
 				}
-				if (this!=null&&Application.IsPlaying(this))
+				if (this != null && Application.IsPlaying(this))
 				{
 					gameObject.SetActive(IsShow);
 				}
@@ -261,7 +284,7 @@ namespace QTool.UI
 					gameObject.SetActive(IsShow);
 				}
 				Group.interactable = IsShow;
-				if (blockInput)
+				if (isWindow)
 				{
 					Group.blocksRaycasts = IsShow;
 				}
@@ -269,68 +292,33 @@ namespace QTool.UI
 			}
 			if (!this.IsShow)
 			{
-				OnHide();
+				gameObject.SetActive(false);
 			}
 		}
 		public override async Task ShowAsync()
 		{
-			await StartShow(true).Run();
+			await Switch(true).Run();
 		}
 
 		public override async Task HideAsync()
 		{
-			await StartShow(false).Run();
+			await Switch(false).Run();
 		}
-
-		public void ShowAndComplete()
+		protected virtual void Complete()
 		{
-			Show();
 #if QTween
 			showAnim?.Complete();
 #endif
+		}
+		public void ShowAndComplete()
+		{
+			Show();
+			Complete();
 		}
 		public void HideAndComplete()
 		{
 			Hide();
-#if QTween
-			showAnim?.Complete();
-#endif
-		}
-		protected virtual void OnShow()
-		{
-			try
-			{
-				transform.SetAsLastSibling();
-				OnShowAction?.Invoke();
-				if (Application.isPlaying)
-				{
-					if (timeScale >= 0)
-					{
-						QTime.ChangeScale(gameObject, timeScale);
-					}
-					if (blockInput)
-					{
-						QUIManager.WindowPush(this);
-					}
-					OnFresh();
-				}
-			}
-			catch (System.Exception e)
-			{
-				Debug.LogError(this + " " + nameof(OnShow) + " 出错：" + e);
-			}
-		}
-		protected virtual void OnHide()
-		{
-			OnHideAction?.Invoke();
-			if (this != null)
-			{
-				QTime.RevertScale(gameObject);
-			}
-			if (blockInput)
-			{
-				QUIManager.WindowRemove(this);
-			}
+			Complete();
 		}
 		#endregion
 	}

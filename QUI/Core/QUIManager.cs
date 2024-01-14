@@ -15,7 +15,7 @@ namespace QTool.UI
 	/// </summary>
 	public static class QUIManager
 	{
-		internal static QDictionary<string, QUIPanel> PanelList = new QDictionary<string, QUIPanel>();
+		private static QDictionary<string, QUIPanel> PanelList = new QDictionary<string, QUIPanel>();
 		/// <summary>
 		/// 注册UI到管理器
 		/// </summary>
@@ -133,21 +133,15 @@ namespace QTool.UI
 				windowStack.Remove(window);
 			}
 			windowStack.Push(window);
-			WindowChange?.Invoke(windowStack.StackPeek());
-#if QDebug
-			QEventManager.InvokeEvent("UI页面", windowStack.ToOneString());
-#endif
+			OnCurrentWindowChange?.Invoke(windowStack.StackPeek());
 		}
-		public static event System.Action<QUIPanel> WindowChange;
+		public static event System.Action<QUIPanel> OnCurrentWindowChange;
 
 		internal static void WindowRemove(QUIPanel window)
 		{
 			if (windowStack.Count == 0 || !windowStack.Contains(window)) return;
 			windowStack.Remove(window);
-			WindowChange?.Invoke(windowStack.StackPeek());
-#if QDebug
-			QEventManager.InvokeEvent("UI页面", windowStack.ToOneString());
-#endif
+			OnCurrentWindowChange?.Invoke(windowStack.StackPeek());
 		}
 	}
 

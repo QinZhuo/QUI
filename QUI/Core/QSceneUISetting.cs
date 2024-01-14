@@ -24,13 +24,7 @@ namespace QTool.UI
 			else
 			{
 				QDebug.Begin("加载场景UI");
-				foreach (var uiKey in PanelList)
-				{
-					if (!QUIManager.PanelList.ContainsKey(uiKey))
-					{
-						QUIManager.Get(uiKey)?.ResetUI();
-					}
-				}
+				PanelList.ForEach(key => QUIManager.Get(key));
 				QDebug.End("加载场景UI");
 			}
 		}
@@ -39,12 +33,9 @@ namespace QTool.UI
 			QDebug.Begin("预加载场景UI");
 			foreach (var uiKey in PanelList)
 			{
-				if (!QUIManager.PanelList.ContainsKey(uiKey))
-				{
-					await QUIPanelPrefab.LoadAsync(uiKey);
-					QUIManager.Get(uiKey)?.ResetUI();
-					await QTask.Step();
-				}
+				await QUIPanelPrefab.LoadAsync(uiKey);
+				QUIManager.Get(uiKey);
+				await QTask.Step();
 			}
 			QDebug.End("预加载场景UI");
 		}

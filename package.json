@@ -21,6 +21,11 @@
       "displayName": "Demo",
       "description": "Demo",
       "path": ".Demo"
+    },
+ {
+      "displayName": "UIEffect",
+      "description": "UIEffect",
+      "path": ".UIEffect"
     }
   ]
 }

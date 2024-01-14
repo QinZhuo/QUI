@@ -20,7 +20,7 @@ public class QUIColorControl : QKeyColor
 		base.OnValidate();
 		foreach (var modifier in modifiers)
 		{
-			modifier.hue = m_Color.ToH() - modifier.targetColor.ToH();
+			modifier.hue = Mathf.Repeat(m_Color.ToH() - modifier.targetColor.ToH() + 0.5f, 1) - 0.5f;
 		}
 	}
 }

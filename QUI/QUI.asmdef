@@ -4,7 +4,8 @@
     "references": [
         "GUID:8c4295a259d9a934784fb95a11fa9e58",
         "GUID:24a932a217b594b47a735a1f916a201a",
-        "GUID:0359e8cb563338145ab0b8c6897b4a7a"
+        "GUID:0359e8cb563338145ab0b8c6897b4a7a",
+        "GUID:735c8f008d0ad4caa9cdc4306f1c3042"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -28,6 +29,11 @@
             "name": "com.unity.inputsystem",
             "expression": "",
             "define": "QInputSystem"
+        },
+        {
+            "name": "com.coffee.ui-effect",
+            "expression": "",
+            "define": "UIEffect"
         }
     ],
     "noEngineReferences": false

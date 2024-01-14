@@ -2,7 +2,7 @@
   "name": "com.qtool.ui",
   "version": "2024.1.14",
   "displayName": "QUI",
-  "description": "QUI  other good UI tool https://github.com/mob-sakai/UIEffect.git  https://github.com/mob-sakai/UIEffectSnapshot.git https://github.com/mob-sakai/ParticleEffectForUGUI.git ",
+  "description": "QUI  \n other good UI tool \n https://github.com/mob-sakai/UIEffect.git  \n https://github.com/mob-sakai/UIEffectSnapshot.git  \n https://github.com/mob-sakai/ParticleEffectForUGUI.git ",
   "unity": "2022.1",
     "dependencies": {
     "com.qtool.qtool": "1.6.9"

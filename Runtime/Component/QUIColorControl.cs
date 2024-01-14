@@ -4,19 +4,9 @@ using UnityEngine;
 using QTool;
 #if UIEffect
 using Coffee.UIEffects;
-public class QUIColorControl : MonoBehaviour
+public class QUIColorControl : QKeyColor
 {
-	[SerializeField]
-	private Color m_Color = Color.green;
 	public UIHsvModifier[] modifiers;
-	public Color Color
-	{
-		get => m_Color; set
-		{
-			m_Color = value;
-			OnValidate();
-		}
-	}
 	private void Reset()
 	{
 		modifiers = GetComponentsInChildren<UIHsvModifier>();
@@ -25,11 +15,12 @@ public class QUIColorControl : MonoBehaviour
 			m_Color = modifiers.Get(0).targetColor;
 		}
 	}
-	private void OnValidate()
+	protected override void OnValidate()
 	{
+		base.OnValidate();
 		foreach (var modifier in modifiers)
 		{
-			modifier.hue = Color.ToH() - modifier.targetColor.ToH();
+			modifier.hue = m_Color.ToH() - modifier.targetColor.ToH();
 		}
 	}
 }

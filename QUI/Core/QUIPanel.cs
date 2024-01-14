@@ -30,7 +30,7 @@ namespace QTool.UI
 			return Task.CompletedTask;
 		}
 
-		public virtual void Awake()
+		protected virtual void Awake()
 		{
 			gameObject.SetActive(true);
 		}
@@ -117,7 +117,7 @@ namespace QTool.UI
 		#region 基本生命周期
 
 
-		public override void Awake()
+		protected override void Awake()
 		{
 			if (this is T panel)
 			{

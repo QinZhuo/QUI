@@ -18,9 +18,14 @@ public class QUIColorControl : QKeyColor
 	protected override void OnValidate()
 	{
 		base.OnValidate();
+
+		Color.RGBToHSV(m_Color, out var h, out var s, out var v);
 		foreach (var modifier in modifiers)
 		{
-			modifier.hue = Mathf.Repeat(m_Color.ToH() - modifier.targetColor.ToH() + 0.5f, 1) - 0.5f; 
+			Color.RGBToHSV(modifier.targetColor, out var th, out var ts, out var tv);
+			modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
+			modifier.saturation = Mathf.Repeat(s - ts + 0.5f, 1) - 0.5f;
+			modifier.value = Mathf.Repeat(v - tv + 0.5f, 1) - 0.5f;
 		}
 	}
 }

@@ -7,6 +7,8 @@ using Coffee.UIEffects;
 public class QUIColorControl : QKeyColor
 {
 	public UIHsvModifier[] modifiers;
+	[QName("只控制色调")]
+	public bool onlyH=true;
 	private void Reset()
 	{
 		modifiers = GetComponentsInChildren<UIHsvModifier>();
@@ -24,8 +26,11 @@ public class QUIColorControl : QKeyColor
 		{
 			Color.RGBToHSV(modifier.targetColor, out var th, out var ts, out var tv);
 			modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
-			modifier.saturation = Mathf.Repeat(s - ts + 0.5f, 1) - 0.5f;
-			modifier.value = Mathf.Repeat(v - tv + 0.5f, 1) - 0.5f;
+			if (!onlyH)
+			{
+				modifier.saturation = Mathf.Repeat(s - ts + 0.5f, 1) - 0.5f;
+				modifier.value = Mathf.Repeat(v - tv + 0.5f, 1) - 0.5f;
+			}
 		}
 	}
 }

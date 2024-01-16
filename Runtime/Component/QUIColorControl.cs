@@ -24,8 +24,8 @@ public class QUIColorControl : QKeyColor
 		{
 			Color.RGBToHSV(modifier.targetColor, out var th, out var ts, out var tv);
 			modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
-			modifier.saturation = s - 0.5f;
-			modifier.value = v - 0.5f;
+			modifier.saturation = Mathf.Lerp(s - ts, 0, 0.5f) + Mathf.Lerp(ts - s, 0, -0.5f);
+			modifier.value = Mathf.Lerp(v - tv, 0, 0.5f) + Mathf.Lerp(tv - v, 0, -0.5f);
 		}
 	}
 }

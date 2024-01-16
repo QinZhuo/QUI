@@ -6,7 +6,9 @@ using QTool;
 using Coffee.UIEffects;
 public class QUIColorControl : QKeyColor
 {
+	
 	public UIHsvModifier[] modifiers;
+	
 	private void Reset()
 	{
 		modifiers = GetComponentsInChildren<UIHsvModifier>();
@@ -18,21 +20,27 @@ public class QUIColorControl : QKeyColor
 	protected override void OnValidate()
 	{
 		base.OnValidate();
-
 		Color.RGBToHSV(m_Color, out var h, out var s, out var v);
 		foreach (var modifier in modifiers)
 		{
 			if (modifier == null) continue;
 			Color.RGBToHSV(modifier.targetColor, out var th, out var ts, out var tv);
-			if (s > 0)
+			if (onlyHue)
 			{
 				modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
 			}
-			if (v > 0)
+			else
 			{
-				modifier.saturation = s - ts;
+				if (s > 0)
+				{
+					modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
+				}
+				if (v > 0)
+				{
+					modifier.saturation = s - ts;
+				}
+				modifier.value = v - tv;
 			}
-			modifier.value = v - tv;
 		}
 	}
 }

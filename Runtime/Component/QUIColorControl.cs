@@ -30,9 +30,9 @@ public class QUIColorControl : QKeyColor
 			}
 			if (v > 0)
 			{
-				modifier.saturation = (s - ts) / 2;
+				modifier.saturation = s - ts;
 			}
-			modifier.value = (v - tv)/2;
+			modifier.value = v - tv;
 		}
 	}
 }

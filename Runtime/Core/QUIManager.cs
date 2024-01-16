@@ -85,6 +85,7 @@ namespace QTool.UI
 		}
 		internal static QUIPanel Get(this string key)
 		{
+			if (!QTool.IsPlaying) return null;
 			if (key.IsNull()) return Get(nameof(Canvas));
 			if (PanelList[key] == null)
 			{

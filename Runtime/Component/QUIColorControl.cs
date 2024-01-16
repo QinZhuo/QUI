@@ -28,6 +28,8 @@ public class QUIColorControl : QKeyColor
 			if (onlyHue)
 			{
 				modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
+				modifier.saturation = 0;
+				modifier.value = 0;
 			}
 			else
 			{

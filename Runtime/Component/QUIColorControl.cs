@@ -22,6 +22,7 @@ public class QUIColorControl : QKeyColor
 		Color.RGBToHSV(m_Color, out var h, out var s, out var v);
 		foreach (var modifier in modifiers)
 		{
+			if (modifier == null) continue;
 			Color.RGBToHSV(modifier.targetColor, out var th, out var ts, out var tv);
 			if (s > 0)
 			{

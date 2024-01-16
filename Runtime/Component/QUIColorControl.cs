@@ -23,9 +23,15 @@ public class QUIColorControl : QKeyColor
 		foreach (var modifier in modifiers)
 		{
 			Color.RGBToHSV(modifier.targetColor, out var th, out var ts, out var tv);
-			modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
-			modifier.saturation = Mathf.Lerp(s - ts, 0, 0.5f) + Mathf.Lerp(ts - s, 0, -0.5f);
-			modifier.value = Mathf.Lerp(v - tv, 0, 0.5f) + Mathf.Lerp(tv - v, 0, -0.5f);
+			if (s > 0)
+			{
+				modifier.hue = Mathf.Repeat(h - th + 0.5f, 1) - 0.5f;
+			}
+			if (v > 0)
+			{
+				modifier.saturation = (s - ts) / 2;
+			}
+			modifier.value = (v - tv)/2;
 		}
 	}
 }

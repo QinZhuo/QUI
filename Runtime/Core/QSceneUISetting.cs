@@ -23,9 +23,7 @@ namespace QTool.UI
 			}
 			else
 			{
-				QDebug.Begin("加载场景UI");
-				PanelList.ForEach(key => QUIManager.Load(key));
-				QDebug.End("加载场景UI");
+				_ = PreLoad();
 			}
 		}
 		private async Task PreLoad()

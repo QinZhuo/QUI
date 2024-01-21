@@ -24,7 +24,7 @@ namespace QTool.UI
 			else
 			{
 				QDebug.Begin("加载场景UI");
-				PanelList.ForEach(key => QUIManager.Get(key));
+				PanelList.ForEach(key => QUIManager.Load(key));
 				QDebug.End("加载场景UI");
 			}
 		}
@@ -33,8 +33,7 @@ namespace QTool.UI
 			QDebug.Begin("预加载场景UI");
 			foreach (var uiKey in PanelList)
 			{
-				await QUIPanelPrefab.LoadAsync(uiKey);
-				QUIManager.Get(uiKey);
+				await QUIManager.LoadAsync(uiKey);
 				await QTask.Step();
 			}
 			QDebug.End("预加载场景UI");

@@ -10,11 +10,11 @@ namespace QTool.UI
 		public string panelName;
 		public void Show()
 		{
-			QUIManager.Get(panelName).Show();
+			QUIManager.Load(panelName).Show();
 		}
 		public void Hide()
 		{
-			QUIManager.Get(panelName).Hide();
+			QUIManager.Load(panelName).Hide();
 		}
 	}
 }

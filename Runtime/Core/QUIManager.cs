@@ -27,7 +27,7 @@ namespace QTool.UI
 			PanelList[panel.QName()] = panel;
 			if (!parentKey.IsNull())
 			{
-				var parent = Get(parentKey);
+				var parent = Load(parentKey);
 				if (parent != null && parent != panel)
 				{
 					var scale = panel.RectTransform.localScale;
@@ -61,32 +61,37 @@ namespace QTool.UI
 			}
 			if (show)
 			{
-				await Get(enumKey.ToString()).ShowAsync();
+				await Load(enumKey.ToString()).ShowAsync();
 			}
 			else
 			{
-				await Get(enumKey.ToString()).HideAsync();
+				await Load(enumKey.ToString()).HideAsync();
 			}
 		}
 		public static async Task Show(this System.Enum key)
 		{
 			if (IsShow(key)) return;
-			await Get(key.ToString()).ShowAsync();
+			await Load(key.ToString()).ShowAsync();
 		}
 		public static async Task Hide(this System.Enum key)
 		{
 			if (!IsShow(key)) return;
-			await Get(key.ToString()).HideAsync();
+			await Load(key.ToString()).HideAsync();
 		}
 		public static async Task Show<T>(this System.Enum key, T obj)
 		{
-			Get(key.ToString()).Set(obj);
+			Load(key.ToString()).Set(obj);
 			await Show(key);
 		}
-		internal static QUIPanel Get(this string key)
+		internal static async Task<QUIPanel> LoadAsync(string key)
+		{
+			await QUIPanelPrefab.LoadAsync(key);
+			return Load(key);
+		}
+		internal static QUIPanel Load(string key)
 		{
 			if (!QTool.IsPlaying) return null;
-			if (key.IsNull()) return Get(nameof(Canvas));
+			if (key.IsNull()) return Load(nameof(Canvas));
 			if (PanelList[key] == null)
 			{
 				QDebug.Begin("动态创建" + nameof(QUIPanel) + "<" + key + ">");

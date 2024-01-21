@@ -66,7 +66,7 @@ namespace QTool.UI
 			get
 			{
 				if (_instance != null || !Application.isPlaying) return _instance;
-				_instance = QUIManager.Get(typeof(T).Name) as T;
+				_instance = QUIManager.Load(typeof(T).Name) as T;
 				return _instance;
 			}
 		}
@@ -83,6 +83,10 @@ namespace QTool.UI
 					return Instance.IsShow;
 				}
 			}
+		}
+		public static async Task LoadAsync()
+		{
+			await QUIManager.LoadAsync(typeof(T).Name);
 		}
 		public static async Task ShowPanel()
 		{

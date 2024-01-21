@@ -8,7 +8,7 @@ public class QUIColorControl : QKeyColor
 {
 	
 	public UIHsvModifier[] modifiers;
-	
+
 	private void Reset()
 	{
 		modifiers = GetComponentsInChildren<UIHsvModifier>();

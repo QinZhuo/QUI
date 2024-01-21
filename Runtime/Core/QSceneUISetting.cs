@@ -11,30 +11,31 @@ namespace QTool.UI
 	/// </summary>
 	public class QSceneUISetting : QInstanceBehaviour<QSceneUISetting>
 	{
-		[QName("预加载UI")]
-		[QPopup(nameof(QUIPanelPrefab) +"."+nameof(QUIPanelPrefab.LoadAll))]
+		[QName("异步加载UI")]
+		[QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
 		public List<string> PanelList = new List<string>();
 		protected override void Awake()
 		{
 			base.Awake();
 			if (QSceneTool.IsLoading)
 			{
-				QSceneTool.PreLoadList.Add(PreLoad().Run());
+				QSceneTool.PreLoadList.Add(LoadAsync().Run());
 			}
 			else
 			{
-				_ = PreLoad();
+				_ = LoadAsync();
 			}
 		}
-		private async Task PreLoad()
+		private async Task LoadAsync()
 		{
-			QDebug.Begin("预加载场景UI");
+			await QDataList.PreLoadAsync();
+			QDebug.Begin("异步加载场景UI");
 			foreach (var uiKey in PanelList)
 			{
 				await QUIManager.LoadAsync(uiKey);
 				await QTask.Step();
 			}
-			QDebug.End("预加载场景UI");
+			QDebug.End("异步加载场景UI");
 		}
 	}
 }

@@ -14,18 +14,10 @@ namespace QTool.UI
 		[QName("异步加载UI")]
 		[QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
 		public List<string> PanelList = new List<string>();
-		protected override async void Awake()
+		protected override void Awake()
 		{
 			base.Awake();
-			await QDataList.PreLoadAsync();
-			if (QSceneTool.IsLoading)
-			{
-				QSceneTool.PreLoadList.Add(LoadAsync().Run());
-			}
-			else
-			{
-				_ = LoadAsync();
-			}
+			LoadAsync().PreLoadRun();
 		}
 		private async Task LoadAsync()
 		{

@@ -68,20 +68,20 @@ namespace QTool.UI
 				await Load(enumKey.ToString()).HideAsync();
 			}
 		}
-		public static async Task Show(this System.Enum key)
+		public static void Show(this System.Enum key)
 		{
 			if (IsShow(key)) return;
-			await Load(key.ToString()).ShowAsync();
+			Load(key.ToString()).Show();
 		}
-		public static async Task Hide(this System.Enum key)
+		public static void Hide(this System.Enum key)
 		{
 			if (!IsShow(key)) return;
-			await Load(key.ToString()).HideAsync();
+			Load(key.ToString()).Hide();
 		}
-		public static async Task Show<T>(this System.Enum key, T obj)
+		public static void Show<T>(this System.Enum key, T obj)
 		{
 			Load(key.ToString()).Set(obj);
-			await Show(key);
+			Show(key);
 		}
 		internal static async Task<QUIPanel> LoadAsync(string key)
 		{

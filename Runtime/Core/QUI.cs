@@ -103,8 +103,8 @@ namespace QTool.UI
 		#region 基础属性
 		[QName("初始显示")]
 		public bool showOnStart = false;
-		[QName("弹窗模式"),UnityEngine.Serialization.FormerlySerializedAs("blockInput")]
-		public bool isWindow = true;
+		[QName("模态窗"),UnityEngine.Serialization.FormerlySerializedAs("isWindow")]
+		public bool isModalWindow = false;
 		[QName("控制TimeScale")]
 		public float timeScale = -1;
 #if QTween
@@ -174,9 +174,9 @@ namespace QTool.UI
 					{
 						QTime.ChangeScale(gameObject, timeScale);
 					}
-					if (isWindow)
+					if (isModalWindow)
 					{
-						QUIManager.WindowPush(this);
+						QUIManager.ModalWindowPush(this);
 					}
 					OnFresh();
 				}
@@ -194,9 +194,9 @@ namespace QTool.UI
 				{
 					QTime.RevertScale(gameObject);
 				}
-				if (isWindow)
+				if (isModalWindow)
 				{
-					QUIManager.WindowRemove(this);
+					QUIManager.ModalWindowRemove(this);
 				}
 			}
 			catch (System.Exception e)
@@ -215,7 +215,7 @@ namespace QTool.UI
 				if (IsShow)
 				{
 					Group.interactable = true;
-					if (isWindow)
+					if (isModalWindow)
 					{
 						Group.blocksRaycasts = true;
 					}
@@ -225,7 +225,7 @@ namespace QTool.UI
 			else
 			{
 				Group.interactable = false;
-				if (isWindow)
+				if (isModalWindow)
 				{
 					Group.blocksRaycasts = false;
 				}
@@ -288,7 +288,7 @@ namespace QTool.UI
 					gameObject.SetActive(IsShow);
 				}
 				Group.interactable = IsShow;
-				if (isWindow)
+				if (isModalWindow)
 				{
 					Group.blocksRaycasts = IsShow;
 				}

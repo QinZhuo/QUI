@@ -124,30 +124,30 @@ namespace QTool.UI
 		{
 			get
 			{
-				return windowStack.Count;
+				return ModalWindowStack.Count;
 			}
 		}
-		public static List<QUI> windowStack = new List<QUI>();
-		internal static void WindowPush(QUI window)
+		public static List<QUI> ModalWindowStack { get; private set; } = new List<QUI>();
+		internal static void ModalWindowPush(QUI window)
 		{
-			if (windowStack.StackPeek() == window)
+			if (ModalWindowStack.StackPeek() == window)
 			{
 				return;
 			}
-			if (windowStack.Contains(window))
+			if (ModalWindowStack.Contains(window))
 			{
-				windowStack.Remove(window);
+				ModalWindowStack.Remove(window);
 			}
-			windowStack.Push(window);
-			OnCurrentWindowChange?.Invoke(windowStack.StackPeek());
+			ModalWindowStack.Push(window);
+			OnCurrentWindowChange?.Invoke(ModalWindowStack.StackPeek());
 		}
 		public static event System.Action<QUI> OnCurrentWindowChange;
 
-		internal static void WindowRemove(QUI window)
+		internal static void ModalWindowRemove(QUI window)
 		{
-			if (windowStack.Count == 0 || !windowStack.Contains(window)) return;
-			windowStack.Remove(window);
-			OnCurrentWindowChange?.Invoke(windowStack.StackPeek());
+			if (ModalWindowStack.Count == 0 || !ModalWindowStack.Contains(window)) return;
+			ModalWindowStack.Remove(window);
+			OnCurrentWindowChange?.Invoke(ModalWindowStack.StackPeek());
 		}
 	}
 

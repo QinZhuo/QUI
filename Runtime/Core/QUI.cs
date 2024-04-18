@@ -12,10 +12,6 @@ namespace QTool.UI
 {
 	public class QUI : MonoBehaviour
 	{
-		public virtual void Set<TObj>(TObj obj)
-		{
-			throw new System.Exception("未实现" + GetType() + ".Set函数[" + typeof(TObj) + "]" + obj);
-		}
 		public virtual Task ShowAsync()
 		{
 			IsShow = true;
@@ -44,7 +40,11 @@ namespace QTool.UI
 		{
 			_ = ShowAsync();
 		}
-
+		[QName("显示")]
+		public virtual void Show(IViewData viewData)
+		{
+			Show();
+		}
 		public bool IsShow { internal set; get; }
 		public RectTransform RectTransform
 		{
@@ -103,7 +103,7 @@ namespace QTool.UI
 		#region 基础属性
 		[QName("初始显示")]
 		public bool showOnStart = false;
-		[QName("模态窗"),UnityEngine.Serialization.FormerlySerializedAs("isWindow")]
+		[QName("模态窗"), UnityEngine.Serialization.FormerlySerializedAs("isWindow")]
 		public bool isModalWindow = false;
 		[QName("控制TimeScale")]
 		public float timeScale = -1;
@@ -111,8 +111,8 @@ namespace QTool.UI
 		[QName("显示动画")]
 		public QTweenComponent showAnim;
 #endif
-		[QName("父页面"),QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
-		
+		[QName("父页面"), QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
+
 		public string ParentPanel = "";
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
 		CanvasGroup _group;
@@ -236,7 +236,7 @@ namespace QTool.UI
 		/// </summary>
 		public virtual void OnFresh()
 		{
-		
+
 		}
 		/// <summary>
 		/// 由UISettinng控制 是否初始化显示
@@ -325,5 +325,52 @@ namespace QTool.UI
 			Complete();
 		}
 		#endregion
+	}
+	public interface IViewData
+	{
+
+	}
+	public abstract class QUI<T, TViewData> : QUI<T> where T : QUI<T, TViewData> where TViewData : class, IViewData
+	{
+		private TViewData _ViewData = null;
+		public TViewData ViewData
+		{
+			set
+			{
+				if (value != _ViewData)
+				{
+					if (_ViewData != null)
+					{
+						OnUnsetViewData();
+					}
+					_ViewData = value;
+					if (_ViewData != null)
+					{
+						OnSetViewData();
+					}
+				}
+			}
+			get => _ViewData;
+		}
+
+		protected virtual void OnSetViewData()
+		{
+			gameObject.RegisterEvent(ViewData);
+		}
+
+		protected virtual void OnUnsetViewData()
+		{
+			gameObject.RegisterEvent(ViewData);
+		}
+		public override void Show(IViewData viewData)
+		{
+			ViewData = viewData as TViewData;
+			base.Show(viewData);
+		}
+		public static async Task ShowPanel(TViewData viewData)
+		{
+			Instance.ViewData = viewData;
+			await ShowPanel();
+		}
 	}
 }

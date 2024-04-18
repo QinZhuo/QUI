@@ -78,10 +78,9 @@ namespace QTool.UI
 			if (!IsShow(key)) return;
 			Load(key.ToString()).Hide();
 		}
-		public static void Show<T>(this System.Enum key, T obj)
+		public static void Show(this System.Enum key, IViewData viewData)
 		{
-			Load(key.ToString()).Set(obj);
-			Show(key);
+			Load(key.ToString()).Show(viewData);
 		}
 		internal static async Task<QUI> LoadAsync(string key)
 		{

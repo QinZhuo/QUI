@@ -6,7 +6,7 @@ namespace QTool.UI
 {
 	public class QUIPanelControl : MonoBehaviour
 	{
-		[QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
+		[QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
 		public string panelName;
 		public void Show()
 		{

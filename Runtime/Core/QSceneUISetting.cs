@@ -12,7 +12,7 @@ namespace QTool.UI
 	public class QSceneUISetting : QInstanceBehaviour<QSceneUISetting>
 	{
 		[QName("异步加载UI")]
-		[QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
+		[QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
 		public List<string> PanelList = new List<string>();
 		protected override void Awake()
 		{

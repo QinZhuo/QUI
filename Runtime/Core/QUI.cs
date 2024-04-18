@@ -10,7 +10,7 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
-	public class QUIPanel : MonoBehaviour
+	public class QUI : MonoBehaviour
 	{
 		public virtual void Set<TObj>(TObj obj)
 		{
@@ -57,7 +57,7 @@ namespace QTool.UI
 	}
 
 	[RequireComponent(typeof(CanvasGroup))]
-	public abstract class QUIPanel<T> : QUIPanel where T : QUIPanel<T>
+	public abstract class QUI<T> : QUI where T : QUI<T>
 	{
 		#region 静态逻辑
 		private static T _instance;
@@ -111,7 +111,7 @@ namespace QTool.UI
 		[QName("显示动画")]
 		public QTweenComponent showAnim;
 #endif
-		[QName("父页面"),QPopup(nameof(QUIPanelPrefab) + "." + nameof(QUIPanelPrefab.LoadAll))]
+		[QName("父页面"),QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
 		
 		public string ParentPanel = "";
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
@@ -206,7 +206,7 @@ namespace QTool.UI
 		}
 
 
-		private void Fresh(QUIPanel window)
+		private void Fresh(QUI window)
 		{
 			if (this == null) return;
 			var value = window == null || this.Equals(window) || transform.ParentHas(window.RectTransform);

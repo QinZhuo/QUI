@@ -250,7 +250,9 @@ namespace QTool.UI
 		/// <summary>
 		/// 显示或隐藏页面时 最开始调用
 		/// </summary>
+#pragma warning disable CS1998 // 异步方法缺少 "await" 运算符，将以同步方式运行
 		protected virtual async Task Switch(bool IsShow)
+#pragma warning restore CS1998 // 异步方法缺少 "await" 运算符，将以同步方式运行
 		{
 			if (this == null) return;
 			this.IsShow = IsShow;

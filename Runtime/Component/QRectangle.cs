@@ -13,7 +13,7 @@ namespace QTool.UI
         [Range(0, 256)]
         [QName("圆角")]
         public float radius = 10;
-        [QName("线框", "VertexMode")]
+        [QName("线框")]
         public float lineWidth = -1;
         protected override List<UIVertex> Draw()
         {

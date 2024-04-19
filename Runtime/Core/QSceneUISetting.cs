@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace QTool.UI
 {
 	/// <summary>
-	/// 场景预加载UI配置
+	/// 场景预加载UI配置 
 	/// </summary>
 	public class QSceneUISetting : QInstanceBehaviour<QSceneUISetting>
 	{

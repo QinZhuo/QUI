@@ -351,12 +351,12 @@ namespace QTool.UI
 
 		protected virtual void OnSetViewData()
 		{
-			gameObject.RegisterEvent(ViewData);
+			//gameObject.RegisterEvent(ViewData);
 		}
 
 		protected virtual void OnUnsetViewData()
 		{
-			gameObject.RegisterEvent(ViewData);
+			//gameObject.RegisterEvent(ViewData);
 		}
 		public override void Show(IViewData viewData)
 		{

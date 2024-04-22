@@ -105,8 +105,6 @@ namespace QTool.UI
 		public bool showOnStart = false;
 		[QName("模态窗"), UnityEngine.Serialization.FormerlySerializedAs("isWindow")]
 		public bool isModalWindow = false;
-		[QName("控制TimeScale")]
-		public float timeScale = -1;
 #if QTween
 		[QName("显示动画")]
 		public QTweenComponent showAnim;
@@ -170,10 +168,6 @@ namespace QTool.UI
 				transform.SetAsLastSibling();
 				if (Application.isPlaying)
 				{
-					if (timeScale >= 0)
-					{
-						QTime.ChangeScale(gameObject, timeScale);
-					}
 					if (isModalWindow)
 					{
 						QUIManager.ModalWindowPush(this);

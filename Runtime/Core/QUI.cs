@@ -25,7 +25,12 @@ namespace QTool.UI
 			gameObject.SetActive(false);
 			return Task.CompletedTask;
 		}
-
+#if UNITY_EDITOR
+		private void OnValidate()
+		{
+			gameObject.AutoAddPersistentListener(this);
+		}
+#endif
 		protected virtual void Awake()
 		{
 			gameObject.SetActive(true);

@@ -34,6 +34,7 @@ namespace QTool.UI
 		protected virtual void Awake()
 		{
 			gameObject.SetActive(true);
+			QUIManager.ResisterPanel(this);
 		}
 		[QName("隐藏")]
 		public void Hide()

@@ -16,5 +16,9 @@ namespace QTool.UI
 		{
 			QUIManager.Load(panelName).Hide();
 		}
+		public void Switch(bool show)
+		{
+			QUIManager.Load(panelName).Switch(show);
+		}
 	}
 }

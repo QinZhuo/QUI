@@ -31,9 +31,8 @@ namespace QTool.UI
 			gameObject.AutoAddPersistentListener(this);
 		}
 #endif
-		protected virtual void Awake()
+		private void Awake()
 		{
-			gameObject.SetActive(true);
 			QUIManager.ResisterPanel(this);
 		}
 		[QName("隐藏")]
@@ -136,7 +135,7 @@ namespace QTool.UI
 		#region 基本生命周期
 
 
-		protected override void Awake()
+		private void Awake()
 		{
 			if (this is T panel)
 			{
@@ -169,7 +168,7 @@ namespace QTool.UI
 				gameObject.SetActive(IsShow);
 			}
 		}
-		protected virtual void OnDestroy()
+		private void OnDestroy()
 		{
 			if (_instance == this)
 			{

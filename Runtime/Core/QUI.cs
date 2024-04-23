@@ -45,6 +45,17 @@ namespace QTool.UI
 		{
 			_ = ShowAsync();
 		}
+		public void Switch(bool show)
+		{
+			if (show)
+			{
+				Show();
+			}
+			else
+			{
+				Hide();
+			}
+		}
 		[QName("显示")]
 		public virtual void Show(IViewData viewData)
 		{

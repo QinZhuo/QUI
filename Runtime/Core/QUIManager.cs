@@ -39,6 +39,10 @@ namespace QTool.UI
 						panel.RectTransform.offsetMax = Vector2.zero;
 					}
 				}
+				else
+				{
+					QDebug.LogWarning("找不到父页面[" + parentKey + "]");
+				}
 			}
 		}
 		/// <summary>

@@ -49,7 +49,7 @@ namespace QTool.UI
 		{
 			if (show)
 			{
-				Show();
+				Show(); 
 			}
 			else
 			{
@@ -261,7 +261,7 @@ namespace QTool.UI
 		/// 显示或隐藏页面时 最开始调用
 		/// </summary>
 #pragma warning disable CS1998 // 异步方法缺少 "await" 运算符，将以同步方式运行
-		protected virtual async Task Switch(bool IsShow)
+		protected virtual async Task SwitchAsync(bool IsShow)
 #pragma warning restore CS1998 // 异步方法缺少 "await" 运算符，将以同步方式运行
 		{
 			if (this == null) return;
@@ -313,12 +313,12 @@ namespace QTool.UI
 		}
 		public override async Task ShowAsync()
 		{
-			await Switch(true).Run();
+			await SwitchAsync(true).Run();
 		}
 
 		public override async Task HideAsync()
 		{
-			await Switch(false).Run();
+			await SwitchAsync(false).Run();
 		}
 		protected virtual void Complete()
 		{

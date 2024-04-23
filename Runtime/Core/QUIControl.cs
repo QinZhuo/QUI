@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 namespace QTool.UI
 {
-	public class QUIPanelControl : MonoBehaviour
+	public class QUIControl : MonoBehaviour
 	{
 		[QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
 		public string panelName;

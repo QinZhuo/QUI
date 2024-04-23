@@ -9,7 +9,7 @@ namespace QTool.UI
 	/// <summary>
 	/// 场景预加载UI配置 
 	/// </summary>
-	public class QSceneUISetting : QInstanceBehaviour<QSceneUISetting>
+	public class QUISceneSetting : QInstanceBehaviour<QUISceneSetting>
 	{
 		[QName("异步加载UI")]
 		[QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]

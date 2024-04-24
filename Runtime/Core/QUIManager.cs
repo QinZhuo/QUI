@@ -27,21 +27,22 @@ namespace QTool.UI
 			PanelList[panel.QName()] = panel;
 			if (!parentKey.IsNull())
 			{
-				var parent = Load(parentKey);
+				var parent = Load(parentKey).transform;
+				if (parent == null)
+				{
+					QDebug.LogWarning("找不到父页面[" + parentKey + "]");
+					parent = GameObject.FindAnyObjectByType<Canvas>()?.transform;
+				}
 				if (parent != null && parent != panel)
 				{
 					var scale = panel.RectTransform.localScale;
-					panel.RectTransform.SetParent(parent.RectTransform, false);
+					panel.RectTransform.SetParent(parent, false);
 					panel.RectTransform.localScale = scale;
 					if (panel.RectTransform.anchorMin == Vector2.zero && panel.RectTransform.anchorMax == Vector2.one)
 					{
 						panel.RectTransform.offsetMin = Vector2.zero;
 						panel.RectTransform.offsetMax = Vector2.zero;
 					}
-				}
-				else
-				{
-					QDebug.LogWarning("找不到父页面[" + parentKey + "]");
 				}
 			}
 		}

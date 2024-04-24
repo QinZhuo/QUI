@@ -147,7 +147,7 @@ namespace QTool.UI
 			}
 			IsShow = Group.alpha >= 0.9f && gameObject.activeSelf;
 			QUIManager.OnCurrentWindowChange += Fresh;
-			QUIManager.ResisterPanel(this, ParentPanel);
+			QUIManager.ResisterPanel(this, transform.parent == null ? ParentPanel : "");
 
 			if (showOnStart)
 			{

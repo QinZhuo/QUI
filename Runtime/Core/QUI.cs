@@ -49,7 +49,7 @@ namespace QTool.UI
 		{
 			if (show)
 			{
-				Show(); 
+				Show();
 			}
 			else
 			{
@@ -104,11 +104,19 @@ namespace QTool.UI
 		{
 			await QUIManager.LoadAsync(typeof(T).Name);
 		}
-		public static async Task ShowPanel()
+		public static void ShowPanel()
+		{
+			_ = ShowPanelAsync();
+		}
+		public static void HidePanel()
+		{
+			_ = HidePanelAsync();
+		}
+		public static async Task ShowPanelAsync()
 		{
 			await Instance?.ShowAsync();
 		}
-		public static async Task HidePanel()
+		public static async Task HidePanelAsync()
 		{
 			if (PanelIsShow)
 			{
@@ -379,10 +387,14 @@ namespace QTool.UI
 			ViewData = viewData as TViewData;
 			base.Show(viewData);
 		}
-		public static async Task ShowPanel(TViewData viewData)
+		public static void ShowPanel(TViewData viewData)
+		{
+			_ = ShowPanelAsync(viewData);
+		}
+		public static async Task ShowPanelAsync(TViewData viewData)
 		{
 			Instance.ViewData = viewData;
-			await ShowPanel();
+			await ShowPanelAsync();
 		}
 	}
 }

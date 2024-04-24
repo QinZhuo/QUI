@@ -219,7 +219,7 @@ namespace QTool.UI
 			}
 			catch (System.Exception e)
 			{
-				QDebug.LogError(this + " " + nameof(OnDisable) + " 出错：" + e);
+				QDebug.LogError(this + " " + nameof(OnDisable) + " 出错：" + e); 
 			}
 		}
 

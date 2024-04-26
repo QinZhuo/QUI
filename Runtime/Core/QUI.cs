@@ -303,10 +303,6 @@ namespace QTool.UI
 #endif
 			{
 				if (this == null) return;
-				if (Application.IsPlaying(this))
-				{
-					gameObject.SetActive(IsShow);
-				}
 				Group.interactable = IsShow;
 				if (isModalWindow)
 				{
@@ -316,7 +312,10 @@ namespace QTool.UI
 			}
 			if (!this.IsShow)
 			{
-				gameObject.SetActive(false);
+				if (Application.IsPlaying(this))
+				{
+					gameObject.SetActive(true);
+				}
 			}
 		}
 		public override async Task ShowAsync()

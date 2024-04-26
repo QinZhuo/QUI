@@ -314,7 +314,7 @@ namespace QTool.UI
 			{
 				if (Application.IsPlaying(this))
 				{
-					gameObject.SetActive(true);
+					gameObject.SetActive(false);
 				}
 			}
 		}

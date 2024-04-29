@@ -10,6 +10,9 @@ using QTool.Tween;
 #endif
 namespace QTool.UI
 {
+	/// <summary>
+	/// 基础UI 自动注册事件
+	/// </summary>
 	public class QUI : MonoBehaviour
 	{
 		public virtual Task ShowAsync()
@@ -33,7 +36,7 @@ namespace QTool.UI
 #endif
 		protected virtual void Awake()
 		{
-			QUIManager.ResisterPanel(this);
+			QUIManager.Add(this);
 		}
 		[QName("隐藏")]
 		public void Hide()
@@ -55,11 +58,6 @@ namespace QTool.UI
 			{
 				Hide();
 			}
-		}
-		[QName("显示")]
-		public virtual void Show(IViewData viewData)
-		{
-			Show();
 		}
 		public bool IsShow { internal set; get; }
 		public RectTransform RectTransform
@@ -125,8 +123,6 @@ namespace QTool.UI
 		}
 		#endregion
 		#region 基础属性
-		[QName("初始显示")]
-		public bool showOnStart = false;
 		[QName("模态窗"), UnityEngine.Serialization.FormerlySerializedAs("isWindow")]
 		public bool isModalWindow = false;
 #if QTween
@@ -137,7 +133,8 @@ namespace QTool.UI
 
 		public string ParentPanel = "";
 		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
-		CanvasGroup _group;
+		[SerializeField,QReadonly]
+		private CanvasGroup _group;
 
 		#endregion
 		#region 基本生命周期
@@ -155,22 +152,36 @@ namespace QTool.UI
 			}
 			IsShow = Group.alpha >= 0.9f;
 			QUIManager.OnCurrentWindowChange += Fresh;
-			QUIManager.ResisterPanel(this, transform.parent == null ? ParentPanel : "");
-
-			if (showOnStart)
+			#region 动态创建时设置父物体并隐藏
+			if (transform.parent == null)
 			{
-				if (!IsShow)
+				if (!ParentPanel.IsNull())
 				{
-					ShowAndComplete();
+					var parent = QUIManager.Load(ParentPanel)?.transform;
+					if (parent == null)
+					{
+						QDebug.LogWarning("找不到父页面[" + ParentPanel + "]");
+					}
+					else if (parent != this)
+					{
+						var scale = RectTransform.localScale;
+						RectTransform.SetParent(parent, false);
+						RectTransform.localScale = scale;
+						if (RectTransform.anchorMin == Vector2.zero && RectTransform.anchorMax == Vector2.one)
+						{
+							RectTransform.offsetMin = Vector2.zero;
+							RectTransform.offsetMax = Vector2.zero;
+						}
+					}
 				}
-			}
-			else
-			{
-				if (IsShow)
+				if (transform.parent == null)
 				{
-					HideAndComplete();
+					transform.parent = FindFirstObjectByType<Canvas>()?.transform;
 				}
+				HideAndComplete();
 			}
+			#endregion
+			QUIManager.Add(this);
 			if (gameObject.activeSelf != IsShow)
 			{
 				gameObject.SetActive(IsShow);
@@ -344,56 +355,5 @@ namespace QTool.UI
 			Complete();
 		}
 		#endregion
-	}
-	public interface IViewData
-	{
-
-	}
-	public abstract class QUI<T, TViewData> : QUI<T> where T : QUI<T, TViewData> where TViewData : class, IViewData
-	{
-		private TViewData _ViewData = null;
-		public TViewData ViewData
-		{
-			set
-			{
-				if (value != _ViewData)
-				{
-					if (_ViewData != null)
-					{
-						OnUnsetViewData();
-					}
-					_ViewData = value;
-					if (_ViewData != null)
-					{
-						OnSetViewData();
-					}
-				}
-			}
-			get => _ViewData;
-		}
-
-		protected virtual void OnSetViewData()
-		{
-			//gameObject.RegisterEvent(ViewData);
-		}
-
-		protected virtual void OnUnsetViewData()
-		{
-			//gameObject.RegisterEvent(ViewData);
-		}
-		public override void Show(IViewData viewData)
-		{
-			ViewData = viewData as TViewData;
-			base.Show(viewData);
-		}
-		public static void ShowPanel(TViewData viewData)
-		{
-			_ = ShowPanelAsync(viewData);
-		}
-		public static async Task ShowPanelAsync(TViewData viewData)
-		{
-			Instance.ViewData = viewData;
-			await ShowPanelAsync();
-		}
 	}
 }

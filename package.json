@@ -1,6 +1,6 @@
 {
   "name": "com.qtool.ui",
-  "version": "2024.4.26",
+  "version": "2024.4.30",
   "displayName": "QUI",
   "description": "QUI  \n other good UI tool \n https://github.com/mob-sakai/UIEffect.git  \n https://github.com/mob-sakai/UIEffectSnapshot.git  \n https://github.com/mob-sakai/ParticleEffectForUGUI.git ",
   "unity": "2022.1",

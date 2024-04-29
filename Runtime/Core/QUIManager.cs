@@ -19,30 +19,19 @@ namespace QTool.UI
 		/// <summary>
 		/// 注册UI到管理器
 		/// </summary>
-		/// <param name="key">关键名</param>
-		/// <param name="panel">UI页面</param>
-		/// <param name="parentKey">父页面</param>
-		internal static void ResisterPanel(QUI panel, string parentKey = "")
+		internal static void Add(QUI panel)
 		{
 			PanelList[panel.QName()] = panel;
-			if (!parentKey.IsNull())
+		}
+		internal static void Remove(QUI panel)
+		{
+			var key = panel.name;
+			if (!key.IsNull() && PanelList.ContainsKey(key))
 			{
-				var parent = Load(parentKey).transform;
-				if (parent == null)
+				var ui = PanelList[key];
+				if (ui == panel)
 				{
-					QDebug.LogWarning("找不到父页面[" + parentKey + "]");
-					parent = GameObject.FindAnyObjectByType<Canvas>()?.transform;
-				}
-				if (parent != null && parent != panel)
-				{
-					var scale = panel.RectTransform.localScale;
-					panel.RectTransform.SetParent(parent, false);
-					panel.RectTransform.localScale = scale;
-					if (panel.RectTransform.anchorMin == Vector2.zero && panel.RectTransform.anchorMax == Vector2.one)
-					{
-						panel.RectTransform.offsetMin = Vector2.zero;
-						panel.RectTransform.offsetMax = Vector2.zero;
-					}
+					PanelList.RemoveKey(key);
 				}
 			}
 		}
@@ -83,10 +72,6 @@ namespace QTool.UI
 			if (!IsShow(key)) return;
 			Load(key.ToString()).Hide();
 		}
-		public static void Show(this System.Enum key, IViewData viewData)
-		{
-			Load(key.ToString()).Show(viewData);
-		}
 		internal static async Task<QUI> LoadAsync(string key)
 		{
 			await UI_Prefab.LoadAsync(key);
@@ -95,7 +80,6 @@ namespace QTool.UI
 		internal static QUI Load(string key)
 		{
 			if (!QTool.IsPlaying) return null;
-			if (key.IsNull()) return Load(nameof(Canvas));
 			if (PanelList[key] == null)
 			{
 				QDebug.Begin("动态创建" + nameof(QUI) + "<" + key + ">");
@@ -107,23 +91,11 @@ namespace QTool.UI
 				}
 				var panel = Object.Instantiate(prefab).GetComponent<QUI>(true);
 				panel.name = key;
-				ResisterPanel(panel);
 				QDebug.End("动态创建" + nameof(QUI) + "<" + key + ">");
 			}
 			return PanelList[key];
 		}
-		internal static void Remove(QUI panel)
-		{
-			var key = panel.name;
-			if (!key.IsNull() && PanelList.ContainsKey(key))
-			{
-				var ui = PanelList[key];
-				if (ui == panel)
-				{
-					PanelList.RemoveKey(key);
-				}
-			}
-		}
+		
 		public static int Count
 		{
 			get

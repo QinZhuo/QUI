@@ -75,7 +75,7 @@ namespace QTool.UI
 	{
 		#region 静态逻辑
 		private static T _instance;
-		protected static T Instance
+		public static T Instance
 		{
 			get
 			{

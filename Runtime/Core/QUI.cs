@@ -132,10 +132,13 @@ namespace QTool.UI
 		[QName("父页面"), QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
 
 		public string ParentPanel = "";
-		public CanvasGroup Group => _group ??= GetComponent<CanvasGroup>();
+		public CanvasGroup Group => _group;
 		[SerializeField,QReadonly]
 		private CanvasGroup _group;
-
+		private void Reset()
+		{
+			_group = GetComponent<CanvasGroup>();
+		}
 		#endregion
 		#region 基本生命周期
 

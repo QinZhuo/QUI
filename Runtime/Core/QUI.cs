@@ -142,7 +142,7 @@ namespace QTool.UI
 		#endregion
 		#region 基本生命周期
 
-
+		private int initIndex = -1;
 		protected override void Awake()
 		{
 			if (this is T panel)
@@ -183,6 +183,10 @@ namespace QTool.UI
 				}
 				HideAndComplete();
 			}
+			else
+			{
+				initIndex = transform.GetSiblingIndex();
+			}
 			#endregion
 			QUIManager.Add(this);
 			if (gameObject.activeSelf != IsShow)
@@ -199,11 +203,18 @@ namespace QTool.UI
 			QUIManager.OnCurrentWindowChange -= Fresh;
 			QUIManager.Remove(this);
 		}
-		protected virtual void OnEnable()
+		protected virtual void OnShow()
 		{
 			try
 			{
-				transform.SetAsLastSibling();
+				if (initIndex < 0)
+				{
+					transform.SetAsLastSibling();
+				}
+				else
+				{
+					transform.SetSiblingIndex(initIndex);
+				}
 				if (Application.isPlaying)
 				{
 					if (isModalWindow)
@@ -218,14 +229,10 @@ namespace QTool.UI
 				QDebug.LogError(this + " " + nameof(OnEnable) + " 出错：" + e);
 			}
 		}
-		protected virtual void OnDisable()
+		protected virtual void OnHide()
 		{
 			try
 			{
-				if (this != null)
-				{
-					QTime.RevertScale(gameObject);
-				}
 				if (isModalWindow)
 				{
 					QUIManager.ModalWindowRemove(this);
@@ -233,11 +240,17 @@ namespace QTool.UI
 			}
 			catch (System.Exception e)
 			{
-				QDebug.LogError(this + " " + nameof(OnDisable) + " 出错：" + e); 
+				QDebug.LogError(this + " " + nameof(OnDisable) + " 出错：" + e);
 			}
 		}
-
-
+		protected virtual void OnEnable()
+		{
+			OnShow();
+		}
+		protected virtual void OnDisable()
+		{
+			OnHide();
+		}
 		private void Fresh(QUI window)
 		{
 			if (this == null) return;
@@ -331,6 +344,7 @@ namespace QTool.UI
 					gameObject.SetActive(false);
 				}
 			}
+			gameObject.SetDirty();
 		}
 		public override async Task ShowAsync()
 		{

@@ -183,7 +183,7 @@ namespace QTool.UI
 				}
 				HideAndComplete();
 			}
-			else
+			else if (IsShow)
 			{
 				initIndex = transform.GetSiblingIndex();
 			}
@@ -214,6 +214,7 @@ namespace QTool.UI
 				else
 				{
 					transform.SetSiblingIndex(initIndex);
+					initIndex = -1;
 				}
 				if (Application.isPlaying)
 				{

@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using QTool.Reflection;
+using UnityEngine.Profiling.Memory.Experimental;
+using UnityEditor;
+using UnityEngine.UI;
+
+
+
+
 
 #if QTween
 using QTool.Tween;
@@ -67,7 +75,52 @@ namespace QTool.UI
 				return transform as RectTransform;
 			}
 		}
-
+#if UNITY_EDITOR
+		private bool CanGenerate => GetType() != typeof(QUI);
+		const string UICodeStart = "//UICodeStart\n";
+		const string UICodeEnd = "//UICodeEnd\n";
+		[QName("UI字段生成", nameof(CanGenerate))]
+		private void GenerateUICode()
+		{
+			var target = this;
+			if (!CanGenerate) return;
+			var script = UnityEditor.MonoScript.FromMonoBehaviour(this);
+			var path = UnityEditor.AssetDatabase.GetAssetPath(script);
+			var className = script.GetClass().Name;
+			var data = QFileTool.Load(path);
+			var oldUICode = "";
+			if (data.Contains(UICodeStart) && data.Contains(UICodeEnd))
+			{
+				oldUICode = data.GetBlockValue(UICodeStart, UICodeEnd);
+			}
+			else
+			{
+				var classIndex = data.IndexOf("class " + className);
+				var index = data.IndexOf('{', classIndex);
+				var startIndex = data.Substring(0, index).LastIndexOf('\n') + 1;
+				var t = data.Substring(startIndex, index - startIndex) + "    ";
+				data = data.Insert(index + 1, "\n" + t + UICodeStart + t + "\n" + t + UICodeEnd);
+				oldUICode = data.GetBlockValue(UICodeStart, UICodeEnd);
+			}
+			var start = oldUICode.Substring(oldUICode.LastIndexOf('\n'));
+			var newUICode = QTool.BuildString(writer =>
+			{
+				var texts = gameObject.GetComponentsInChildren<Text>();
+				foreach (var item in texts)
+				{
+					writer.Write(string.Format("{0}public Text {1}=null;\n", start, item.name.Replace(" ", "_")));
+				}
+			});
+			newUICode += start;
+			if (oldUICode != newUICode)
+			{
+				data = data.Replace(UICodeStart + oldUICode + UICodeEnd, UICodeStart + newUICode + UICodeEnd);
+				Debug.LogError(data);
+			}
+			QFileTool.Save(path, data);
+			AssetDatabase.Refresh();
+		}
+#endif
 	}
 
 	[RequireComponent(typeof(CanvasGroup))]
@@ -393,5 +446,6 @@ namespace QTool.UI
 			base.OnHide();
 			Data = default;
 		}
+
 	}
 }

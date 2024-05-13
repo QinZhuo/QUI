@@ -133,7 +133,7 @@ namespace QTool.UI
 
 		public string ParentPanel = "";
 		public CanvasGroup Group => _group;
-		[SerializeField,QReadonly]
+		[SerializeField, QReadonly]
 		private CanvasGroup _group;
 		private void Reset()
 		{
@@ -373,5 +373,25 @@ namespace QTool.UI
 			Complete();
 		}
 		#endregion
+	}
+
+	public abstract class QUI<T, TData> : QUI<T> where T : QUI<T, TData>
+	{
+		public virtual TData Data { get; protected set; }
+		protected override void Awake()
+		{
+			base.Awake();
+			QEventManager.Register<TData>(GetType().Name + "_" + nameof(Show) + "_" + typeof(TData).Name, Show);
+		}
+		public virtual void Show(TData data)
+		{
+			Data = data;
+			Show();
+		}
+		protected override void OnHide()
+		{
+			base.OnHide();
+			Data = default;
+		}
 	}
 }

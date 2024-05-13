@@ -83,6 +83,10 @@ namespace QTool.UI
 		}
 		#endregion
 		#region 枚举接口
+		public static void Show<TData>(this System.Enum key, TData data)
+		{
+			QEventManager.InvokeEvent(key.ToString() + "_" + nameof(Show) + "_" + typeof(TData).Name);
+		}
 		public static void Show(this System.Enum key)
 		{
 			if (IsShow(key)) return;

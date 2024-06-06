@@ -70,8 +70,8 @@ namespace QTool.UI {
 			var ui = Load(key.ToString());
 			if (ui == null)
 				return;
-			if (ui is ISetValue<TData> setData) {
-				setData.SetValue(data);
+			if (ui is IQEvent<TData> setData) {
+				setData.InvokeEvent(data);
 			}
 			ui.Show();
 		}

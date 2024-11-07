@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-namespace QTool.UI
-{
-	public class QUIControl : MonoBehaviour
-	{
-		[QPopup(nameof(UI_Prefab) + "." + nameof(UI_Prefab.LoadAll))]
+namespace QTool.UI {
+	public class QUIControl : MonoBehaviour {
 		public string panelName;
-		public void Show()
-		{
-			QUIManager.Load(panelName).Show();
+		public void Show() {
+			QUIManager.Show(panelName);
 		}
-		public void Hide()
-		{
-			QUIManager.Load(panelName).Hide();
+		public void Hide() {
+			QUIManager.Hide(panelName);
 		}
-		public void Switch(bool show)
-		{
-			QUIManager.Load(panelName).Switch(show);
+		public void Switch(bool show) {
+			if (show) {
+				Show();
+			}
+			else {
+				Hide();
+			}
 		}
 	}
 }
